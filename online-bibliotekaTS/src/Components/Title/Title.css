@@ -1,0 +1,29 @@
+body {
+  background-color: rgb(221, 234, 230);
+}
+
+.title-wrapper-closed {
+  width: calc(100vw - 4.7rem);
+  overflow: hidden;
+  transition: width 0.3s ease;
+}
+
+.title-wrapper-opened {
+  width: calc(100vw - 13rem);
+  overflow: hidden;
+  transition: width 0.3s ease;
+}
+
+.title {
+  padding: 0.1rem 0 0.1rem 2rem;
+  margin: 0;
+  width: 100%;
+  background-color: rgb(212, 212, 212);
+}
+
+.title-divider {
+  width: 100%;
+  border-top: 2px solid #ffffff;
+  background-color: rgb(212, 212, 212);
+  margin: 0;
+}
