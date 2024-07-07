@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   DashboardOutlined,
   TeamOutlined,
@@ -21,18 +22,36 @@ interface MenuItem {
   type?: string;
   icon?: JSX.Element;
   label?: string;
+  path?: string;
 }
 
 const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
-  const [clicked, setClicked] = useState<number>(1); // Set initial state with type number
+  const location = useLocation();
+  const [activeItem, setActiveItem] = useState("");
 
-  const clickedItemHandler = (id: number) => setClicked(id);
   const openHandler = () => setIsOpen(!isOpen);
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+
+    const activeMenuItem = menuItem.find((item) => item.path === currentPath);
+    if (activeMenuItem) {
+      setActiveItem(activeMenuItem.label || "");
+    }
+  }, [location.pathname]);
 
   const menuItem: MenuItem[] = [
     { type: "divider" },
-    { icon: <DashboardOutlined className="icon" />, label: "Dashboard" },
-    { icon: <TeamOutlined className="icon" />, label: "Bibliotekari" },
+    {
+      icon: <DashboardOutlined className="icon" />,
+      label: "Dashboard",
+      path: "/",
+    },
+    {
+      icon: <TeamOutlined className="icon" />,
+      label: "Bibliotekari",
+      path: "/bibliotekari",
+    },
     { icon: <UsergroupAddOutlined className="icon" />, label: "Ucenici" },
     { icon: <BookOutlined className="icon" />, label: "Knjige" },
     { icon: <SolutionOutlined className="icon" />, label: "Autori" },
@@ -44,6 +63,10 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
     { type: "divider" },
     { icon: <SettingOutlined className="icon gear" />, label: "Settings" },
   ];
+
+  const handleClick = (label: string) => {
+    setActiveItem(label);
+  };
 
   return (
     <div className="sidebar" style={{ width: isOpen ? "13rem" : "4.6rem" }}>
@@ -67,10 +90,17 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
             return <hr key={id} className="sidemenu-divider" />;
           }
           return (
-            <div
+            <NavLink
               key={id}
-              className={`menu_item ${clicked === id ? "clicked" : ""}`}
-              onClick={() => clickedItemHandler(id)}
+              to={item.path || "#"}
+              className={`menu_item ${
+                item.label === activeItem ? "active" : ""
+              }`}
+              onClick={() => handleClick(item.label || "")}
+              style={{
+                color: "white",
+                backgroundColor: item.label === activeItem ? "#333" : "",
+              }}
             >
               <div className="icon">{item.icon}</div>
               <div
@@ -81,7 +111,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
               >
                 {item.label}
               </div>
-            </div>
+            </NavLink>
           );
         })}
       </div>

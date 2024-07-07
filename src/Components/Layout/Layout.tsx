@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import { Outlet } from "react-router-dom";
 import Header from "./Header/Header";
 import SideMenu from "./Sidemenu/Sidemenu";
 import Title from "./Title/Title";
@@ -17,6 +18,7 @@ const Layout: React.FC = () => {
         </div>
         <div className="Title">
           <Title isOpen={isOpen} />
+          <Outlet />
         </div>
       </div>
     </Fragment>

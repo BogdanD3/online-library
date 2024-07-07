@@ -1,11 +1,17 @@
 import React, { Fragment, useState } from "react";
 import Header from "../Components/Layout/Header/Header";
 import SideMenu from "../Components/Layout/Sidemenu/Sidemenu";
-import Title from "../Components/Layout//Title/Title";
-import PrimaryBtn from "../Components/Buttons/PrimaryBtn";
+import Title from "../Components/Layout/Title/Title";
+import FormComponent, { FormData } from "./Forms/FormComponent";
 
-const Bibliotekari: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+const AddBibliotekar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (formData: FormData) => {
+    console.log(formData);
+    setSubmitted(true);
+  };
 
   return (
     <Fragment>
@@ -18,11 +24,12 @@ const Bibliotekari: React.FC = () => {
         </div>
         <div className="Title">
           <Title isOpen={isOpen} />
-          <PrimaryBtn />
+          <FormComponent onSubmit={handleSubmit} />
+          {submitted && <p>Submitted</p>}
         </div>
       </div>
     </Fragment>
   );
 };
 
-export default Bibliotekari;
+export default AddBibliotekar;
