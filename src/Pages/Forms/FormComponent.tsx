@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./FormComponent.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import Button from "../../Components/Buttons/FormBtn";
 
 export interface FormData {
@@ -30,6 +31,13 @@ const initialFormData: FormData = {
 const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const navigate = useNavigate();
+
+  const handleIconClick = () => {
+    const fileInput = document.getElementById("picture");
+    if (fileInput) {
+      fileInput.click();
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
@@ -121,12 +129,22 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
       </div>
       <div className="form-group">
         <label htmlFor="picture">Profile Picture:</label>
+        <i
+          className="bi bi-image"
+          onClick={handleIconClick}
+          style={{
+            cursor: "pointer",
+            border: "1px solid black",
+            padding: "5rem 4rem",
+          }}
+        ></i>
         <input
           type="file"
           id="picture"
           name="picture"
           accept="image/*"
           onChange={handleChange}
+          style={{ display: "none" }}
         />
       </div>
       <Button type="submit" className="submit-button">
