@@ -52,7 +52,7 @@ const Bibliotekari: React.FC = () => {
           <SideMenu isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
         <div className="Title">
-          <Title isOpen={isOpen} />
+          <Title isOpen={isOpen} title="Bibliotekari" />
           <PrimaryBtn />
           <div className="table-container">
             <table className="table">

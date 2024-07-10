@@ -23,7 +23,7 @@ const AddBibliotekar: React.FC = () => {
           <SideMenu isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
         <div className="Title">
-          <Title isOpen={isOpen} />
+          <Title isOpen={isOpen} title="Add Bibliotekar" />
           <FormComponent onSubmit={handleSubmit} />
           {submitted && <p>Submitted</p>}
         </div>
