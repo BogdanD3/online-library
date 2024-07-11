@@ -1,41 +1,155 @@
 form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 15px;
   max-width: 400px;
-  margin: auto;
+  margin-left: 2rem;
+}
+
+.form-rigth-side {
+  margin-left: 2rem;
 }
 
 .form-group {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  margin-top: 0.5rem;
 }
 
 label {
-  width: 150px;
-  margin-right: 10px;
-  text-align: right;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 input[type="text"],
 input[type="email"],
-input[type="password"],
-input[type="file"] {
-  flex: 1;
-  padding: 8px;
+input[type="password"] {
+  padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 35rem;
+}
+
+.bi-image {
+  cursor: pointer;
+  border: 1px solid black;
+  text-align: center;
+  padding: 5rem;
+  font-size: 1.5rem;
+}
+
+.submit-clear {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 1rem;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 0.7rem 3rem;
   border: none;
   border-radius: 4px;
   background-color: #007bff;
   color: white;
   cursor: pointer;
+  width: 10rem;
+  justify-content: center;
 }
 
-button:hover {
-  background-color: #0056b3;
+.submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+
+.clear-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  background-color: rgb(253, 12, 12);
+  color: white;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+
+.submit-button:hover {
+  background-color: rgb(221, 234, 230);
+  color: green;
+  border: 2px solid green;
+  transition: 0.4s ease;
+}
+
+.clear-button:hover {
+  background-color: rgb(221, 234, 230);
+  color: rgb(253, 12, 12);
+  border: 2px solid rgb(253, 12, 12);
+  transition: 0.4s ease;
+}
+
+.submit-button i,
+.clear-button i {
+  font-size: 1.5rem;
+  margin-left: 5px;
+}
+
+@media (max-width: 768px) {
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-container {
+    padding: 1rem;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="file"] {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 15rem;
+    height: 0.5rem;
+  }
+
+  .form-rigth-side {
+    width: 6rem;
+  }
+
+  .bi-image {
+    padding: 2rem;
+  }
+
+  .submit-clear {
+    position: relative;
+    margin-top: 1rem;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+
+  .submit-button,
+  .clear-button {
+    padding: 0.5rem 1rem;
+    margin: 0.3rem 0;
+  }
+
+  .submit-clear {
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 1rem;
+  }
 }
