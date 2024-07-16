@@ -9,7 +9,7 @@ interface TitleProps {
 
 const Title: React.FC<TitleProps> = ({ isOpen, title, children }) => {
   return (
-    <div className={isOpen ? "title-wrapper-opened" : "title-wrapper-closed"}>
+    <div className="title-wrapper">
       <div className="title">
         <h1>{title || children}</h1>
       </div>

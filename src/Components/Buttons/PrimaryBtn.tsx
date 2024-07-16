@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
-import "bootstrap-icons/font/bootstrap-icons.css";
 
-function PrimaryBtn() {
+interface PrimaryBtnProps {
+  link: string;
+  children: React.ReactNode;
+  className: string;
+}
+
+function PrimaryBtn({ link, children, className }: PrimaryBtnProps) {
   return (
-    <Link to="add-bibliotekar">
-      <button>
-        <i className="bi bi-plus-lg" style={{ fontSize: "1rem" }}></i> Novi
-        Bibliotekar/ka
-      </button>
+    <Link to={link}>
+      <button className={className}>{children}</button>
     </Link>
   );
 }

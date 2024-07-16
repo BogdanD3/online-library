@@ -87,7 +87,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
     <form onSubmit={handleSubmit}>
       <div className="form-left-side">
         <div className="form-group">
-          <label htmlFor="firstName">First Name:</label>
+          <label htmlFor="firstName">Ime i Prezime:</label>
           <input
             type="text"
             id="firstName"
@@ -98,7 +98,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="lastName">Last Name:</label>
+          <label htmlFor="lastName">JMBG:</label>
           <input
             type="text"
             id="lastName"
@@ -120,7 +120,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="phone">Phone:</label>
+          <label htmlFor="phone">Korisnicko ime:</label>
           <input
             type="text"
             id="phone"
@@ -131,7 +131,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password">Sifra:</label>
           <input
             type="password"
             id="password"
@@ -142,7 +142,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm Password:</label>
+          <label htmlFor="confirmPassword">Potvrdi Sifru:</label>
           <input
             type="password"
             id="confirmPassword"
@@ -156,27 +156,32 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
           <div className="password-match-error">{passwordMatchError}</div>
         )}
       </div>
-      <div className="form-rigth-side">
-        <div className="form-group">
-          <label htmlFor="picture">Profile Picture:</label>
-          <i className="bi bi-image" onClick={handleIconClick}></i>
-          <input
-            type="file"
-            id="picture"
-            name="picture"
-            accept="image/*"
-            onChange={handleChange}
-            style={{ display: "none" }}
-          />
+      <div className="form-group add-image">
+        <i
+          className="bi bi-image"
+          style={{ fontSize: "1.5rem", zIndex: "1" }}
+          onClick={handleIconClick}
+        >
+          Dodaj sliku
+        </i>
+        <input
+          type="file"
+          id="picture"
+          name="picture"
+          accept="image/*"
+          onChange={handleChange}
+          style={{ display: "none" }}
+        />
+
+        <div className="submit-clear">
+          <Button type="submit" className="submit-button">
+            Sacuvaj{" "}
+            <i className="bi bi-check" style={{ fontSize: "1.3rem" }}></i>
+          </Button>
+          <Button type="button" onClick={clearForm} className="clear-button">
+            Ponisti <i className="bi bi-x" style={{ fontSize: "1.3rem" }}></i>
+          </Button>
         </div>
-      </div>
-      <div className="submit-clear">
-        <Button type="submit" className="submit-button">
-          Submit <i className="bi bi-check"></i>
-        </Button>
-        <Button type="button" onClick={clearForm} className="clear-button">
-          Clear <i className="bi bi-x"></i>
-        </Button>
       </div>
     </form>
   );

@@ -1,11 +1,8 @@
-import React, { Fragment, useState } from "react";
-import Header from "../Components/Layout/Header/Header";
-import SideMenu from "../Components/Layout/Sidemenu/Sidemenu";
-import Title from "../Components/Layout/Title/Title";
+import React, { useState } from "react";
+import Layout from "../Components/Layout/Layout";
 import FormComponent, { FormData } from "./Forms/FormComponent";
 
 const AddBibliotekar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (formData: FormData) => {
@@ -14,21 +11,12 @@ const AddBibliotekar: React.FC = () => {
   };
 
   return (
-    <Fragment>
-      <div>
-        <Header />
+    <Layout title="Add Bibliotekar">
+      <div className="bottom-right">
+        {submitted && <p>Submitted</p>}
+        <FormComponent onSubmit={handleSubmit} />
       </div>
-      <div className="layout">
-        <div className="Sidemenu">
-          <SideMenu isOpen={isOpen} setIsOpen={setIsOpen} />
-        </div>
-        <div className="Title">
-          <Title isOpen={isOpen} title="Add Bibliotekar" />
-          <FormComponent onSubmit={handleSubmit} />
-          {submitted && <p>Submitted</p>}
-        </div>
-      </div>
-    </Fragment>
+    </Layout>
   );
 };
 

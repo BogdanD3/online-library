@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import "./Header.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import { Dropdown, MenuProps } from "antd";
-import { ReadOutlined, MoreOutlined, LinkOutlined } from "@ant-design/icons";
+import { MoreOutlined, LinkOutlined } from "@ant-design/icons";
+import "./RightHeader.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
-function Header() {
+const RightHeader = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const items: MenuProps["items"] = [
@@ -47,23 +47,17 @@ function Header() {
   }, []);
 
   return (
-    <header className="header">
-      <div className="logo">
-        <ReadOutlined style={{ marginRight: "1rem" }} />
-        Online Biblioteka
+    <div className="right-header">
+      <div className="header-function-btns">
+        <i className="bi bi-bell"></i>
       </div>
-      <div className="header-right">
-        <div className="header-function-btns">
-          <i className="bi bi-bell"></i>
-        </div>
-        <div className="divider"></div>
-        <div className="header-function-btns">
-          <i className="bi bi-plus-lg"></i>
-        </div>
-        <div className="company">bildstudio</div>
-        <div className="profile-img">
-          <i className="bi bi-person-circle"></i>
-        </div>
+      <div className="divider"></div>
+      <div className="header-function-btns">
+        <i className="bi bi-plus-lg"></i>
+      </div>
+      <div className="company">bildstudio</div>
+      <div className="profile-img">
+        <i className="bi bi-person-circle"></i>
       </div>
 
       <Dropdown
@@ -76,8 +70,8 @@ function Header() {
           <MoreOutlined className="dots" />
         </p>
       </Dropdown>
-    </header>
+    </div>
   );
-}
+};
 
-export default Header;
+export default RightHeader;

@@ -1,0 +1,17 @@
+.left-header {
+  display: flex;
+  align-items: center;
+  height: 4.3rem;
+  width: 100%;
+  background-color: #b7b7b7d0;
+}
+
+.left-header .logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background-color: #b7b7b7d0;
+  padding: 0 1.5rem;
+  height: 100%;
+}

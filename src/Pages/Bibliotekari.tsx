@@ -1,93 +1,26 @@
-import React, { Fragment, useState } from "react";
-import Header from "../Components/Layout/Header/Header";
-import SideMenu from "../Components/Layout/Sidemenu/Sidemenu";
-import Title from "../Components/Layout//Title/Title";
+import React from "react";
 import PrimaryBtn from "../Components/Buttons/PrimaryBtn";
-
-interface User {
-  name: string;
-  email: string;
-  lastLogin: string;
-}
-
-const users: User[] = [
-  {
-    name: "Valentina Kascelan",
-    email: "valentina.kascelan@domain...",
-    lastLogin: "Prije 10 sati",
-  },
-  {
-    name: "Tarik Zaimovic",
-    email: "tarik.zaimovic@domain.netcom",
-    lastLogin: "Prije 2 dana",
-  },
-  {
-    name: "Test Akontacijevic",
-    email: "test.akontacijevic@bild-studio...",
-    lastLogin: "Nije se nikad ulogovao",
-  },
-  {
-    name: "Darko Kascelan",
-    email: "darko.kascelan@bild-studio...",
-    lastLogin: "Prije 2 nedelje",
-  },
-];
+import BibliotekariTable from "./Tables/BibliotekariTable";
+import Layout from "../Components/Layout/Layout";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "./Bibliotekari.css";
 
 const Bibliotekari: React.FC = () => {
-  const [rowsPerPage, setRowsPerPage] = useState(20);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
   return (
-    <Fragment>
-      <div>
-        <Header />
-      </div>
-      <div className="layout">
-        <div className="Sidemenu">
-          <SideMenu isOpen={isOpen} setIsOpen={setIsOpen} />
-        </div>
-        <div className="Title">
-          <Title isOpen={isOpen} title="Bibliotekari" />
-          <PrimaryBtn />
-          <div className="table-container">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Ime i prezime</th>
-                  <th>Email</th>
-                  <th>Zadnji pristup sistemu</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user, index) => (
-                  <tr key={index}>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.lastLogin}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="pagination">
-              <span>
-                Rows per page: {rowsPerPage}{" "}
-                <select
-                  value={rowsPerPage}
-                  onChange={(e) => setRowsPerPage(parseInt(e.target.value, 10))}
-                >
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="50">50</option>
-                </select>
-              </span>
-              <span>
-                1 of 1 <button>&lt;</button> <button>&gt;</button>
-              </span>
-            </div>
+    <Layout title="Bibliotekari">
+      <div className="bottom-right">
+        <div className="top">
+          <PrimaryBtn link="add-bibliotekar" className="primaryBtn">
+            <i className="bi bi-plus-lg"></i> Novi Bibliotekar/ka
+          </PrimaryBtn>
+          <div className="search-bar">
+            <i className="bi bi-search" />
+            <input className="search-input" type="search"></input>
           </div>
         </div>
+        <BibliotekariTable />
       </div>
-    </Fragment>
+    </Layout>
   );
 };
 
