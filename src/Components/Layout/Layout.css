@@ -17,6 +17,10 @@
   flex-direction: column;
 }
 
+.bottom-left {
+  height: 100%;
+}
+
 .bottom-right {
   width: 100%;
   flex-grow: 1;

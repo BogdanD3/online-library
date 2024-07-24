@@ -28,8 +28,13 @@ interface MenuItem {
 const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
   const location = useLocation();
   const [activeItem, setActiveItem] = useState("");
+  const [hoverDelayClass, setHoverDelayClass] = useState("");
 
   const openHandler = () => setIsOpen(!isOpen);
+
+  const handleClick = (label: string) => {
+    setActiveItem(label);
+  };
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -39,6 +44,19 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
       setActiveItem(activeMenuItem.label || "");
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setHoverDelayClass("");
+      const timer = setTimeout(() => {
+        setHoverDelayClass("delayed-hover");
+      }, 500);
+
+      return () => clearTimeout(timer);
+    } else {
+      setHoverDelayClass("");
+    }
+  }, [isOpen]);
 
   const menuItem: MenuItem[] = [
     { type: "divider" },
@@ -64,10 +82,6 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
     { icon: <SettingOutlined className="icon gear" />, label: "Settings" },
   ];
 
-  const handleClick = (label: string) => {
-    setActiveItem(label);
-  };
-
   return (
     <div className="sidebar" style={{ width: isOpen ? "13rem" : "4.6rem" }}>
       <div
@@ -78,7 +92,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
         }}
       >
         <UnorderedListOutlined
-          className="bars"
+          className={`bars ${isOpen ? hoverDelayClass : ""}`}
           style={{ padding: isOpen ? "0.3rem 4rem" : "0.3rem 1rem" }}
           onClick={openHandler}
         />

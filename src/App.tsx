@@ -2,8 +2,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard";
-import AddBibliotekar from "./Pages/AddBibliotekar";
-import Bibliotekari from "./Pages/Bibliotekari";
+import AddBibliotekar from "./Pages/Bibliotekari/AddBibliotekar";
+import Bibliotekari from "./Pages/Bibliotekari/Bibliotekari";
 
 const App: React.FC = () => {
   return (

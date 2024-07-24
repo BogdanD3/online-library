@@ -1,39 +1,42 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./FormComponent.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import Button from "../../Components/Buttons/FormBtn";
 
-export interface FormData {
+export interface BibliotekarFormData {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
+  username: string;
   password: string;
   confirmPassword: string;
   picture: File | null;
 }
 
 interface FormComponentProps {
-  onSubmit: (formData: FormData) => void;
+  onSubmit: (formData: BibliotekarFormData) => void;
+  passwordValidation?: (formData: BibliotekarFormData) => string | null;
 }
 
-const initialFormData: FormData = {
+const initialFormData: BibliotekarFormData = {
   firstName: "",
   lastName: "",
   email: "",
-  phone: "",
+  username: "",
   password: "",
   confirmPassword: "",
   picture: null,
 };
 
-const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+const FormComponent: React.FC<FormComponentProps> = ({
+  onSubmit,
+  passwordValidation,
+}) => {
+  const [formData, setFormData] =
+    useState<BibliotekarFormData>(initialFormData);
   const [passwordMatchError, setPasswordMatchError] = useState<string | null>(
     null
   );
-  const navigate = useNavigate();
 
   const handleIconClick = () => {
     const fileInput = document.getElementById("picture");
@@ -49,45 +52,30 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
     } else {
       setFormData({ ...formData, [name]: value });
       if (name === "password" || name === "confirmPassword") {
-        validatePasswordMatch(name, value);
+        validatePasswordMatch();
       }
     }
   };
 
-  const validatePasswordMatch = (name: string, value: string) => {
-    if (name === "password") {
-      setPasswordMatchError(
-        formData.confirmPassword !== value ? "Passwords do not match" : null
-      );
-    } else if (name === "confirmPassword") {
-      setPasswordMatchError(
-        formData.password !== value ? "Passwords do not match" : null
-      );
+  const validatePasswordMatch = () => {
+    if (passwordValidation) {
+      setPasswordMatchError(passwordValidation(formData));
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const { password, confirmPassword } = formData;
-    if (password !== confirmPassword) {
-      setPasswordMatchError("Passwords must match");
-    } else {
-      onSubmit(formData);
-      clearForm();
-      navigate("/bibliotekari");
+    if (passwordValidation && passwordValidation(formData)) {
+      return;
     }
-  };
-
-  const clearForm = () => {
-    setFormData(initialFormData);
-    setPasswordMatchError(null);
+    onSubmit(formData);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-left-side">
         <div className="form-group">
-          <label htmlFor="firstName">Ime i Prezime:</label>
+          <label htmlFor="firstName">First Name:</label>
           <input
             type="text"
             id="firstName"
@@ -98,7 +86,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="lastName">JMBG:</label>
+          <label htmlFor="lastName">Last Name:</label>
           <input
             type="text"
             id="lastName"
@@ -120,18 +108,18 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="phone">Korisnicko ime:</label>
+          <label htmlFor="username">Username:</label>
           <input
             type="text"
-            id="phone"
-            name="phone"
-            value={formData.phone}
+            id="username"
+            name="username"
+            value={formData.username}
             onChange={handleChange}
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Sifra:</label>
+          <label htmlFor="password">Password:</label>
           <input
             type="password"
             id="password"
@@ -142,7 +130,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="confirmPassword">Potvrdi Sifru:</label>
+          <label htmlFor="confirmPassword">Confirm Password:</label>
           <input
             type="password"
             id="confirmPassword"
@@ -162,7 +150,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
           style={{ fontSize: "1.5rem", zIndex: "1" }}
           onClick={handleIconClick}
         >
-          Dodaj sliku
+          Add Picture
         </i>
         <input
           type="file"
@@ -175,11 +163,8 @@ const FormComponent: React.FC<FormComponentProps> = ({ onSubmit }) => {
 
         <div className="submit-clear">
           <Button type="submit" className="submit-button">
-            Sacuvaj{" "}
+            Save
             <i className="bi bi-check" style={{ fontSize: "1.3rem" }}></i>
-          </Button>
-          <Button type="button" onClick={clearForm} className="clear-button">
-            Ponisti <i className="bi bi-x" style={{ fontSize: "1.3rem" }}></i>
           </Button>
         </div>
       </div>

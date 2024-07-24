@@ -1,7 +1,7 @@
 import React from "react";
-import PrimaryBtn from "../Components/Buttons/PrimaryBtn";
-import BibliotekariTable from "./Tables/BibliotekariTable";
-import Layout from "../Components/Layout/Layout";
+import PrimaryBtn from "../../Components/Buttons/PrimaryBtn";
+import BibliotekariTable from "./BibliotekariTable";
+import Layout from "../../Components/Layout/Layout";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./Bibliotekari.css";
 

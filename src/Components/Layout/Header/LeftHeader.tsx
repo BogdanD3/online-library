@@ -5,7 +5,7 @@ const LeftHeader = () => {
   return (
     <div className="left-header">
       <div className="logo">
-        <ReadOutlined style={{ marginRight: "1.3rem" }} />
+        <ReadOutlined style={{ marginRight: "1.5rem" }} />
         Online Biblioteka
       </div>
     </div>
