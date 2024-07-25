@@ -5,7 +5,7 @@
 //}
 
 //interface SignInPageState {
-//username: string;
+//email: string;
 //password: string;
 //error: string | null;
 //}
@@ -14,14 +14,14 @@
 //constructor(props: SignInPageProps) {
 //super(props);
 //this.state = {
-//username: '',
+//email: '',
 //password: '',
 //error: null,
 //};
 //}
 
-//handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//this.setState({ username: event.target.value });
+//handleemailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//this.setState({ email: event.target.value });
 //};
 
 //handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +36,7 @@
 // fetch('/api/signin', {
 //   method: 'POST',
 //   headers: { 'Content-Type': 'application/json' },
-//   body: JSON.stringify({ username: this.state.username, password: this.state.password }),
+//   body: JSON.stringify({ email: this.state.email, password: this.state.password }),
 // })
 //   .then((response) => response.json())
 //   .then((data) => {
@@ -58,11 +58,11 @@
 //<h1>Sign In</h1>
 //<form onSubmit={this.handleSubmit}>
 //<label>
-//Username:
+//Email:
 //<input
 //type="text"
-//value={this.state.username}
-//onChange={this.handleUsernameChange}
+//value={this.state.email}
+//onChange={this.handleEmailChange}
 ///>
 // </label>
 //<label>
@@ -91,12 +91,12 @@ export {};
 // }
 
 // const SignInPage: React.FC<SignInPageProps> = () => {
-//   const [username, setUsername] = useState<string>('');
+//   const [email, setEmail] = useState<string>('');
 //   const [password, setPassword] = useState<string>('');
 //   const [error, setError] = useState<string | null>(null);
 
-//   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setUsername(event.target.value);
+//   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//     setEmail(event.target.value);
 //   };
 
 //   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,7 +110,7 @@ export {};
 //       const response = await fetch('/api/signin', {
 //         method: 'POST',
 //         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ username, password }),
+//         body: JSON.stringify({ email, password }),
 //       });
 
 //       const data = await response.json();
@@ -131,8 +131,8 @@ export {};
 //       <h1>Sign In</h1>
 //       <form onSubmit={handleSubmit}>
 //         <label>
-//           Username:
-//           <input type="text" value={username} onChange={handleUsernameChange} />
+//           Email:
+//           <input type="text" value={email} onChange={handleEmailChange} />
 //         </label>
 //         <label>
 //           Password:
