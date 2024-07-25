@@ -1,9 +1,10 @@
-// App.tsx
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard";
 import AddBibliotekar from "./Pages/Bibliotekari/AddBibliotekar";
 import Bibliotekari from "./Pages/Bibliotekari/Bibliotekari";
+import SignInPage from "./Pages/SignIn/SignIn";
+import Ucenici from "./Pages/Ucenici/Ucenici";
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,8 @@ const App: React.FC = () => {
           path="bibliotekari/add-bibliotekar"
           element={<AddBibliotekar />}
         />
+        <Route path="ucenici" element={<Ucenici />} />
+        <Route path="/signin" element={<SignInPage />} />
       </Routes>
     </BrowserRouter>
   );

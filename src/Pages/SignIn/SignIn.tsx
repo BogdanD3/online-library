@@ -1,3 +1,66 @@
+import React, { useState } from "react";
+
+const SignInPage: React.FC = () => {
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch("/api/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        setError(data.error);
+      } else {
+        // User is authenticated, redirect to protected page
+        // e.g., window.location.href = '/protected-page';
+      }
+    } catch (error: any) {
+      setError(error.message);
+    }
+  };
+
+  return (
+    <div className="sign-in-page">
+      <h1>Sign In</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Username:
+          <input type="text" value={username} onChange={handleUsernameChange} />
+        </label>
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </label>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
+  );
+};
+
+export default SignInPage;
+
 //import * as React from 'react';
 
 //interface SignInPageProps {
@@ -82,67 +145,3 @@
 //}
 
 //export default SignInPage;
-export {};
-
-// import React, { useState } from 'react';
-
-// interface SignInPageProps {
-//   // Ako treba neki prop
-// }
-
-// const SignInPage: React.FC<SignInPageProps> = () => {
-//   const [username, setUsername] = useState<string>('');
-//   const [password, setPassword] = useState<string>('');
-//   const [error, setError] = useState<string | null>(null);
-
-//   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setUsername(event.target.value);
-//   };
-
-//   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setPassword(event.target.value);
-//   };
-
-//   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-//     event.preventDefault();
-
-//     try {
-//       const response = await fetch('/api/signin', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ username, password }),
-//       });
-
-//       const data = await response.json();
-
-//       if (data.error) {
-//         setError(data.error);
-//       } else {
-//         // User is authenticated, redirect to protected page
-//         // e.g., window.location.href = '/protected-page';
-//       }
-//     } catch (error: any) {
-//       setError(error.message);
-//     }
-//   };
-
-//   return (
-//     <div className="sign-in-page">
-//       <h1>Sign In</h1>
-//       <form onSubmit={handleSubmit}>
-//         <label>
-//           Username:
-//           <input type="text" value={username} onChange={handleUsernameChange} />
-//         </label>
-//         <label>
-//           Password:
-//           <input type="password" value={password} onChange={handlePasswordChange} />
-//         </label>
-//         {error && <p style={{ color: 'red' }}>{error}</p>}
-//         <button type="submit">Sign In</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default SignInPage;

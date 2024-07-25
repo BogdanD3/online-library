@@ -1,25 +1,26 @@
 import React from "react";
 import PrimaryBtn from "../../Components/Buttons/PrimaryBtn";
 import Layout from "../../Components/Layout/Layout";
-import BibliotekariTable from "./BibliotekariTable";
+import UceniciTable from "./UceniciTable";
+import "./Ucenici.css";
 
-const Bibliotekari: React.FC = () => {
+const Ucenici: React.FC = () => {
   return (
-    <Layout title="Bibliotekari">
+    <Layout title="Ucenici">
       <div className="bottom-right">
         <div className="top">
           <PrimaryBtn link="add-bibliotekar" className="primaryBtn">
-            <i className="bi bi-plus-lg"></i> Novi Bibliotekar/ka
+            <i className="bi bi-plus-lg"></i> Novi Ucenik/ca
           </PrimaryBtn>
           <div className="search-bar">
             <i className="bi bi-search" />
             <input className="search-input" type="search"></input>
           </div>
         </div>
-        <BibliotekariTable />
+        <UceniciTable />
       </div>
     </Layout>
   );
 };
 
-export default Bibliotekari;
+export default Ucenici;

@@ -12,7 +12,7 @@ interface User {
   email?: string;
 }
 
-const BibliotekariTable: React.FC = () => {
+const UceniciTable: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +34,6 @@ const BibliotekariTable: React.FC = () => {
       });
 
       if (response.status === 429) {
-        // Too Many Requests
         if (retryCount < maxRetries) {
           console.warn(
             `Rate limit exceeded, retrying in ${retryDelay / 1000} seconds...`
@@ -54,12 +53,8 @@ const BibliotekariTable: React.FC = () => {
 
       const result = await response.json();
 
-      console.log("API Response:", result);
-
       if (Array.isArray(result.data)) {
-        setUsers(
-          result.data.filter((user: User) => user.role === "Bibliotekar")
-        );
+        setUsers(result.data.filter((user: User) => user.role === "Učenik"));
       } else {
         console.error("API response did not contain expected data:", result);
         setError("Failed to load data");
@@ -87,14 +82,14 @@ const BibliotekariTable: React.FC = () => {
   return (
     <div className="wrapper">
       <div className="first-card user-card user-details">
-        <h3 style={{ marginLeft: "4rem" }}>Ime i Prezime</h3>
+        <h3 style={{ marginLeft: "6rem" }}>Ime i Prezime</h3>
         <p>E-mail</p>
-        <p style={{ marginRight: "6rem" }}>
+        <p style={{ marginRight: "4rem" }}>
           Posljednji put aktivan
           {/*this should be last time user was active */}
         </p>
       </div>
-      <div className="bibliotekari-table">
+      <div className="ucenici-table">
         {users.map((user) => (
           <div key={user.id} className="user-card">
             <img
@@ -104,10 +99,13 @@ const BibliotekariTable: React.FC = () => {
             />
             <div className="user-info">
               <div className="user-details">
-                <h3>{user.username || "No Name"}</h3>
-                <p>{user.jmbg || "N/A"}</p>
+                <h3>
+                  {user.name || "No Name"} {user.surname || "No Surname"}
+                </h3>
+                <p>{user.email || "No email"}</p>
                 <p>
-                  <strong>Role:</strong> {user.role || "N/A"}
+                  <strong>Role:</strong> {user.username || "N/A"}{" "}
+                  {/*this should be last time user was active */}
                 </p>
                 <p>
                   <MoreOutlined
@@ -119,15 +117,14 @@ const BibliotekariTable: React.FC = () => {
             </div>
           </div>
         ))}
-      </div>
-      <style>{`
+        <style>{`
             .wrapper {
               display:flex;
               flex-direction: column;
               align-items: center;
               margin-top: 3rem;
             }
-            .bibliotekari-table {
+            .ucenici-table {
               display: flex;
               flex-direction: column;
               align-items: center;
@@ -168,8 +165,9 @@ const BibliotekariTable: React.FC = () => {
               font-weight: bold;
             }
           `}</style>
+      </div>
     </div>
   );
 };
 
-export default BibliotekariTable;
+export default UceniciTable;
