@@ -96,3 +96,4 @@
 
 //const registerPage: RegisterPage = new RegisterPage();
 //registerPage.render();
+export {}
