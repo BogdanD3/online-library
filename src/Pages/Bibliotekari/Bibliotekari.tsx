@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import PrimaryBtn from "../../Components/Buttons/PrimaryBtn";
 import Layout from "../../Components/Layout/Layout";
 import BibliotekariTable from "./BibliotekariTable";
+import "./Bibliotekari.css";
 
 const Bibliotekari: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
     <Layout title="Bibliotekari">
       <div className="bottom-right">
@@ -13,10 +20,15 @@ const Bibliotekari: React.FC = () => {
           </PrimaryBtn>
           <div className="search-bar">
             <i className="bi bi-search" />
-            <input className="search-input" type="search"></input>
+            <input
+              className="search-input"
+              type="search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
           </div>
         </div>
-        <BibliotekariTable />
+        <BibliotekariTable searchQuery={searchQuery} />
       </div>
     </Layout>
   );

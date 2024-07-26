@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import PrimaryBtn from "../../Components/Buttons/PrimaryBtn";
 import Layout from "../../Components/Layout/Layout";
 import UceniciTable from "./UceniciTable";
 import "./Ucenici.css";
 
 const Ucenici: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
     <Layout title="Ucenici">
       <div className="bottom-right">
@@ -14,10 +20,15 @@ const Ucenici: React.FC = () => {
           </PrimaryBtn>
           <div className="search-bar">
             <i className="bi bi-search" />
-            <input className="search-input" type="search"></input>
+            <input
+              className="search-input"
+              type="search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
           </div>
         </div>
-        <UceniciTable />
+        <UceniciTable searchQuery={searchQuery} />
       </div>
     </Layout>
   );

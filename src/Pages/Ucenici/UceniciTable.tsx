@@ -12,7 +12,11 @@ interface User {
   email?: string;
 }
 
-const UceniciTable: React.FC = () => {
+interface UceniciTableProps {
+  searchQuery: string;
+}
+
+const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -71,6 +75,11 @@ const UceniciTable: React.FC = () => {
     fetchData();
   }, [fetchData]);
 
+  const filteredUsers = users.filter((user) => {
+    const fullName = `${user.name} ${user.surname}`.toLowerCase();
+    return fullName.startsWith(searchQuery.toLowerCase());
+  });
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -90,7 +99,7 @@ const UceniciTable: React.FC = () => {
         </p>
       </div>
       <div className="ucenici-table">
-        {users.map((user) => (
+        {filteredUsers.map((user) => (
           <div key={user.id} className="user-card">
             <img
               src={user.photoPath || "https://via.placeholder.com/100"}

@@ -12,7 +12,13 @@ interface User {
   email?: string;
 }
 
-const BibliotekariTable: React.FC = () => {
+interface BibliotekariTableProps {
+  searchQuery: string;
+}
+
+const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
+  searchQuery,
+}) => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -76,6 +82,11 @@ const BibliotekariTable: React.FC = () => {
     fetchData();
   }, [fetchData]);
 
+  const filteredUsers = users.filter((user) => {
+    const fullName = `${user.name} ${user.surname}`.toLowerCase();
+    return fullName.startsWith(searchQuery.toLowerCase());
+  });
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -95,7 +106,7 @@ const BibliotekariTable: React.FC = () => {
         </p>
       </div>
       <div className="bibliotekari-table">
-        {users.map((user) => (
+        {filteredUsers.map((user) => (
           <div key={user.id} className="user-card">
             <img
               src={user.photoPath || "https://via.placeholder.com/100"}
@@ -104,7 +115,10 @@ const BibliotekariTable: React.FC = () => {
             />
             <div className="user-info">
               <div className="user-details">
-                <h3>{user.username || "No Name"}</h3>
+                <h3>
+                  {user.name || "No Name"}
+                  {user.surname || "No Name"}
+                </h3>
                 <p>{user.jmbg || "N/A"}</p>
                 <p>
                   <strong>Role:</strong> {user.role || "N/A"}
