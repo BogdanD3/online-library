@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import Layout from "../Components/Layout/Layout";
+import Layout from "../../Components/Layout/Layout";
 
 const Dashboard: React.FC = () => {
   return (

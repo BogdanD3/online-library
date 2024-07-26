@@ -96,3 +96,73 @@
 
 //const registerPage: RegisterPage = new RegisterPage();
 //registerPage.render();
+import React, { useState } from "react";
+import "./Register.css";
+
+interface RegisterForm {
+  name: string;
+  surname: string;
+  email: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
+}
+
+const RegisterPage: React.FC = () => {
+  const [form, setForm] = useState<RegisterForm>({
+    name: "",
+    surname: "",
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (form.password !== form.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+  };
+
+  return (
+    <div className="register-container">
+      <h1>Register </h1>
+      <form id="register-form" onSubmit={handleSubmit}>
+        {Object.entries({
+          name: "Name:",
+          surname: "Surname:",
+          email: "Email:",
+          username: "Username:",
+          password: "Password:",
+          confirmPassword: "Confirm Password:",
+        }).map(([key, label]) => (
+          <div key={key}>
+            <label htmlFor={key}>{label}</label>
+            <input
+              type={
+                key === "password" || key === "confirmPassword"
+                  ? "password"
+                  : "text"
+              }
+              id={key}
+              name={key}
+              value={(form as any)[key]}
+              onChange={handleChange}
+            />
+          </div>
+        ))}
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  );
+};
+
+export default RegisterPage;

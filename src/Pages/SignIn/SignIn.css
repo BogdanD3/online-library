@@ -1,34 +1,34 @@
-/* CSS to center the form on the page and align elements vertically */
 .sign-in-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f0f0f0; /* Optional: Change background color */
+  background-color: rgb(210, 248, 249);
 }
 
 .sign-in-page h1 {
   margin-bottom: 20px;
+  text-shadow: 1px 2px rgb(149, 149, 149);
 }
 
 .sign-in-page form {
   display: flex;
   flex-direction: column;
-  width: 300px; /* Optional: Adjust width as needed */
-  padding: 20px;
-  background-color: #fff; /* Optional: Form background color */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Box shadow for better visual */
-  border-radius: 5px; /* Optional: Rounded corners */
+  width: 20rem;
+  padding: 1.7rem;
+  background-color: rgba(178, 237, 239, 0.881);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
 }
 
 .sign-in-page label {
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
 
 .sign-in-page input {
   width: 100%;
-  padding: 8px;
+  padding: 0.5rem;
   margin-top: 5px;
   box-sizing: border-box;
   border: 1px solid #ccc;
@@ -36,12 +36,13 @@
 }
 
 .sign-in-page button {
-  padding: 10px;
+  padding: 0.7rem;
   background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 2rem;
 }
 
 .sign-in-page button:hover {
@@ -49,5 +50,5 @@
 }
 
 .sign-in-page p {
-  margin-top: 10px;
+  margin-top: 0.7rem;
 }
