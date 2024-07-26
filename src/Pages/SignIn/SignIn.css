@@ -1,47 +1,53 @@
+/* CSS to center the form on the page and align elements vertically */
 .sign-in-page {
-    max-width: 300px;
-    margin: 40px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .sign-in-page h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .sign-in-page form {
-    margin-top: 20px;
-  }
-  
-  .sign-in-page label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .sign-in-page input[type="text"],
-  .sign-in-page input[type="password"] {
-    width: 100%;
-    height: 40px;
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .sign-in-page button[type="submit"] {
-    width: 100%;
-    height: 40px;
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .sign-in-page button[type="submit"]:hover {
-    background-color: #3e8e41;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0; /* Optional: Change background color */
+}
+
+.sign-in-page h1 {
+  margin-bottom: 20px;
+}
+
+.sign-in-page form {
+  display: flex;
+  flex-direction: column;
+  width: 300px; /* Optional: Adjust width as needed */
+  padding: 20px;
+  background-color: #fff; /* Optional: Form background color */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Box shadow for better visual */
+  border-radius: 5px; /* Optional: Rounded corners */
+}
+
+.sign-in-page label {
+  margin-bottom: 15px;
+}
+
+.sign-in-page input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.sign-in-page button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.sign-in-page button:hover {
+  background-color: #0056b3;
+}
+
+.sign-in-page p {
+  margin-top: 10px;
+}
