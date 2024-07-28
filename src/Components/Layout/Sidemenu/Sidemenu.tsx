@@ -76,7 +76,9 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
       path: "/ucenici",
     },
     { icon: <BookOutlined className="icon" />, label: "Knjige" },
-    { icon: <SolutionOutlined className="icon" />, label: "Autori" },
+    { icon: <SolutionOutlined className="icon" />, label: "Autori", 
+      path: "/autori"
+    },
     {
       icon: <AccountBookOutlined className="icon" />,
       label: "Izdavanje knjiga",
