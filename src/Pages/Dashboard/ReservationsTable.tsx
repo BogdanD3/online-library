@@ -1,27 +1,26 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { MoreOutlined } from "@ant-design/icons";
 
-interface User {
-  id?: number;
-  role?: string;
-  jmbg?: string;
-  photoPath?: string;
-  username?: string;
-  name?: string;
-  surname?: string;
-  email?: string;
+interface Reservation {
+  id: number;
+  knjiga: {
+    title: string;
+  };
+  bibliotekar0: {
+    name: string;
+    surname: string;
+  };
+  action_date: string;
+  status: string;
 }
 
-interface UceniciTableProps {
-  searchQuery: string;
-}
-
-const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
-  const [users, setUsers] = useState<User[]>([]);
+const ReservationsTable: React.FC = () => {
+  const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const apiEndpoint = "https://biblioteka.simonovicp.com/api/users";
+  const apiEndpoint =
+    "https://biblioteka.simonovicp.com/api/books/reservations";
 
   const fetchData = useCallback(async (retryCount = 0) => {
     const maxRetries = 5;
@@ -38,6 +37,7 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
       });
 
       if (response.status === 429) {
+        // Too Many Requests
         if (retryCount < maxRetries) {
           console.warn(
             `Rate limit exceeded, retrying in ${retryDelay / 1000} seconds...`
@@ -57,8 +57,10 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
 
       const result = await response.json();
 
-      if (Array.isArray(result.data)) {
-        setUsers(result.data.filter((user: User) => user.role === "Učenik"));
+      console.log("API Response:", result);
+
+      if (result.data && result.data.active) {
+        setReservations(result.data.active);
       } else {
         console.error("API response did not contain expected data:", result);
         setError("Failed to load data");
@@ -75,11 +77,6 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
     fetchData();
   }, [fetchData]);
 
-  const filteredUsers = users.filter((user) => {
-    const fullName = `${user.name} ${user.surname}`.toLowerCase();
-    return fullName.startsWith(searchQuery.toLowerCase());
-  });
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -90,56 +87,50 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
 
   return (
     <div className="wrapper">
-      <div className="first-card user-card user-details">
-        <h3 style={{ marginLeft: "6rem" }}>Ime i Prezime</h3>
-        <p>E-mail</p>
-        <p style={{ marginRight: "4rem" }}>
-          Posljednji put aktivan
-          {/*this should be last time user was active */}
-        </p>
+      <div className="first-card reservation-card reservation-details">
+        <h2>Naziv knjige</h2>
+        <p>Datum rezervacije</p>
+        <p>Rezervacija istice</p>
+        <p>Rezervaciju podnio</p>
+        <p style={{ marginRight: "3rem" }}>Status</p>
       </div>
-      <div className="ucenici-table">
-        {filteredUsers.map((user) => (
-          <div key={user.id} className="user-card">
-            <img
-              src={user.photoPath || "https://via.placeholder.com/100"}
-              alt={`${user.name || "Unknown"} ${user.surname || "User"}`}
-              className="user-photo"
-            />
-            <div className="user-info">
-              <div className="user-details">
-                <h3>
-                  {user.name || "No Name"} {user.surname || "No Surname"}
-                </h3>
-                <p>{user.email || "No email"}</p>
-                <p>
-                  <strong>Role:</strong> {user.username || "N/A"}{" "}
-                  {/*this should be last time user was active */}
-                </p>
-                <p>
-                  <MoreOutlined
-                    className="dots"
-                    style={{ fontSize: "1.5rem" }}
-                  />
-                </p>
-              </div>
+      <div className="reservations-table">
+        {reservations.map((reservation) => (
+          <div key={reservation.id} className="reservation-card">
+            <div className="reservation-info">
+              <h3 style={{ marginRight: "1.5rem" }}>
+                {reservation.knjiga.title || "No Title"}
+              </h3>
+              <p>{reservation.action_date || "N/A"}</p>
+              <p style={{ marginRight: "3rem" }}>
+                {/* Logika za expiery date */}Lorem ipsum
+              </p>
+              <p style={{ marginRight: "1rem" }}>
+                {reservation.bibliotekar0.name || "No Name"}{" "}
+                {reservation.bibliotekar0.surname || "No Surname"}
+              </p>
+              <p style={{ marginRight: "-2rem" }}>
+                {reservation.status || "N/A"}
+              </p>
+              <MoreOutlined className="dots" style={{ fontSize: "1.5rem" }} />
             </div>
           </div>
         ))}
-        <style>{`
+      </div>
+      <style>{`
             .wrapper {
-              display:flex;
+              display: flex;
               flex-direction: column;
               align-items: center;
               margin-top: 3rem;
             }
-            .ucenici-table {
+            .reservations-table {
               display: flex;
               flex-direction: column;
               align-items: center;
               width: 50rem;
             }
-            .user-card {
+            .reservation-card {
               display: flex;
               flex-direction: row;
               align-items: center;
@@ -149,34 +140,26 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
               max-width: 50rem;
               box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
-            .user-photo {
-              margin-right: 3rem;
-              width: 3rem;
-              height: 3rem;
-              border-radius: 50%;
+            .reservation-info {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+              width: 100%;
+              margin-left: 2.5rem;
             }
-            .user-info {
-              flex: 1;
-            }
-            .user-details {
+            .reservation-details {
               display: flex;
               flex-direction: row;
               justify-content: space-between;
             }
-            h3 {
+            .dots {   
+              cursor: pointer;
               margin: 0;
-              font-size: 1.2em;
-            }
-            p {
-              margin: 5px 0 0;
-            }
-            strong {
-              font-weight: bold;
             }
           `}</style>
-      </div>
     </div>
   );
 };
 
-export default UceniciTable;
+export default ReservationsTable;

@@ -30,7 +30,7 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
     const retryDelay = 1000 * Math.pow(2, retryCount);
 
     const headers = {
-      Authorization: "Bearer 2031|kwS1XIzZQT94d9VRldypWYBAWjKkOU2Oe6LyTpGe",
+      Authorization: "Bearer 2919|90b48xI4cMhDaAPlo1Avc0bVjgFPxYmrwcPWZe2Y",
     };
 
     try {

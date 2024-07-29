@@ -1,13 +1,13 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import Layout from "../../Components/Layout/Layout";
+import ReservationsTable from "./ReservationsTable";
 
 const Dashboard: React.FC = () => {
   return (
     <Fragment>
       <Layout title="Dashboard">
-        <div className="Content" style={{ height: "100%" }}>
-          <p>This is the main content of the dashboard.</p>
-          <p style={{ marginTop: "40rem" }}>a</p>
+        <div className="bottom-right" style={{ height: "100%" }}>
+          <ReservationsTable />
         </div>
       </Layout>
     </Fragment>
