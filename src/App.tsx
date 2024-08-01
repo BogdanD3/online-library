@@ -8,6 +8,7 @@ import Ucenici from "./Pages/Ucenici/Ucenici";
 import RegisterPage from "./Pages/Register/Register";
 import AddAutor from "./Pages/Autori/AddAutor";
 import Autori from "./Pages/Autori/Autori";
+import Knjige from "./Pages/Knjige/Knjige";
 
 const App: React.FC = () => {
   return (
@@ -20,11 +21,9 @@ const App: React.FC = () => {
           element={<AddBibliotekar />}
         />
         <Route path="autori" element={<Autori />} />
-        <Route
-          path="autori/add-autor"
-          element={<AddAutor />}
-        />
+        <Route path="autori/add-autor" element={<AddAutor />} />
         <Route path="ucenici" element={<Ucenici />} />
+        <Route path="/knjige" element={<Knjige />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>

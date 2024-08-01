@@ -27,7 +27,7 @@ const ReservationsTable: React.FC = () => {
     const retryDelay = 1000 * Math.pow(2, retryCount);
 
     const headers = {
-      Authorization: "Bearer 2919|90b48xI4cMhDaAPlo1Avc0bVjgFPxYmrwcPWZe2Y",
+      Authorization: "Bearer 3150|Ir4VqM3VedMBRljNf4E9sJxcwJ6mqVIfa30EgjmC",
     };
 
     try {
@@ -87,77 +87,58 @@ const ReservationsTable: React.FC = () => {
 
   return (
     <div className="wrapper">
-      <div className="first-card reservation-card reservation-details">
-        <h2>Naziv knjige</h2>
-        <p>Datum rezervacije</p>
-        <p>Rezervacija istice</p>
-        <p>Rezervaciju podnio</p>
-        <p style={{ marginRight: "3rem" }}>Status</p>
-      </div>
-      <div className="reservations-table">
+      <div className="grid-container">
+        <div className="grid-header">Naziv knjige</div>
+        <div className="grid-header">Datum rezervacije</div>
+        <div className="grid-header">Rezervacija istice</div>
+        <div className="grid-header">Rezervaciju podnio</div>
+        <div className="grid-header">Status</div>
+        <div className="grid-header"></div>
         {reservations.map((reservation) => (
-          <div key={reservation.id} className="reservation-card">
-            <div className="reservation-info">
-              <h3 style={{ marginRight: "1.5rem" }}>
-                {reservation.knjiga.title || "No Title"}
-              </h3>
-              <p>{reservation.action_date || "N/A"}</p>
-              <p style={{ marginRight: "3rem" }}>
-                {/* Logika za expiery date */}Lorem ipsum
-              </p>
-              <p style={{ marginRight: "1rem" }}>
-                {reservation.bibliotekar0.name || "No Name"}{" "}
-                {reservation.bibliotekar0.surname || "No Surname"}
-              </p>
-              <p style={{ marginRight: "-2rem" }}>
-                {reservation.status || "N/A"}
-              </p>
+          <React.Fragment key={reservation.id}>
+            <div className="grid-item">
+              {reservation.knjiga.title || "No Title"}
+            </div>
+            <div className="grid-item">{reservation.action_date || "N/A"}</div>
+            <div className="grid-item">Lorem ipsum</div>{" "}
+            {/* Placeholder for expiry date logic */}
+            <div className="grid-item">
+              {reservation.bibliotekar0.name || "No Name"}{" "}
+              {reservation.bibliotekar0.surname || "No Surname"}
+            </div>
+            <div className="grid-item">{reservation.status || "N/A"}</div>
+            <div className="grid-item">
               <MoreOutlined className="dots" style={{ fontSize: "1.5rem" }} />
             </div>
-          </div>
+          </React.Fragment>
         ))}
       </div>
       <style>{`
-            .wrapper {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              margin-top: 3rem;
-            }
-            .reservations-table {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              width: 50rem;
-            }
-            .reservation-card {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              border: 1px solid #ccc;
-              padding: 1rem;
-              width: 100%;
-              max-width: 50rem;
-              box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
-            .reservation-info {
-              display: flex;
-              flex-direction: row;
-              justify-content: space-between;
-              align-items: center;
-              width: 100%;
-              margin-left: 2.5rem;
-            }
-            .reservation-details {
-              display: flex;
-              flex-direction: row;
-              justify-content: space-between;
-            }
-            .dots {   
-              cursor: pointer;
-              margin: 0;
-            }
-          `}</style>
+        .wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 3rem;
+        }
+        .grid-container {
+          display: grid;
+          grid-template-columns: auto auto auto auto auto auto;
+          width: 80%;
+          gap: 0.5rem;
+        }
+        .grid-header {
+          font-weight: bold;
+          border-bottom: 2px solid #ccc;
+          padding: 0.5rem;
+        }
+        .grid-item {
+          border-bottom: 1px solid #ccc;
+          padding: 0.5rem;
+        }
+        .dots {
+          cursor: pointer;
+        }
+      `}</style>
     </div>
   );
 };

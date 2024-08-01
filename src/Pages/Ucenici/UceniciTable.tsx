@@ -28,7 +28,7 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
     const retryDelay = 1000 * Math.pow(2, retryCount);
 
     const headers = {
-      Authorization: "Bearer 2919|90b48xI4cMhDaAPlo1Avc0bVjgFPxYmrwcPWZe2Y",
+      Authorization: "Bearer 3150|Ir4VqM3VedMBRljNf4E9sJxcwJ6mqVIfa30EgjmC",
     };
 
     try {
@@ -90,91 +90,71 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
 
   return (
     <div className="wrapper">
-      <div className="first-card user-card user-details">
-        <h3 style={{ marginLeft: "6rem" }}>Ime i Prezime</h3>
-        <p>E-mail</p>
-        <p style={{ marginRight: "4rem" }}>
-          Posljednji put aktivan
-          {/*this should be last time user was active */}
-        </p>
-      </div>
-      <div className="ucenici-table">
+      <div className="grid-container">
+        <div className="grid-header">Slika</div>
+        <div className="grid-header">Ime i Prezime</div>
+        <div className="grid-header">E-mail</div>
+        <div className="grid-header">Posljednji put aktivan</div>
+        <div className="grid-header"></div>
         {filteredUsers.map((user) => (
-          <div key={user.id} className="user-card">
-            <img
-              src={user.photoPath || "https://via.placeholder.com/100"}
-              alt={`${user.name || "Unknown"} ${user.surname || "User"}`}
-              className="user-photo"
-            />
-            <div className="user-info">
-              <div className="user-details">
-                <h3>
-                  {user.name || "No Name"} {user.surname || "No Surname"}
-                </h3>
-                <p>{user.email || "No email"}</p>
-                <p>
-                  <strong>Role:</strong> {user.username || "N/A"}{" "}
-                  {/*this should be last time user was active */}
-                </p>
-                <p>
-                  <MoreOutlined
-                    className="dots"
-                    style={{ fontSize: "1.5rem" }}
-                  />
-                </p>
-              </div>
+          <React.Fragment key={user.id}>
+            <div className="grid-item">
+              <img
+                src={user.photoPath || "https://via.placeholder.com/100"}
+                alt={`${user.name || "Unknown"} ${user.surname || "User"}`}
+                className="user-photo"
+              />
             </div>
-          </div>
+            <div className="grid-item">
+              {user.name || "No Name"} {user.surname || "No Surname"}
+            </div>
+            <div className="grid-item">{user.email || "No email"}</div>
+            <div className="grid-item">
+              {/* Logic for last active date */}
+              Lorem ipsum
+            </div>
+            <div className="grid-item">
+              <MoreOutlined className="dots" style={{ fontSize: "1.5rem" }} />
+            </div>
+          </React.Fragment>
         ))}
-        <style>{`
-            .wrapper {
-              display:flex;
-              flex-direction: column;
-              align-items: center;
-              margin-top: 3rem;
-            }
-            .ucenici-table {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              width: 50rem;
-            }
-            .user-card {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              border: 1px solid #ccc;
-              padding: 1rem;
-              width: 100%;
-              max-width: 50rem;
-              box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
-            .user-photo {
-              margin-right: 3rem;
-              width: 3rem;
-              height: 3rem;
-              border-radius: 50%;
-            }
-            .user-info {
-              flex: 1;
-            }
-            .user-details {
-              display: flex;
-              flex-direction: row;
-              justify-content: space-between;
-            }
-            h3 {
-              margin: 0;
-              font-size: 1.2em;
-            }
-            p {
-              margin: 5px 0 0;
-            }
-            strong {
-              font-weight: bold;
-            }
-          `}</style>
       </div>
+      <style>{`
+        .wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 3rem;
+        }
+        .grid-container {
+          display: grid;
+          grid-template-columns: auto auto auto auto auto;
+          width: 50rem;
+          gap: 0.5rem;
+        }
+        .grid-header {
+          font-weight: bold;
+          border-bottom: 2px solid #ccc;
+          padding: 0.5rem;
+        }
+        .grid-item {
+          border-bottom: 1px solid #ccc;
+          padding: 0.5rem;
+          display: flex;
+          align-items: center;
+        }
+        .user-photo {
+          width: 3rem;
+          height: 3rem;
+          border-radius: 50%;
+          margin-right: 1rem;
+        }
+        .dots {
+          cursor: pointer;
+          margin: 0;
+          width: 2rem; /* Shorter width for the last column */
+        }
+      `}</style>
     </div>
   );
 };

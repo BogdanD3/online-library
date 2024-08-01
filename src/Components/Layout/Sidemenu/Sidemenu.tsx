@@ -75,9 +75,15 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
       label: "Ucenici",
       path: "/ucenici",
     },
-    { icon: <BookOutlined className="icon" />, label: "Knjige" },
-    { icon: <SolutionOutlined className="icon" />, label: "Autori", 
-      path: "/autori"
+    {
+      icon: <BookOutlined className="icon" />,
+      label: "Knjige",
+      path: "/knjige",
+    },
+    {
+      icon: <SolutionOutlined className="icon" />,
+      label: "Autori",
+      path: "/autori",
     },
     {
       icon: <AccountBookOutlined className="icon" />,

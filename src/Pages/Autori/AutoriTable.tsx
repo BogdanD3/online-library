@@ -23,7 +23,7 @@ const AutoriTable: React.FC<AutoriTableProps> = ({ searchQuery }) => {
       const response = await fetch(apiEndpoint, {
         method: "GET",
         headers: {
-          Authorization: "Bearer 2919|90b48xI4cMhDaAPlo1Avc0bVjgFPxYmrwcPWZe2Y",
+          Authorization: "Bearer 3150|Ir4VqM3VedMBRljNf4E9sJxcwJ6mqVIfa30EgjmC",
         },
       });
 
@@ -69,19 +69,16 @@ const AutoriTable: React.FC<AutoriTableProps> = ({ searchQuery }) => {
 
   return (
     <div className="wrapper">
-      <div className="first-card user-card user-details">
-        <h3>Ime i Prezime</h3>
-        <p style={{ marginLeft: "4.5rem" }}>Opis</p>
-      </div>
-      <div className="autori-table">
+      <div className="grid-container">
+        <div className="grid-header">Ime i Prezime</div>
+        <div className="grid-header">Opis</div>
+        <div className="grid-header"></div>
         {filteredUsers.map((user) => (
-          <div key={user.id} className="user-card">
-            <div className="user-name">
-              <h3>
-                {user.name} {user.surname}
-              </h3>
+          <React.Fragment key={user.id}>
+            <div className="grid-item">
+              {user.name} {user.surname}
             </div>
-            <div className="user-description">
+            <div className="grid-item">
               <p>
                 {`Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam ad voluptate ea. Aperiam, consequatur nulla laboriosam earum similique voluptas delectus incidunt voluptatum, explicabo omnis, iste velit quae non consectetur sit.`.substring(
                   0,
@@ -90,51 +87,40 @@ const AutoriTable: React.FC<AutoriTableProps> = ({ searchQuery }) => {
                 ...
               </p>
             </div>
-            <div className="user-more">
+            <div className="grid-item">
               <MoreOutlined className="dots" style={{ fontSize: "1.5rem" }} />
             </div>
-          </div>
+          </React.Fragment>
         ))}
       </div>
       <style>{`
         .wrapper {
-          display:flex;
+          display: flex;
           flex-direction: column;
           align-items: center;
           margin-top: 3rem;
         }
-        .autori-table {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          width: 50rem;
-        }
-        .user-card {
+        .grid-container {
           display: grid;
-          grid-template-columns: 1fr 3fr auto;
+          grid-template-columns: 2fr 4fr auto;
+          width: 50rem;
+          gap: 0.5rem;
+        }
+        .grid-header {
+          font-weight: bold;
+          border-bottom: 2px solid #ccc;
+          padding: 0.5rem;
+        }
+        .grid-item {
+          border-bottom: 1px solid #ccc;
+          padding: 0.5rem;
+          display: flex;
           align-items: center;
-          border: 1px solid #ccc;
-          padding: 1rem;
-          width: 100%;
-          max-width: 50rem;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .user-name {
-          grid-column: 1 / 2;
-        }
-        .user-description {
-          grid-column: 2 / 3;
-          margin-left: 2rem;
-        }
-        .user-more {
-          grid-column: 3 / 4;
-        }
-        h3 {
+        .dots {
+          cursor: pointer;
           margin: 0;
-          font-size: 1.2em;
-        }
-        p {
-          margin-left: 3rem;
+          width: 2rem; /* Shorter width for the last column */
         }
       `}</style>
     </div>

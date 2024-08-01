@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import PrimaryBtn from "../../Components/Buttons/PrimaryBtn";
 import Layout from "../../Components/Layout/Layout";
-import BibliotekariTable from "./KnjigeTable";
+import KnjigeTable from "./KnjigeTable";
 import "./Knjige.css";
 
-const Bibliotekari: React.FC = () => {
+const Knjige: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -3,7 +3,7 @@ import Layout from "../../Components/Layout/Layout";
 import AutoriForm from "./AutoriForm";
 
 const AddAutor: React.FC = () => {
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted] = useState(false);
 
   return (
     <Layout title="Add Autor">
