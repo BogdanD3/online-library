@@ -9,18 +9,22 @@ import RegisterPage from "./Pages/Register/Register";
 import AddAutor from "./Pages/Autori/AddAutor";
 import Autori from "./Pages/Autori/Autori";
 import Knjige from "./Pages/Knjige/Knjige";
+import PrivateRoute from "./Components/PrivateRoute"; // Make sure to adjust the path as needed
+import ApiService from "./Shared/api";
+
 
 const App: React.FC = () => {
+  // initialize ApiClient
+  ApiService.init();
+  ApiService.setHeader();
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="bibliotekari" element={<Bibliotekari />} />
-        <Route
-          path="bibliotekari/add-bibliotekar"
-          element={<AddBibliotekar />}
-        />
-        <Route path="autori" element={<Autori />} />
+        <Route path="/" element={<PrivateRoute element={<Dashboard />} />} />
+        <Route path="bibliotekari" element={<PrivateRoute element={<Bibliotekari />} />} />
+        <Route path="bibliotekari/add-bibliotekar" element={<PrivateRoute element={<AddBibliotekar />} />} />
+        <Route path="autori" element={<PrivateRoute element={<Autori />} />} />
         <Route path="autori/add-autor" element={<AddAutor />} />
         <Route path="ucenici" element={<Ucenici />} />
         <Route path="/knjige" element={<Knjige />} />

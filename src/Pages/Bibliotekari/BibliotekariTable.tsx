@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { MoreOutlined } from "@ant-design/icons";
+import ApiService from "../../Shared/api";
 
 interface User {
   id?: number;
@@ -23,52 +24,24 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const apiEndpoint = "https://biblioteka.simonovicp.com/api/users";
-
-  const fetchData = useCallback(async (retryCount = 0) => {
-    const maxRetries = 5;
-    const retryDelay = 1000 * Math.pow(2, retryCount);
-
-    const headers = {
-      Authorization: "Bearer 3150|Ir4VqM3VedMBRljNf4E9sJxcwJ6mqVIfa30EgjmC",
-    };
+  const fetchData = useCallback(async () => {
 
     try {
-      const response = await fetch(apiEndpoint, {
-        method: "GET",
-        headers,
-      });
 
-      if (response.status === 429) {
-        // Too Many Requests
-        if (retryCount < maxRetries) {
-          console.warn(
-            `Rate limit exceeded, retrying in ${retryDelay / 1000} seconds...`
-          );
-          setTimeout(() => fetchData(retryCount + 1), retryDelay);
-          return;
-        } else {
-          throw new Error(
-            "Too many requests, exceeded maximum retry attempts."
-          );
-        }
+      const response = await ApiService.getLibrarians(searchQuery)
+
+      if(response.error) {
+        setError(response.error);
       }
 
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
+      console.log("API Response:", response);
 
-      const result = await response.json();
-
-      console.log("API Response:", result);
-
-      if (Array.isArray(result.data)) {
+      if (Array.isArray(response.data?.data)) {
         setUsers(
-          result.data.filter((user: User) => user.role === "Bibliotekar")
+          response.data.data.filter((user: User) => user.role === "Bibliotekar")
         );
       } else {
-        console.error("API response did not contain expected data:", result);
-        setError("Failed to load data");
+        setError("Failed to load data: " + response.error);
       }
     } catch (error: any) {
       console.error("There was a problem with the fetch operation:", error);

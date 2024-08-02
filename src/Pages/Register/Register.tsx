@@ -98,6 +98,7 @@
 //registerPage.render();
 import React, { useState } from "react";
 import "./Register.css";
+import ApiService from "../../Shared/api";
 
 interface RegisterForm {
   name: string;
@@ -105,7 +106,7 @@ interface RegisterForm {
   email: string;
   username: string;
   password: string;
-  confirmPassword: string;
+  password_confirmation: string;
 }
 
 const RegisterPage: React.FC = () => {
@@ -115,7 +116,7 @@ const RegisterPage: React.FC = () => {
     email: "",
     username: "",
     password: "",
-    confirmPassword: "",
+    password_confirmation: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,12 +124,32 @@ const RegisterPage: React.FC = () => {
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (form.password !== form.confirmPassword) {
+    if (form.password !== form.password_confirmation) {
       alert("Passwords do not match");
       return;
+    }
+
+    try {
+      const response = await ApiService.register({
+        device: 'WEB_BROWSER',
+        ...form
+      });
+      
+      if(response.error) {
+        alert(response.error);
+        return;
+      } else {
+        alert("Successfully registered");
+        window.location.href = "/signin";
+      }
+
+    } catch (error) {
+      console.error(error);
+
+      alert("An error occurred while registering " + JSON.stringify(error));
     }
   };
 
@@ -142,13 +163,13 @@ const RegisterPage: React.FC = () => {
           email: "Email:",
           username: "Username:",
           password: "Password:",
-          confirmPassword: "Confirm Password:",
+          password_confirmation: "Confirm Password:",
         }).map(([key, label]) => (
           <div key={key}>
             <label htmlFor={key}>{label}</label>
             <input
               type={
-                key === "password" || key === "confirmPassword"
+                key === "password" || key === "password_confirmation"
                   ? "password"
                   : "text"
               }

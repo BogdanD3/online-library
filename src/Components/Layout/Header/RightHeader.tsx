@@ -3,6 +3,7 @@ import { Dropdown, MenuProps } from "antd";
 import { MoreOutlined, LinkOutlined } from "@ant-design/icons";
 import "./RightHeader.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { logout } from "../../../Shared/api";
 
 const RightHeader = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -20,7 +21,7 @@ const RightHeader = () => {
     },
     {
       icon: <LinkOutlined style={{ fontSize: "1rem" }} />,
-      label: "bildStudio",
+      label: "Biblioteka",
       key: "2",
     },
     {
@@ -48,6 +49,10 @@ const RightHeader = () => {
 
   return (
     <div className="right-header">
+      <div className="header-function-btns" onClick={() => logout()}>
+        <i className="bi bi-box-arrow-right"></i>
+      </div>
+      <div className="divider"></div>
       <div className="header-function-btns">
         <i className="bi bi-bell"></i>
       </div>
@@ -55,7 +60,8 @@ const RightHeader = () => {
       <div className="header-function-btns">
         <i className="bi bi-plus-lg"></i>
       </div>
-      <div className="company">bildstudio</div>
+
+      <div className="company">Biblioteka</div>
       <div className="profile-img">
         <i className="bi bi-person-circle"></i>
       </div>
