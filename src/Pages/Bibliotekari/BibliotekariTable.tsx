@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Dropdown, Menu, MenuProps } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
 
 interface User {
@@ -22,15 +23,40 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [dropdownVisible, setDropdownVisible] = useState<number | null>(null);
+
+  const items: MenuProps["items"] = [
+    {
+      icon: <i className="bi bi-bell" style={{ fontSize: "1rem" }}></i>,
+      label: "Notifikacije",
+      key: "0",
+    },
+    {
+      icon: <i className="bi bi-plus-lg" style={{ fontSize: "1rem" }}></i>,
+      label: "Dodaj knjigu",
+      key: "1",
+    },
+    {
+      label: "bildStudio",
+      key: "2",
+    },
+    {
+      type: "divider",
+    },
+    {
+      icon: (
+        <i className="bi bi-person-circle" style={{ fontSize: "1rem" }}></i>
+      ),
+      label: "Profile",
+      key: "3",
+    },
+  ];
 
   const apiEndpoint = "https://biblioteka.simonovicp.com/api/users";
 
-  const fetchData = useCallback(async (retryCount = 0) => {
-    const maxRetries = 5;
-    const retryDelay = 1000 * Math.pow(2, retryCount);
-
+  const fetchData = useCallback(async () => {
     const headers = {
-      Authorization: "Bearer 3150|Ir4VqM3VedMBRljNf4E9sJxcwJ6mqVIfa30EgjmC",
+      Authorization: "Bearer 3178|PnGlZRQALxNP7EiW7DbYN8cQ53pPcgVje2HBC5N0",
     };
 
     try {
@@ -39,28 +65,11 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
         headers,
       });
 
-      if (response.status === 429) {
-        // Too Many Requests
-        if (retryCount < maxRetries) {
-          console.warn(
-            `Rate limit exceeded, retrying in ${retryDelay / 1000} seconds...`
-          );
-          setTimeout(() => fetchData(retryCount + 1), retryDelay);
-          return;
-        } else {
-          throw new Error(
-            "Too many requests, exceeded maximum retry attempts."
-          );
-        }
-      }
-
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
 
       const result = await response.json();
-
-      console.log("API Response:", result);
 
       if (Array.isArray(result.data)) {
         setUsers(
@@ -118,7 +127,18 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
             <div className="grid-item">{user.email || "N/A"}</div>
             <div className="grid-item">Lorem Ipsum</div>
             <div className="grid-item action-column">
-              <MoreOutlined className="dots" style={{ fontSize: "1.5rem" }} />
+              <Dropdown
+                overlay={<Menu items={items} />}
+                trigger={["click"]}
+                visible={dropdownVisible === user.id}
+                onVisibleChange={(flag) =>
+                  setDropdownVisible(flag ? user.id! : null)
+                }
+              >
+                <p onClick={(e) => e.preventDefault()}>
+                  <MoreOutlined className="dots" />
+                </p>
+              </Dropdown>
             </div>
           </React.Fragment>
         ))}

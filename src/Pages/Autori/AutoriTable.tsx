@@ -23,7 +23,7 @@ const AutoriTable: React.FC<AutoriTableProps> = ({ searchQuery }) => {
       const response = await fetch(apiEndpoint, {
         method: "GET",
         headers: {
-          Authorization: "Bearer 3150|Ir4VqM3VedMBRljNf4E9sJxcwJ6mqVIfa30EgjmC",
+          Authorization: "Bearer 3176|KIiql8TLpnJ0ozc3mprKnP64fxeXF67DviptkXRB",
         },
       });
 
