@@ -11,7 +11,7 @@ interface User {
   name?: string;
   surname?: string;
   email?: string;
-  lastActiveDate?: string; // Assuming this is part of the user data
+  lastActiveDate?: string;
 }
 
 interface UceniciTableProps {

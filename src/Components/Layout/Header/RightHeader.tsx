@@ -57,7 +57,13 @@ const RightHeader = () => {
         <i className="bi bi-plus-lg"></i>
       </div>
 
-      <div className="company">Biblioteka</div>
+      <a
+        href="https://www.bild-studio.com/en/"
+        className="company"
+        style={{ textDecoration: "none", color: "black" }}
+      >
+        bildstudio
+      </a>
       <div className="profile-img">
         <PersonCircle />
       </div>

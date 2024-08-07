@@ -121,10 +121,8 @@ const ApiService = {
     });
   },
 
-  // RESOURCE CALLS
-
   async getLibrarians(searchQuery) {
-    return this.getFilter("users", searchQuery);
+    return this.getFilter("users", { search: searchQuery });
   },
 
   async getAuthors(searchQuery) {
