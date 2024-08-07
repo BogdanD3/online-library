@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Dropdown, Menu, MenuProps } from "antd";
-import { MoreOutlined } from "@ant-design/icons";
+import ApiService from "../../Shared/api";
+import MoreBtn from "../../Components/Buttons/MoreBtn";
 
 interface User {
   id?: number;
@@ -23,61 +23,23 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [dropdownVisible, setDropdownVisible] = useState<number | null>(null);
-
-  const items: MenuProps["items"] = [
-    {
-      icon: <i className="bi bi-bell" style={{ fontSize: "1rem" }}></i>,
-      label: "Notifikacije",
-      key: "0",
-    },
-    {
-      icon: <i className="bi bi-plus-lg" style={{ fontSize: "1rem" }}></i>,
-      label: "Dodaj knjigu",
-      key: "1",
-    },
-    {
-      label: "bildStudio",
-      key: "2",
-    },
-    {
-      type: "divider",
-    },
-    {
-      icon: (
-        <i className="bi bi-person-circle" style={{ fontSize: "1rem" }}></i>
-      ),
-      label: "Profile",
-      key: "3",
-    },
-  ];
-
-  const apiEndpoint = "https://biblioteka.simonovicp.com/api/users";
 
   const fetchData = useCallback(async () => {
-    const headers = {
-      Authorization: "Bearer 3178|PnGlZRQALxNP7EiW7DbYN8cQ53pPcgVje2HBC5N0",
-    };
-
     try {
-      const response = await fetch(apiEndpoint, {
-        method: "GET",
-        headers,
-      });
+      const response = await ApiService.getLibrarians(searchQuery);
 
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
+      if (response.error) {
+        setError(response.error);
       }
 
-      const result = await response.json();
+      console.log("API Response:", response);
 
-      if (Array.isArray(result.data)) {
+      if (Array.isArray(response.data?.data)) {
         setUsers(
-          result.data.filter((user: User) => user.role === "Bibliotekar")
+          response.data.data.filter((user: User) => user.role === "Bibliotekar")
         );
       } else {
-        console.error("API response did not contain expected data:", result);
-        setError("Failed to load data");
+        setError("Failed to load data: " + response.error);
       }
     } catch (error: any) {
       console.error("There was a problem with the fetch operation:", error);
@@ -85,7 +47,7 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [searchQuery]);
 
   useEffect(() => {
     fetchData();
@@ -127,59 +89,60 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
             <div className="grid-item">{user.email || "N/A"}</div>
             <div className="grid-item">Lorem Ipsum</div>
             <div className="grid-item action-column">
-              <Dropdown
-                overlay={<Menu items={items} />}
-                trigger={["click"]}
-                visible={dropdownVisible === user.id}
-                onVisibleChange={(flag) =>
-                  setDropdownVisible(flag ? user.id! : null)
-                }
-              >
-                <p onClick={(e) => e.preventDefault()}>
-                  <MoreOutlined className="dots" />
-                </p>
-              </Dropdown>
+              <MoreBtn />
             </div>
           </React.Fragment>
         ))}
       </div>
       <style>{`
-        .wrapper {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-top: 3rem;
-        }
-        .grid-container {
-          display: grid;
-          grid-template-columns: auto auto auto auto auto; 
-          width: 50rem;
-          gap: 1rem;
-        }
-        .grid-header {
-          font-weight: bold;
-          border-bottom: 2px solid #ccc;
-          padding: 0.5rem;
-        }
-        .grid-item {
-          border-bottom: 1px solid #ccc;
-          padding: 0.5rem;
-          display: flex;
-          align-items: center;
-        }
-        .user-photo {
-          margin-right: 1rem;
-          width: 3rem;
-          height: 3rem;
-          border-radius: 50%;
-        }
-        .action-column {
-          min-width: 3rem; /* Fixed width for action column */
-        }
-        .dots {
-          cursor: pointer;
-          margin: 0;
-        }
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+  width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+.grid-header {
+  font-weight: bold;
+  border-bottom: 2px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+.grid-item {
+  border-bottom: 1px solid #ccc;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.user-photo {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .grid-header:nth-child(3),
+  .grid-item:nth-child(5n + 3) {
+    display: none;
+  }
+}
+
       `}</style>
     </div>
   );

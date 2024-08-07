@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { MoreOutlined } from "@ant-design/icons";
+import ApiService from "../../Shared/api";
 
 interface User {
   id: number;
@@ -16,31 +17,20 @@ const AutoriTable: React.FC<AutoriTableProps> = ({ searchQuery }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const apiEndpoint = "https://biblioteka.simonovicp.com/api/authors";
-
   const fetchData = useCallback(async () => {
     try {
-      const response = await fetch(apiEndpoint, {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer 3176|KIiql8TLpnJ0ozc3mprKnP64fxeXF67DviptkXRB",
-        },
-      });
+      const response = await ApiService.getAuthors(searchQuery);
 
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
+      if (response.error) {
+        setError(response.error);
       }
 
-      const result = await response.json();
-      console.log("API Response:", result);
+      console.log("API Response:", response);
 
-      if (Array.isArray(result)) {
-        setUsers(result);
-      } else if (Array.isArray(result.data)) {
-        setUsers(result.data);
+      if (Array.isArray(response.data?.data)) {
+        setUsers(response.data.data);
       } else {
-        console.error("API response did not contain expected data:", result);
-        setError("Failed to load data");
+        setError("Failed to load data: " + response.error);
       }
     } catch (error: any) {
       console.error("There was a problem with the fetch operation:", error);
@@ -48,7 +38,7 @@ const AutoriTable: React.FC<AutoriTableProps> = ({ searchQuery }) => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [searchQuery]);
 
   useEffect(() => {
     fetchData();
@@ -94,34 +84,38 @@ const AutoriTable: React.FC<AutoriTableProps> = ({ searchQuery }) => {
         ))}
       </div>
       <style>{`
-        .wrapper {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-top: 3rem;
-        }
-        .grid-container {
-          display: grid;
-          grid-template-columns: 2fr 4fr auto;
-          width: 50rem;
-          gap: 0.5rem;
-        }
-        .grid-header {
-          font-weight: bold;
-          border-bottom: 2px solid #ccc;
-          padding: 0.5rem;
-        }
-        .grid-item {
-          border-bottom: 1px solid #ccc;
-          padding: 0.5rem;
-          display: flex;
-          align-items: center;
-        }
-        .dots {
-          cursor: pointer;
-          margin: 0;
-          width: 2rem; /* Shorter width for the last column */
-        }
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+  width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+.grid-header {
+  font-weight: bold;
+  border-bottom: 2px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+.grid-item {
+  border-bottom: 1px solid #ccc;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
       `}</style>
     </div>
   );

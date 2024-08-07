@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./SignIn.css";
+import ApiService from "../../Shared/api";
 
 const SignInPage: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -18,19 +19,18 @@ const SignInPage: React.FC = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch("/api/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await ApiService.signIn(username, password);
 
-      const data = await response.json();
-
-      if (data.error) {
-        setError(data.error);
+      if (response.error) {
+        setError(response.error);
       } else {
         // User is authenticated, redirect to protected page
         // e.g., window.location.href = '/protected-page';
+     
+        // store response.data.data.token
+        localStorage.setItem('auth_token', response.data.data.token);
+        
+        window.location.href = '/';
       }
     } catch (error: any) {
       setError(error.message);
@@ -55,6 +55,12 @@ const SignInPage: React.FC = () => {
         </label>
         {error && <p style={{ color: "red" }}>{error}</p>}
         <button type="submit">Sign In</button>
+
+        <p style={{marginTop: '15px'}}>Don't have an account? &nbsp;
+        <a href="/register" style={{color: "blue"}}>
+          Register here
+        </a>
+        </p>
       </form>
     </div>
   );

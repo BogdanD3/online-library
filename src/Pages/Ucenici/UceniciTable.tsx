@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { MoreOutlined } from "@ant-design/icons";
+import ApiService from "../../Shared/api";
 
 interface User {
   id?: number;
@@ -10,6 +11,7 @@ interface User {
   name?: string;
   surname?: string;
   email?: string;
+  lastActiveDate?: string; // Assuming this is part of the user data
 }
 
 interface UceniciTableProps {
@@ -21,47 +23,23 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const apiEndpoint = "https://biblioteka.simonovicp.com/api/users";
-
-  const fetchData = useCallback(async (retryCount = 0) => {
-    const maxRetries = 5;
-    const retryDelay = 1000 * Math.pow(2, retryCount);
-
-    const headers = {
-      Authorization: "Bearer 3150|Ir4VqM3VedMBRljNf4E9sJxcwJ6mqVIfa30EgjmC",
-    };
-
+  const fetchData = useCallback(async () => {
     try {
-      const response = await fetch(apiEndpoint, {
-        method: "GET",
-        headers,
-      });
+      const response = await ApiService.getStudents(searchQuery);
 
-      if (response.status === 429) {
-        if (retryCount < maxRetries) {
-          console.warn(
-            `Rate limit exceeded, retrying in ${retryDelay / 1000} seconds...`
-          );
-          setTimeout(() => fetchData(retryCount + 1), retryDelay);
-          return;
-        } else {
-          throw new Error(
-            "Too many requests, exceeded maximum retry attempts."
-          );
-        }
+      if (response.error) {
+        setError(response.error);
+        return;
       }
 
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
+      console.log("API Response:", response);
 
-      const result = await response.json();
-
-      if (Array.isArray(result.data)) {
-        setUsers(result.data.filter((user: User) => user.role === "Učenik"));
+      if (Array.isArray(response.data?.data)) {
+        setUsers(
+          response.data.data.filter((user: User) => user.role === "Učenik")
+        );
       } else {
-        console.error("API response did not contain expected data:", result);
-        setError("Failed to load data");
+        setError("Failed to load data: " + response.error);
       }
     } catch (error: any) {
       console.error("There was a problem with the fetch operation:", error);
@@ -69,7 +47,7 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [searchQuery]);
 
   useEffect(() => {
     fetchData();
@@ -108,12 +86,9 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
             <div className="grid-item">
               {user.name || "No Name"} {user.surname || "No Surname"}
             </div>
-            <div className="grid-item">{user.email || "No email"}</div>
-            <div className="grid-item">
-              {/* Logic for last active date */}
-              Lorem ipsum
-            </div>
-            <div className="grid-item">
+            <div className="grid-item">{user.email || "N/A"}</div>
+            <div className="grid-item">Lorem Ipsum</div>
+            <div className="grid-item action-column">
               <MoreOutlined className="dots" style={{ fontSize: "1.5rem" }} />
             </div>
           </React.Fragment>
@@ -125,35 +100,50 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
           flex-direction: column;
           align-items: center;
           margin-top: 3rem;
+          width: 100%;
+          padding: 0 1rem;
+          box-sizing: border-box;
         }
         .grid-container {
           display: grid;
-          grid-template-columns: auto auto auto auto auto;
-          width: 50rem;
-          gap: 0.5rem;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 1rem;
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
+          overflow-x: auto;
         }
         .grid-header {
           font-weight: bold;
           border-bottom: 2px solid #ccc;
           padding: 0.5rem;
+          text-align: center;
         }
         .grid-item {
           border-bottom: 1px solid #ccc;
           padding: 0.5rem;
           display: flex;
           align-items: center;
+          text-align: center;
+          justify-content: center;
         }
         .user-photo {
+          margin-right: 1rem;
           width: 3rem;
           height: 3rem;
           border-radius: 50%;
-          margin-right: 1rem;
         }
-        .dots {
-          cursor: pointer;
-          margin: 0;
-          width: 2rem; /* Shorter width for the last column */
+      @media (max-width: 768px) {
+        .grid-container {
+          grid-template-columns: repeat(4, 1fr); 
         }
+        .grid-header:nth-child(3) {
+          display: none; 
+        }
+        .grid-item:nth-child(5n + 3) {
+          display: none; 
+        }
+      }
       `}</style>
     </div>
   );

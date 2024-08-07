@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../Components/Layout/Layout";
-import BibliotekarForm from "./BibliotekariForm";
+import BibliotekarForm from "../../Forms/BibliotekariForm";
 
 const AddBibliotekar: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);

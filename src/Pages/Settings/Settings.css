@@ -1,0 +1,56 @@
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .settings-header-button {
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .settings-header-button:hover {
+    background-color: #eee;
+  }
+  
+  .settings-section {
+    padding: 20px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .settings-input-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .settings-input {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .settings-input-label {
+    margin-left: 10px;
+    font-weight: bold;
+  }

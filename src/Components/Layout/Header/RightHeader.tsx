@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Dropdown, MenuProps } from "antd";
-import { MoreOutlined, LinkOutlined } from "@ant-design/icons";
+import { LinkOutlined } from "@ant-design/icons";
 import "./RightHeader.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import PersonCircle from "../../Buttons/PersonCircle";
 
 const RightHeader = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -20,7 +21,7 @@ const RightHeader = () => {
     },
     {
       icon: <LinkOutlined style={{ fontSize: "1rem" }} />,
-      label: "bildStudio",
+      label: "Biblioteka",
       key: "2",
     },
     {
@@ -55,9 +56,10 @@ const RightHeader = () => {
       <div className="header-function-btns">
         <i className="bi bi-plus-lg"></i>
       </div>
-      <div className="company">bildstudio</div>
+
+      <div className="company">Biblioteka</div>
       <div className="profile-img">
-        <i className="bi bi-person-circle"></i>
+        <PersonCircle />
       </div>
 
       <Dropdown
@@ -67,7 +69,7 @@ const RightHeader = () => {
         onVisibleChange={(flag) => setDropdownVisible(flag)}
       >
         <p onClick={(e) => e.preventDefault()}>
-          <MoreOutlined className="dots" />
+          <i className=" dots bi bi-three-dots-vertical"></i>
         </p>
       </Dropdown>
     </div>

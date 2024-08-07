@@ -1,17 +1,23 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { MoreOutlined } from "@ant-design/icons";
+import ApiService from "../../Shared/api";
+import MoreBtn from "../../Components/Buttons/MoreBtn";
 
 interface Reservation {
   id: number;
   knjiga: {
+    id: number;
     title: string;
+    photo: string;
+    authors: { id: number; name: string; surname: string }[];
   };
   bibliotekar0: {
+    id: number;
+    photoPath: string;
     name: string;
     surname: string;
-  };
-  action_date: string;
+  } | null;
   status: string;
+  action_date: string;
 }
 
 const ReservationsTable: React.FC = () => {
@@ -19,51 +25,21 @@ const ReservationsTable: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const apiEndpoint =
-    "https://biblioteka.simonovicp.com/api/books/reservations";
-
-  const fetchData = useCallback(async (retryCount = 0) => {
-    const maxRetries = 5;
-    const retryDelay = 1000 * Math.pow(2, retryCount);
-
-    const headers = {
-      Authorization: "Bearer 3150|Ir4VqM3VedMBRljNf4E9sJxcwJ6mqVIfa30EgjmC",
-    };
-
+  const fetchData = useCallback(async () => {
     try {
-      const response = await fetch(apiEndpoint, {
-        method: "GET",
-        headers,
-      });
+      const response = await ApiService.getReservations();
 
-      if (response.status === 429) {
-        // Too Many Requests
-        if (retryCount < maxRetries) {
-          console.warn(
-            `Rate limit exceeded, retrying in ${retryDelay / 1000} seconds...`
-          );
-          setTimeout(() => fetchData(retryCount + 1), retryDelay);
-          return;
-        } else {
-          throw new Error(
-            "Too many requests, exceeded maximum retry attempts."
-          );
-        }
+      if (response.error) {
+        setError(response.error);
       }
 
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
+      console.log("API Response:", response);
 
-      const result = await response.json();
-
-      console.log("API Response:", result);
-
-      if (result.data && result.data.active) {
-        setReservations(result.data.active);
+      if (response.data?.data) {
+        const activeReservations = response.data.data.active;
+        setReservations(activeReservations);
       } else {
-        console.error("API response did not contain expected data:", result);
-        setError("Failed to load data");
+        setError("Failed to load data: " + response.error);
       }
     } catch (error: any) {
       console.error("There was a problem with the fetch operation:", error);
@@ -88,57 +64,93 @@ const ReservationsTable: React.FC = () => {
   return (
     <div className="wrapper">
       <div className="grid-container">
-        <div className="grid-header">Naziv knjige</div>
-        <div className="grid-header">Datum rezervacije</div>
-        <div className="grid-header">Rezervacija istice</div>
-        <div className="grid-header">Rezervaciju podnio</div>
+        <div className="grid-header">Slika</div>
+        <div className="grid-header">Ime i Prezime</div>
         <div className="grid-header">Status</div>
+        <div className="grid-header">Datum</div>
+        <div className="grid-header">Odobri</div>
         <div className="grid-header"></div>
         {reservations.map((reservation) => (
           <React.Fragment key={reservation.id}>
             <div className="grid-item">
-              {reservation.knjiga.title || "No Title"}
+              <img
+                src={
+                  reservation.knjiga.photo || "https://via.placeholder.com/100"
+                }
+                alt={reservation.knjiga.title}
+                className="book-photo"
+              />
             </div>
-            <div className="grid-item">{reservation.action_date || "N/A"}</div>
-            <div className="grid-item">Lorem ipsum</div>{" "}
-            {/* Placeholder for expiry date logic */}
             <div className="grid-item">
-              {reservation.bibliotekar0.name || "No Name"}{" "}
-              {reservation.bibliotekar0.surname || "No Surname"}
+              {reservation.bibliotekar0?.name || "No Name"}{" "}
+              {reservation.bibliotekar0?.surname || "No Surname"}
             </div>
-            <div className="grid-item">{reservation.status || "N/A"}</div>
-            <div className="grid-item">
-              <MoreOutlined className="dots" style={{ fontSize: "1.5rem" }} />
+            <div className="grid-item">{reservation.status}</div>
+            <div className="grid-item">{reservation.action_date}</div>
+            <div className="grid-item tick-x">
+              <i
+                className="bi bi-check-lg"
+                style={{ fontSize: "1.2rem", paddingRight: "1rem" }}
+              ></i>
+              <i className="bi bi-x-lg"></i>
+            </div>
+            <div className="grid-item action-column">
+              <MoreBtn />
             </div>
           </React.Fragment>
         ))}
       </div>
       <style>{`
-        .wrapper {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-top: 3rem;
-        }
-        .grid-container {
-          display: grid;
-          grid-template-columns: auto auto auto auto auto auto;
-          width: 80%;
-          gap: 0.5rem;
-        }
-        .grid-header {
-          font-weight: bold;
-          border-bottom: 2px solid #ccc;
-          padding: 0.5rem;
-        }
-        .grid-item {
-          border-bottom: 1px solid #ccc;
-          padding: 0.5rem;
-        }
-        .dots {
-          cursor: pointer;
-        }
-      `}</style>
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+  width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+.grid-header {
+  font-weight: bold;
+  border-bottom: 2px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+.grid-item {
+  border-bottom: 1px solid #ccc;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.book-photo {
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+}
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  .grid-header:nth-child(1),
+  .grid-header:nth-child(5),
+  .grid-item:nth-child(6n + 1),
+  .grid-item:nth-child(6n + 5) {
+    display: none;
+  }
+}
+
+`}</style>
     </div>
   );
 };

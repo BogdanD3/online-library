@@ -1,89 +1,39 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { MoreOutlined } from "@ant-design/icons";
-
-interface Author {
-  id: number;
-  name: string;
-  surname: string;
-}
-
-interface Category {
-  id: number;
-  name: string;
-}
-
-interface Picture {
-  id: number;
-  path: string;
-  cover: number;
-}
+import ApiService from "../../Shared/api";
 
 interface Book {
   id: number;
   title: string;
-  photo: string;
-  pictures: Picture[];
-  authors: Author[];
-  categories: Category[];
-  ableToBorrow: boolean;
-  ableToReserve: boolean;
+  authors: { id: number; name: string; surname: string }[];
+  categories: { id: number; name: string }[];
   samples: number;
   bSamples: number;
   rSamples: number;
   fSamples: number;
 }
 
-interface BookTableProps {
+interface KnjigeTableProps {
   searchQuery: string;
 }
 
-const KnjigeTable: React.FC<BookTableProps> = ({ searchQuery }) => {
+const KnjigeTable: React.FC<KnjigeTableProps> = ({ searchQuery }) => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const apiEndpoint = "https://biblioteka.simonovicp.com/api/books";
-
-  const fetchData = useCallback(async (retryCount = 0) => {
-    const maxRetries = 5;
-    const retryDelay = 1000 * Math.pow(2, retryCount);
-
-    const headers = {
-      Authorization: "Bearer 3150|Ir4VqM3VedMBRljNf4E9sJxcwJ6mqVIfa30EgjmC",
-    };
-
+  const fetchData = useCallback(async () => {
     try {
-      const response = await fetch(apiEndpoint, {
-        method: "GET",
-        headers,
-      });
+      const response = await ApiService.getBooks(searchQuery);
 
-      if (response.status === 429) {
-        if (retryCount < maxRetries) {
-          console.warn(
-            `Rate limit exceeded, retrying in ${retryDelay / 1000} seconds...`
-          );
-          setTimeout(() => fetchData(retryCount + 1), retryDelay);
-          return;
-        } else {
-          throw new Error(
-            "Too many requests, exceeded maximum retry attempts."
-          );
-        }
+      if (response.error) {
+        setError(response.error);
       }
 
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
-
-      const result = await response.json();
-      console.log("API Response:", result);
-
-      if (Array.isArray(result.data)) {
-        setBooks(result.data);
+      if (Array.isArray(response.data?.data)) {
+        setBooks(response.data.data);
       } else {
-        console.error("API response did not contain expected data:", result);
-        setError("Failed to load data");
+        setError("Failed to load data: " + response.error);
       }
     } catch (error: any) {
       console.error("There was a problem with the fetch operation:", error);
@@ -91,7 +41,7 @@ const KnjigeTable: React.FC<BookTableProps> = ({ searchQuery }) => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [searchQuery]);
 
   useEffect(() => {
     fetchData();
@@ -112,7 +62,6 @@ const KnjigeTable: React.FC<BookTableProps> = ({ searchQuery }) => {
   return (
     <div className="wrapper">
       <div className="grid-container">
-        <div className="grid-header">Slika</div>
         <div className="grid-header">Naziv knjige</div>
         <div className="grid-header">Autor</div>
         <div className="grid-header">Kategorija</div>
@@ -124,17 +73,6 @@ const KnjigeTable: React.FC<BookTableProps> = ({ searchQuery }) => {
         <div className="grid-header"></div>
         {filteredBooks.map((book) => (
           <React.Fragment key={book.id}>
-            <div className="grid-item">
-              <img
-                src={
-                  book.pictures.find((pic) => pic.cover === 1)?.path ||
-                  book.photo ||
-                  "https://via.placeholder.com/100"
-                }
-                alt={book.title}
-                className="book-photo"
-              />
-            </div>
             <div className="grid-item">{book.title}</div>
             <div className="grid-item">
               {book.authors
@@ -144,11 +82,13 @@ const KnjigeTable: React.FC<BookTableProps> = ({ searchQuery }) => {
             <div className="grid-item">
               {book.categories.map((category) => category.name).join(", ")}
             </div>
-            <div className="grid-item">{book.ableToBorrow ? "Da" : "Ne"}</div>
-            <div className="grid-item">{book.fSamples}</div>
-            <div className="grid-item">{book.bSamples}</div>
-            <div className="grid-item">{book.rSamples}</div>
             <div className="grid-item">{book.samples}</div>
+            <div className="grid-item">{book.rSamples}</div>
+            <div className="grid-item">{book.bSamples}</div>
+            <div className="grid-item">{book.fSamples}</div>
+            <div className="grid-item">
+              {book.samples + book.rSamples + book.bSamples + book.fSamples}
+            </div>
             <div className="grid-item">
               <MoreOutlined className="dots" style={{ fontSize: "1.5rem" }} />
             </div>
@@ -156,33 +96,73 @@ const KnjigeTable: React.FC<BookTableProps> = ({ searchQuery }) => {
         ))}
       </div>
       <style>{`
-        .wrapper {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-top: 3rem;
-        }
-        .grid-container {
-          display: grid;
-          grid-template-columns: repeat(10, 1fr);
-          width: 80%;
-          gap: 0.5rem;
-        }
-        .grid-header {
-          font-weight: bold;
-          border-bottom: 2px solid #ccc;
-          padding: 0.5rem;
-        }
-        .grid-item {
-          border-bottom: 1px solid #ccc;
-          padding: 0.5rem;
-        }
-        .book-photo {
-          width: 3rem;
-          height: 3rem;
-          border-radius: 5px;
-        }
-      `}</style>
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+    width: 100%;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+  .grid-header {
+    font-weight: bold;
+    border-bottom: 2px solid #ccc;
+    padding: 0.5rem;
+    text-align: center;
+  }
+  .grid-item {
+    border-bottom: 1px solid #ccc;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
+  @media (min-width: 768px) and (max-width: 1100px) {
+    .grid-container {
+      grid-template-columns: repeat(6, 1fr); 
+    }
+    .grid-header:nth-child(4),
+    .grid-header:nth-child(5),
+    .grid-header:nth-child(7) {
+      display: none; 
+    }
+    .grid-item:nth-child(9n + 4),
+    .grid-item:nth-child(9n + 5),
+    .grid-item:nth-child(9n + 7) {
+      display: none; 
+    }
+  }
+  @media (max-width: 768px) {
+    .grid-container {
+      grid-template-columns: repeat(4, 1fr); 
+    }
+    .grid-header:nth-child(2),
+    .grid-header:nth-child(4),
+    .grid-header:nth-child(5),
+    .grid-header:nth-child(6),
+    .grid-header:nth-child(7) {
+      display: none; 
+    }
+    .grid-item:nth-child(9n + 2),
+    .grid-item:nth-child(9n + 4),
+    .grid-item:nth-child(9n + 5),
+    .grid-item:nth-child(9n + 6),
+    .grid-item:nth-child(9n + 7) {
+      display: none; /* Hide items for columns 4, 5, 6, and 7 */
+    }
+  }
+`}</style>
     </div>
   );
 };
