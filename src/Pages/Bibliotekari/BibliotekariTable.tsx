@@ -3,7 +3,7 @@ import ApiService from "../../Shared/api";
 import MoreBtn from "../../Components/Buttons/MoreBtn";
 
 interface User {
-  id?: number;
+  id: number;
   role?: string;
   jmbg?: string;
   photoPath?: string;
@@ -89,7 +89,7 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
             <div className="grid-item">{user.email || "N/A"}</div>
             <div className="grid-item">Lorem Ipsum</div>
             <div className="grid-item action-column">
-              <MoreBtn />
+              <MoreBtn id={user.id} />
             </div>
           </React.Fragment>
         ))}

@@ -11,7 +11,7 @@ import Autori from "./Pages/Autori/Autori";
 import Knjige from "./Pages/Knjige/Knjige";
 import PrivateRoute from "./Components/PrivateRoute"; // Make sure to adjust the path as needed
 import ApiService from "./Shared/api";
-
+import BibliotekarDetails from "./Pages/Bibliotekari/BibliotekarDetails";
 
 const App: React.FC = () => {
   // initialize ApiClient
@@ -22,14 +22,24 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<PrivateRoute element={<Dashboard />} />} />
-        <Route path="bibliotekari" element={<PrivateRoute element={<Bibliotekari />} />} />
-        <Route path="bibliotekari/add-bibliotekar" element={<PrivateRoute element={<AddBibliotekar />} />} />
+        <Route
+          path="bibliotekari"
+          element={<PrivateRoute element={<Bibliotekari />} />}
+        />
+        <Route
+          path="bibliotekari/add-bibliotekar"
+          element={<PrivateRoute element={<AddBibliotekar />} />}
+        />
         <Route path="autori" element={<PrivateRoute element={<Autori />} />} />
         <Route path="autori/add-autor" element={<AddAutor />} />
         <Route path="ucenici" element={<Ucenici />} />
         <Route path="/knjige" element={<Knjige />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="bibliotekari/:id"
+          element={<PrivateRoute element={<BibliotekarDetails />} />}
+        />
       </Routes>
     </BrowserRouter>
   );

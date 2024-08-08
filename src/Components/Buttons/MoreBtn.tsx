@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { Dropdown, MenuProps } from "antd";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-const MoreBtn = () => {
+interface MoreBtnProp {
+  id: number;
+}
+
+const MoreBtn: React.FC<MoreBtnProp> = ({ id }) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const items: MenuProps["items"] = [
