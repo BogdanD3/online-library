@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Fragment } from "react";
 import { useParams } from "react-router";
 import ApiService from "../../Shared/api";
+import { Col, Row } from "antd";
+import Layout from "../../Components/Layout/Layout";
 
 interface User {
   id?: number;
@@ -14,7 +16,7 @@ interface User {
 }
 
 const BibliotekarDetails: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [user, setUser] = useState<User>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,13 +32,7 @@ const BibliotekarDetails: React.FC = () => {
 
       console.log("API Response:", response);
 
-      if (Array.isArray(response.data?.data)) {
-        setUsers(
-          response.data.data.filter((user: User) => user.role === "Bibliotekar")
-        );
-      } else {
-        setError("Failed to load data: " + response.error);
-      }
+      setUser(response.data.data);
     } catch (error: any) {
       console.error("There was a problem with the fetch operation:", error);
       setError(error.message);
@@ -49,18 +45,32 @@ const BibliotekarDetails: React.FC = () => {
     fetchData();
   }, [fetchData]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
-    <div className="wrapper">
-      <p>Nesto</p>
-    </div>
+    <Fragment>
+      <Layout title="Bibliotekar">
+        {error && <div>Error: {error}</div>}
+        {loading && <div>Loading...</div>}
+        <div className="wrapper" style={{padding: '20px'}}>
+          <Row>
+            <Col span={3}>
+            Korisničko ime:
+            </Col>
+            <Col span={12}>
+            {user.name }
+            </Col>
+          </Row>
+
+          <Row>
+            <Col span={3}>
+            Email:
+            </Col>
+            <Col span={12}>
+            {user.email }
+            </Col>
+          </Row>
+        </div>
+      </Layout>
+    </Fragment>
   );
 };
 

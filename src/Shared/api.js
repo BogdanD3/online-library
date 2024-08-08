@@ -129,6 +129,10 @@ const ApiService = {
     return this.get(`users/${id}`);
   },
 
+  async updateLibrarian(id, data) {
+    return this.put(`users/${id}`, data);
+  },
+
   async getAuthors(searchQuery) {
     return this.getFilter("authors", { search: searchQuery });
   },

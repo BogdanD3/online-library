@@ -12,6 +12,7 @@ import Knjige from "./Pages/Knjige/Knjige";
 import PrivateRoute from "./Components/PrivateRoute"; // Make sure to adjust the path as needed
 import ApiService from "./Shared/api";
 import BibliotekarDetails from "./Pages/Bibliotekari/BibliotekarDetails";
+import BibliotekarEdit from "./Pages/Bibliotekari/BibliotekarEdit";
 
 const App: React.FC = () => {
   // initialize ApiClient
@@ -37,8 +38,13 @@ const App: React.FC = () => {
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route
-          path="bibliotekari/:id"
+          path="/bibliotekari/:id"
           element={<PrivateRoute element={<BibliotekarDetails />} />}
+        />
+
+        <Route
+          path="/bibliotekari/:id/edit"
+          element={<PrivateRoute element={<BibliotekarEdit />} />}
         />
       </Routes>
     </BrowserRouter>

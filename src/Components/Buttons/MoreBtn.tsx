@@ -3,31 +3,11 @@ import { Dropdown, MenuProps } from "antd";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 interface MoreBtnProp {
-  id: number;
+  items: MenuProps["items"];
 }
 
-const MoreBtn: React.FC<MoreBtnProp> = ({ id }) => {
+const MoreBtn: React.FC<MoreBtnProp> = ({ items }) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-
-  const items: MenuProps["items"] = [
-    {
-      icon: <i className="bi bi-eye" style={{ fontSize: "1rem" }}></i>,
-      label: <p style={{ margin: "0" }}>Detalji</p>,
-      key: "0",
-    },
-    {
-      icon: (
-        <i className="bi bi-pencil-square" style={{ fontSize: "1rem" }}></i>
-      ),
-      label: <p style={{ margin: "0" }}>Izmjeni</p>,
-      key: "1",
-    },
-    {
-      icon: <i className="bi bi-trash3" style={{ fontSize: "1rem" }}></i>,
-      label: <p style={{ margin: "0" }}>Obrisi</p>,
-      key: "2",
-    },
-  ];
 
   const handleResize = () => {
     setDropdownVisible(false);

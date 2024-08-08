@@ -95,7 +95,7 @@ const ReservationsTable: React.FC = () => {
               <i className="bi bi-x-lg"></i>
             </div>
             <div className="grid-item action-column">
-              <MoreBtn />
+              {/* <MoreBtn  /> */}
             </div>
           </React.Fragment>
         ))}

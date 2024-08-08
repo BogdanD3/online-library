@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ApiService from "../../Shared/api";
 import MoreBtn from "../../Components/Buttons/MoreBtn";
-
+import { MenuProps, message } from "antd";
+import { useNavigate } from "react-router-dom";
 interface User {
   id: number;
   role?: string;
@@ -23,6 +24,48 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+
+  const renderMenuItems = (user: User) => {
+    var menuItems: MenuProps["items"] = [
+    {
+      icon: <i className="bi bi-eye" style={{ fontSize: "1rem" }}></i>,
+      label: <p style={{ margin: "0" }}>Detalji</p>,
+      key: "0",
+      onClick: () => {
+        console.log("View user with id:", user.id);
+        navigate(`/bibliotekari/${user.id}`);
+      }
+    },
+    {
+      icon: (
+        <i className="bi bi-pencil-square" style={{ fontSize: "1rem" }}></i>
+      ),
+      label: <p style={{ margin: "0" }}>Izmjeni</p>,
+      key: "1",
+      onClick: () => {
+        console.log("Edit user with id:", user.id);
+        navigate(`/bibliotekari/${user.id}/edit`)
+      }
+    },
+    {
+      icon: <i className="bi bi-trash3" style={{ fontSize: "1rem" }}></i>,
+      label: <p style={{ margin: "0" }}>Obrisi</p>,
+      key: "2",
+      onClick: () => {
+        console.log("Delete user with id:", user.id);
+
+        // Delete user with id
+        // ApiService.deleteUser(user.id);
+
+        message.success("Korisnik obrisan");
+      }
+    },
+  ];
+
+  return menuItems
+  }
 
   const fetchData = useCallback(async () => {
     try {
@@ -89,7 +132,7 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
             <div className="grid-item">{user.email || "N/A"}</div>
             <div className="grid-item">Lorem Ipsum</div>
             <div className="grid-item action-column">
-              <MoreBtn id={user.id} />
+              <MoreBtn items={renderMenuItems(user)} />
             </div>
           </React.Fragment>
         ))}
