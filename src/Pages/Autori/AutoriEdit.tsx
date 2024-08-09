@@ -8,14 +8,11 @@ import { Button, Form, Input } from "antd";
 type FieldType = {
   name?: string;
   surname?: string;
-  jmbg?: string;
-  username?: string;
-  email?: string;
   password?: string;
   password_confirmation?: string;
 };
 
-const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
+const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = () => {
   message.error("Provjeri formu");
 };
 
@@ -30,26 +27,29 @@ interface User {
   email?: string;
 }
 
-const BibliotekarEdit: React.FC = () => {
+const AutorEdit: React.FC = () => {
   const [user, setUser] = useState<User>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [userLoaded, setUserLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [storing, setStoring] = useState<boolean>(false);
 
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    var idAsNumber = parseInt(id as string);
-    storeUserData(idAsNumber, values);
+    if (id) {
+      var idAsNumber = parseInt(id);
+      storeUserData(idAsNumber, values);
+    }
   };
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await ApiService.getLibrarian(id);
+      const response = await ApiService.getAuthor(id);
 
       if (response.error) {
         setError(response.error);
+        return;
       }
 
       console.log("API Response:", response);
@@ -62,15 +62,16 @@ const BibliotekarEdit: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [id]);
 
   const storeUserData = useCallback(async (id: number, userData: User) => {
     try {
       setStoring(true);
-      const response = await ApiService.updateLibrarian(id, userData);
+      const response = await ApiService.updateAuthor(id, userData);
 
       if (response.error) {
         setError(response.error);
+        return;
       }
 
       console.log("API Response:", response);
@@ -92,7 +93,7 @@ const BibliotekarEdit: React.FC = () => {
 
   return (
     <Fragment>
-      <Layout title="Bibliotekar">
+      <Layout title="Autor">
         {error && <div>Error: {error}</div>}
         {loading && <div>Loading...</div>}
         {!userLoaded && <div>Loading user...</div>}
@@ -109,17 +110,7 @@ const BibliotekarEdit: React.FC = () => {
               autoComplete="off"
             >
               <Form.Item<FieldType>
-                label="Username"
-                name="username"
-                rules={[
-                  { required: true, message: "Please input your username!" },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item<FieldType>
-                label="Name"
+                label="Ime"
                 name="name"
                 rules={[{ required: true, message: "Please input your name!" }]}
               >
@@ -127,19 +118,11 @@ const BibliotekarEdit: React.FC = () => {
               </Form.Item>
 
               <Form.Item<FieldType>
-                label="Surname"
+                label="Prezime"
                 name="surname"
                 rules={[
                   { required: true, message: "Please input your surname!" },
                 ]}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item<FieldType>
-                label="Jmbg"
-                name="jmbg"
-                rules={[{ required: true, message: "Please input your jmbg!" }]}
               >
                 <Input />
               </Form.Item>
@@ -155,7 +138,7 @@ const BibliotekarEdit: React.FC = () => {
               </Form.Item>
 
               <Form.Item<FieldType>
-                label="Password"
+                label="Confirm Password"
                 name="password_confirmation"
                 rules={[
                   { required: true, message: "Please confirm your password!" },
@@ -177,4 +160,4 @@ const BibliotekarEdit: React.FC = () => {
   );
 };
 
-export default BibliotekarEdit;
+export default AutorEdit;

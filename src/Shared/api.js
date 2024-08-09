@@ -133,12 +133,40 @@ const ApiService = {
     return this.put(`users/${id}`, data);
   },
 
+  async deleteLibrarian(id) {
+    return this.delete(`users/${id}`);
+  },
+
   async getAuthors(searchQuery) {
     return this.getFilter("authors", { search: searchQuery });
   },
 
+  async getAuthor(id) {
+    return this.get(`authors/${id}`);
+  },
+
+  async updateAuthor(id, data) {
+    return this.put(`authors/${id}`, data);
+  },
+
+  async deleteAuthor(id) {
+    return this.delete(`authors/${id}`);
+  },
+
   async getBooks(searchQuery) {
     return this.getFilter("books", { search: searchQuery });
+  },
+
+  async getBook(id) {
+    return this.get(`books/${id}`);
+  },
+
+  async updateBook(id, data) {
+    return this.put(`books/${id}`, data);
+  },
+
+  async deleteBook(id) {
+    return this.delete(`books/${id}`);
   },
 
   async getStudents(searchQuery) {

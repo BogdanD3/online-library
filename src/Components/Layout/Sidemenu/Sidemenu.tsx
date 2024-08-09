@@ -91,7 +91,11 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
     },
     { icon: <LaptopOutlined className="icon" />, label: "Expand example" },
     { type: "divider" },
-    { icon: <SettingOutlined className="icon gear" />, label: "Settings" },
+    {
+      icon: <SettingOutlined className="icon gear" />,
+      label: "Settings",
+      path: "/settings",
+    },
   ];
 
   return (

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { MoreOutlined } from "@ant-design/icons";
+import MoreBtn from "../../Components/Buttons/MoreBtn";
+import { MenuProps, message } from "antd";
+import { useNavigate } from "react-router-dom";
 import ApiService from "../../Shared/api";
 
 interface Book {
@@ -21,6 +23,47 @@ const KnjigeTable: React.FC<KnjigeTableProps> = ({ searchQuery }) => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+
+  const renderMenuItems = (book: Book) => {
+    var menuItems: MenuProps["items"] = [
+      {
+        icon: <i className="bi bi-eye" style={{ fontSize: "1rem" }}></i>,
+        label: <p style={{ margin: "0" }}>Detalji</p>,
+        key: "0",
+        onClick: () => {
+          console.log("View book with id:", book.id);
+          navigate(`/knjiga/${book.id}`);
+        },
+      },
+      {
+        icon: (
+          <i className="bi bi-pencil-square" style={{ fontSize: "1rem" }}></i>
+        ),
+        label: <p style={{ margin: "0" }}>Izmjeni</p>,
+        key: "1",
+        onClick: () => {
+          console.log("Edit book with id:", book.id);
+          navigate(`/knjiga/${book.id}/edit`);
+        },
+      },
+      {
+        icon: <i className="bi bi-trash3" style={{ fontSize: "1rem" }}></i>,
+        label: <p style={{ margin: "0" }}>Obrisi</p>,
+        key: "2",
+        onClick: () => {
+          console.log("Delete book with id:", book.id);
+
+          // Delete book with id
+          ApiService.deleteLibrarian(book.id);
+          message.success("Korisnik obrisan");
+        },
+      },
+    ];
+
+    return menuItems;
+  };
 
   const fetchData = useCallback(async () => {
     try {
@@ -90,7 +133,7 @@ const KnjigeTable: React.FC<KnjigeTableProps> = ({ searchQuery }) => {
               {book.samples + book.rSamples + book.bSamples + book.fSamples}
             </div>
             <div className="grid-item">
-              <MoreOutlined className="dots" style={{ fontSize: "1.5rem" }} />
+              <MoreBtn items={renderMenuItems(book)} />
             </div>
           </React.Fragment>
         ))}

@@ -29,43 +29,42 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
 
   const renderMenuItems = (user: User) => {
     var menuItems: MenuProps["items"] = [
-    {
-      icon: <i className="bi bi-eye" style={{ fontSize: "1rem" }}></i>,
-      label: <p style={{ margin: "0" }}>Detalji</p>,
-      key: "0",
-      onClick: () => {
-        console.log("View user with id:", user.id);
-        navigate(`/bibliotekari/${user.id}`);
-      }
-    },
-    {
-      icon: (
-        <i className="bi bi-pencil-square" style={{ fontSize: "1rem" }}></i>
-      ),
-      label: <p style={{ margin: "0" }}>Izmjeni</p>,
-      key: "1",
-      onClick: () => {
-        console.log("Edit user with id:", user.id);
-        navigate(`/bibliotekari/${user.id}/edit`)
-      }
-    },
-    {
-      icon: <i className="bi bi-trash3" style={{ fontSize: "1rem" }}></i>,
-      label: <p style={{ margin: "0" }}>Obrisi</p>,
-      key: "2",
-      onClick: () => {
-        console.log("Delete user with id:", user.id);
+      {
+        icon: <i className="bi bi-eye" style={{ fontSize: "1rem" }}></i>,
+        label: <p style={{ margin: "0" }}>Detalji</p>,
+        key: "0",
+        onClick: () => {
+          console.log("View user with id:", user.id);
+          navigate(`/bibliotekari/${user.id}`);
+        },
+      },
+      {
+        icon: (
+          <i className="bi bi-pencil-square" style={{ fontSize: "1rem" }}></i>
+        ),
+        label: <p style={{ margin: "0" }}>Izmjeni</p>,
+        key: "1",
+        onClick: () => {
+          console.log("Edit user with id:", user.id);
+          navigate(`/bibliotekari/${user.id}/edit`);
+        },
+      },
+      {
+        icon: <i className="bi bi-trash3" style={{ fontSize: "1rem" }}></i>,
+        label: <p style={{ margin: "0" }}>Obrisi</p>,
+        key: "2",
+        onClick: () => {
+          console.log("Delete user with id:", user.id);
 
-        // Delete user with id
-        // ApiService.deleteUser(user.id);
+          // Delete user with id
+          ApiService.deleteLibrarian(user.id);
+          message.success("Korisnik obrisan");
+        },
+      },
+    ];
 
-        message.success("Korisnik obrisan");
-      }
-    },
-  ];
-
-  return menuItems
-  }
+    return menuItems;
+  };
 
   const fetchData = useCallback(async () => {
     try {

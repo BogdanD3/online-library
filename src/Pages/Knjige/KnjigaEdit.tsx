@@ -6,32 +6,33 @@ import Layout from "../../Components/Layout/Layout";
 import { Button, Form, Input } from "antd";
 
 type FieldType = {
-  name?: string;
-  surname?: string;
-  jmbg?: string;
-  username?: string;
-  email?: string;
-  password?: string;
-  password_confirmation?: string;
+  id: number;
+  title: string;
+  authors: { id: number; name: string; surname: string }[];
+  categories: { id: number; name: string }[];
+  samples: number;
+  bSamples: number;
+  rSamples: number;
+  fSamples: number;
 };
 
 const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
   message.error("Provjeri formu");
 };
 
-interface User {
-  id?: number;
-  role?: string;
-  jmbg?: string;
-  photoPath?: string;
-  username?: string;
-  name?: string;
-  surname?: string;
-  email?: string;
+interface Book {
+  id: number;
+  title: string;
+  authors: { id: number; name: string; surname: string }[];
+  categories: { id: number; name: string }[];
+  samples: number;
+  bSamples: number;
+  rSamples: number;
+  fSamples: number;
 }
 
-const BibliotekarEdit: React.FC = () => {
-  const [user, setUser] = useState<User>({});
+const KnjigaEdit: React.FC = () => {
+  const [user, setUser] = useState<Book>();
   const [loading, setLoading] = useState<boolean>(true);
   const [userLoaded, setUserLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -46,7 +47,7 @@ const BibliotekarEdit: React.FC = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await ApiService.getLibrarian(id);
+      const response = await ApiService.getBook(id);
 
       if (response.error) {
         setError(response.error);
@@ -64,10 +65,10 @@ const BibliotekarEdit: React.FC = () => {
     }
   }, []);
 
-  const storeUserData = useCallback(async (id: number, userData: User) => {
+  const storeUserData = useCallback(async (id: number, bookData: Book) => {
     try {
       setStoring(true);
-      const response = await ApiService.updateLibrarian(id, userData);
+      const response = await ApiService.updateLibrarian(id, bookData);
 
       if (response.error) {
         setError(response.error);
@@ -92,7 +93,7 @@ const BibliotekarEdit: React.FC = () => {
 
   return (
     <Fragment>
-      <Layout title="Bibliotekar">
+      <Layout title="Knjiga">
         {error && <div>Error: {error}</div>}
         {loading && <div>Loading...</div>}
         {!userLoaded && <div>Loading user...</div>}
@@ -109,8 +110,8 @@ const BibliotekarEdit: React.FC = () => {
               autoComplete="off"
             >
               <Form.Item<FieldType>
-                label="Username"
-                name="username"
+                label="Title"
+                name="title"
                 rules={[
                   { required: true, message: "Please input your username!" },
                 ]}
@@ -119,16 +120,16 @@ const BibliotekarEdit: React.FC = () => {
               </Form.Item>
 
               <Form.Item<FieldType>
-                label="Name"
-                name="name"
+                label="Authors"
+                name="authors"
                 rules={[{ required: true, message: "Please input your name!" }]}
               >
                 <Input />
               </Form.Item>
 
               <Form.Item<FieldType>
-                label="Surname"
-                name="surname"
+                label="Samples"
+                name="samples"
                 rules={[
                   { required: true, message: "Please input your surname!" },
                 ]}
@@ -137,31 +138,25 @@ const BibliotekarEdit: React.FC = () => {
               </Form.Item>
 
               <Form.Item<FieldType>
-                label="Jmbg"
-                name="jmbg"
+                label="Categories"
+                name="categories"
                 rules={[{ required: true, message: "Please input your jmbg!" }]}
               >
                 <Input />
               </Form.Item>
-
               <Form.Item<FieldType>
-                label="Password"
-                name="password"
-                rules={[
-                  { required: true, message: "Please input your password!" },
-                ]}
+                label="Categories"
+                name="rSamples"
+                rules={[{ required: true, message: "Please input your jmbg!" }]}
               >
-                <Input.Password />
+                <Input />
               </Form.Item>
-
               <Form.Item<FieldType>
-                label="Password"
-                name="password_confirmation"
-                rules={[
-                  { required: true, message: "Please confirm your password!" },
-                ]}
+                label="Categories"
+                name="fSamples"
+                rules={[{ required: true, message: "Please input your jmbg!" }]}
               >
-                <Input.Password />
+                <Input />
               </Form.Item>
 
               <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -177,4 +172,4 @@ const BibliotekarEdit: React.FC = () => {
   );
 };
 
-export default BibliotekarEdit;
+export default KnjigaEdit;

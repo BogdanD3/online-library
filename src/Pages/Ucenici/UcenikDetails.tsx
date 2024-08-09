@@ -15,7 +15,7 @@ interface User {
   email?: string;
 }
 
-const BibliotekarDetails: React.FC = () => {
+const UcenikDetails: React.FC = () => {
   const [user, setUser] = useState<User>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -47,11 +47,11 @@ const BibliotekarDetails: React.FC = () => {
 
   return (
     <Fragment>
-      <Layout title="Bibliotekar">
-        <div className="bibliotekar-details-page">
+      <Layout title="Ucenik">
+        <div className="ucenik-details-page">
           {error && <div>Error: {error}</div>}
           {loading && <div>Loading...</div>}
-          <div className="bibliotekar-details-card">
+          <div className="ucenik-details-card">
             <div className="rows-container">
               <Row className="row">
                 <Col span={6}>
@@ -98,7 +98,7 @@ const BibliotekarDetails: React.FC = () => {
       </Layout>
       <style>
         {`
-            .bibliotekar-details-page {
+            .ucenik-details-page {
               display: flex;
               flex-direction: column;
               justify-content: center;
@@ -107,7 +107,7 @@ const BibliotekarDetails: React.FC = () => {
               background-color: rgb(210, 248, 249);
             }
 
-            .bibliotekar-details-card {
+            .ucenik-details-card {
               width: 30rem;
               padding: 1.7rem;
               background-color: rgba(178, 237, 239, 0.881);
@@ -115,15 +115,15 @@ const BibliotekarDetails: React.FC = () => {
               border-radius: 5px;
             }
 
-            .bibliotekar-details-card .rows-container {
+            .ucenik-details-card .rows-container {
               width: 100%;
             }
 
-            .bibliotekar-details-card .rows-container .row {
+            .ucenik-details-card .rows-container .row {
               margin-bottom: 1rem;
             }
 
-            .bibliotekar-details-card .rows-container .col-title {
+            .ucenik-details-card .rows-container .col-title {
               font-weight: bold;
             }
           `}
@@ -132,4 +132,4 @@ const BibliotekarDetails: React.FC = () => {
   );
 };
 
-export default BibliotekarDetails;
+export default UcenikDetails;

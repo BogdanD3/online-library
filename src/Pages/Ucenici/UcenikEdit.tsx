@@ -30,7 +30,7 @@ interface User {
   email?: string;
 }
 
-const BibliotekarEdit: React.FC = () => {
+const UcenikEdit: React.FC = () => {
   const [user, setUser] = useState<User>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [userLoaded, setUserLoaded] = useState<boolean>(false);
@@ -92,7 +92,7 @@ const BibliotekarEdit: React.FC = () => {
 
   return (
     <Fragment>
-      <Layout title="Bibliotekar">
+      <Layout title="Ucenik">
         {error && <div>Error: {error}</div>}
         {loading && <div>Loading...</div>}
         {!userLoaded && <div>Loading user...</div>}
@@ -177,4 +177,4 @@ const BibliotekarEdit: React.FC = () => {
   );
 };
 
-export default BibliotekarEdit;
+export default UcenikEdit;

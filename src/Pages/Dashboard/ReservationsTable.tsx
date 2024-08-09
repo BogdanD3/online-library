@@ -94,9 +94,6 @@ const ReservationsTable: React.FC = () => {
               ></i>
               <i className="bi bi-x-lg"></i>
             </div>
-            <div className="grid-item action-column">
-              {/* <MoreBtn  /> */}
-            </div>
           </React.Fragment>
         ))}
       </div>
@@ -112,7 +109,7 @@ const ReservationsTable: React.FC = () => {
 }
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
   width: 100%;
   max-width: 100%;

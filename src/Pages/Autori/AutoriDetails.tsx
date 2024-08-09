@@ -4,18 +4,20 @@ import ApiService from "../../Shared/api";
 import { Col, Row } from "antd";
 import Layout from "../../Components/Layout/Layout";
 
-interface User {
-  id?: number;
-  role?: string;
-  jmbg?: string;
-  photoPath?: string;
-  username?: string;
-  name?: string;
-  surname?: string;
-  email?: string;
+interface Book {
+  id: number;
+  title: string;
+  description: string;
 }
 
-const BibliotekarDetails: React.FC = () => {
+interface User {
+  id?: number;
+  name?: string;
+  surname?: string;
+  books?: Book[];
+}
+
+const AutorDetails: React.FC = () => {
   const [user, setUser] = useState<User>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,10 +26,11 @@ const BibliotekarDetails: React.FC = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await ApiService.getLibrarian(id);
+      const response = await ApiService.getAuthor(id);
 
       if (response.error) {
         setError(response.error);
+        return;
       }
 
       console.log("API Response:", response);
@@ -47,31 +50,12 @@ const BibliotekarDetails: React.FC = () => {
 
   return (
     <Fragment>
-      <Layout title="Bibliotekar">
-        <div className="bibliotekar-details-page">
+      <Layout title="Autor">
+        <div className="autor-details-page">
           {error && <div>Error: {error}</div>}
           {loading && <div>Loading...</div>}
-          <div className="bibliotekar-details-card">
+          <div className="autor-details-card">
             <div className="rows-container">
-              <Row className="row">
-                <Col span={6}>
-                  <img
-                    src={user.photoPath || "https://via.placeholder.com/100"}
-                    alt="User"
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      borderRadius: "50%",
-                    }}
-                  />
-                </Col>
-              </Row>
-              <Row className="row">
-                <Col span={6} className="col-title">
-                  Korisničko ime:
-                </Col>
-                <Col span={18}>{user.username}</Col>
-              </Row>
               <Row className="row">
                 <Col span={6} className="col-title">
                   Ime i prezime:
@@ -80,17 +64,21 @@ const BibliotekarDetails: React.FC = () => {
                   {user.name} {user.surname}
                 </Col>
               </Row>
+
               <Row className="row">
                 <Col span={6} className="col-title">
-                  Email:
+                  Knjige:
                 </Col>
-                <Col span={18}>{user.email}</Col>
-              </Row>
-              <Row className="row">
-                <Col span={6} className="col-title">
-                  JMBG:
+                <Col span={18}>
+                  {user.books?.map((book) => (
+                    <div key={book.id} className="book">
+                      <div className="book-details">
+                        <h3>{book.title}</h3>
+                        <p>{book.description}</p>
+                      </div>
+                    </div>
+                  ))}
                 </Col>
-                <Col span={18}>{user.jmbg}</Col>
               </Row>
             </div>
           </div>
@@ -98,7 +86,7 @@ const BibliotekarDetails: React.FC = () => {
       </Layout>
       <style>
         {`
-            .bibliotekar-details-page {
+            .autor-details-page {
               display: flex;
               flex-direction: column;
               justify-content: center;
@@ -107,7 +95,7 @@ const BibliotekarDetails: React.FC = () => {
               background-color: rgb(210, 248, 249);
             }
 
-            .bibliotekar-details-card {
+            .autor-details-card {
               width: 30rem;
               padding: 1.7rem;
               background-color: rgba(178, 237, 239, 0.881);
@@ -115,16 +103,42 @@ const BibliotekarDetails: React.FC = () => {
               border-radius: 5px;
             }
 
-            .bibliotekar-details-card .rows-container {
+            .autor-details-card .rows-container {
               width: 100%;
             }
 
-            .bibliotekar-details-card .rows-container .row {
+            .autor-details-card .rows-container .row {
               margin-bottom: 1rem;
             }
 
-            .bibliotekar-details-card .rows-container .col-title {
+            .autor-details-card .rows-container .col-title {
               font-weight: bold;
+            }
+
+            .book {
+              display: flex;
+              align-items: center;
+              margin-bottom: 1rem;
+            }
+
+            .book-photo {
+              width: 3rem;
+              height: 3rem;
+              border-radius: 5px;
+              margin-right: 1rem;
+            }
+
+            .book-details {
+              display: flex;
+              flex-direction: column;
+            }
+
+            .book-details h3 {
+              margin: 0;
+            }
+
+            .book-details p {
+              margin: 0.2rem 0 0 0;
             }
           `}
       </style>
@@ -132,4 +146,4 @@ const BibliotekarDetails: React.FC = () => {
   );
 };
 
-export default BibliotekarDetails;
+export default AutorDetails;

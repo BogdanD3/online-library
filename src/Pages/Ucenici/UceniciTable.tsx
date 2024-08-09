@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { MoreOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import ApiService from "../../Shared/api";
+import { MenuProps, message } from "antd";
+import MoreBtn from "../../Components/Buttons/MoreBtn";
 
 interface User {
   id?: number;
@@ -22,6 +24,46 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+
+  const renderMenuItems = (user: User) => {
+    var menuItems: MenuProps["items"] = [
+      {
+        icon: <i className="bi bi-eye" style={{ fontSize: "1rem" }}></i>,
+        label: <p style={{ margin: "0" }}>Detalji</p>,
+        key: "0",
+        onClick: () => {
+          console.log("View user with id:", user.id);
+          navigate(`/ucenici/${user.id}`);
+        },
+      },
+      {
+        icon: (
+          <i className="bi bi-pencil-square" style={{ fontSize: "1rem" }}></i>
+        ),
+        label: <p style={{ margin: "0" }}>Izmjeni</p>,
+        key: "1",
+        onClick: () => {
+          console.log("Edit user with id:", user.id);
+          navigate(`/ucenici/${user.id}/edit`);
+        },
+      },
+      {
+        icon: <i className="bi bi-trash3" style={{ fontSize: "1rem" }}></i>,
+        label: <p style={{ margin: "0" }}>Obrisi</p>,
+        key: "2",
+        onClick: () => {
+          console.log("Delete user with id:", user.id);
+
+          // Delete user with id
+          ApiService.deleteLibrarian(user.id);
+          message.success("Korisnik obrisan");
+        },
+      },
+    ];
+    return menuItems;
+  };
 
   const fetchData = useCallback(async () => {
     try {
@@ -89,7 +131,7 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
             <div className="grid-item">{user.email || "N/A"}</div>
             <div className="grid-item">Lorem Ipsum</div>
             <div className="grid-item action-column">
-              <MoreOutlined className="dots" style={{ fontSize: "1.5rem" }} />
+              <MoreBtn items={renderMenuItems(user)} />
             </div>
           </React.Fragment>
         ))}
