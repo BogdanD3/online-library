@@ -125,6 +125,10 @@ const ApiService = {
     return this.getFilter("users", { search: searchQuery });
   },
 
+  async createLibrarian(data) {
+    return this.post("users/store", data);
+  },
+
   async getLibrarian(id) {
     return this.get(`users/${id}`);
   },
@@ -139,6 +143,10 @@ const ApiService = {
 
   async getAuthors(searchQuery) {
     return this.getFilter("authors", { search: searchQuery });
+  },
+
+  async createAuthors(data) {
+    return this.post("authors/store", data);
   },
 
   async getAuthor(id) {
@@ -163,6 +171,10 @@ const ApiService = {
 
   async updateBook(id, data) {
     return this.put(`books/${id}`, data);
+  },
+
+  async createBook(data) {
+    return this.post("books/store", data);
   },
 
   async deleteBook(id) {

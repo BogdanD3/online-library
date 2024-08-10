@@ -29,10 +29,10 @@
 .menu_item {
   display: flex;
   align-items: center;
-  padding: 0.9rem 1rem;
+  padding: 1rem 1rem;
   transition: background 0.4s ease;
   border-radius: 0.5rem;
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
   text-decoration: none;
 }
 

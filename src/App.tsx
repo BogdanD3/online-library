@@ -20,6 +20,8 @@ import AutorDetails from "./Pages/Autori/AutoriDetails";
 import AutorEdit from "./Pages/Autori/AutoriEdit";
 import KnjigaDetails from "./Pages/Knjige/KnjigaDetails";
 import KnjigaEdit from "./Pages/Knjige/KnjigaEdit";
+import UceniciForm from "./Pages/Ucenici/AddUcenik";
+import AddKnjiga from "./Pages/Knjige/AddKnjiga";
 
 const App: React.FC = () => {
   // initialize ApiClient
@@ -41,7 +43,9 @@ const App: React.FC = () => {
         <Route path="autori" element={<PrivateRoute element={<Autori />} />} />
         <Route path="autori/add-autor" element={<AddAutor />} />
         <Route path="ucenici" element={<Ucenici />} />
+        <Route path="ucenici/add-ucenik" element={<UceniciForm />} />
         <Route path="/knjige" element={<Knjige />} />
+        <Route path="/knjige/add-knjiga" element={<AddKnjiga />} />
         <Route path="settings" element={<Settings />} />
 
         <Route path="/signin" element={<SignInPage />} />
@@ -56,11 +60,11 @@ const App: React.FC = () => {
           element={<PrivateRoute element={<BibliotekarEdit />} />}
         />
         <Route
-          path="/ucenic/:id"
+          path="/ucenik/:id"
           element={<PrivateRoute element={<UcenikDetails />} />}
         />
         <Route
-          path="/ucenic/:id/edit"
+          path="/ucenik/:id/edit"
           element={<PrivateRoute element={<UcenikEdit />} />}
         />
         <Route

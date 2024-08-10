@@ -22,7 +22,7 @@ interface UceniciTableProps {
 
 const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
   const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+
   const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
         key: "0",
         onClick: () => {
           console.log("View user with id:", user.id);
-          navigate(`/ucenici/${user.id}`);
+          navigate(`/ucenik/${user.id}`);
         },
       },
       {
@@ -46,7 +46,7 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
         key: "1",
         onClick: () => {
           console.log("Edit user with id:", user.id);
-          navigate(`/ucenici/${user.id}/edit`);
+          navigate(`/ucenik/${user.id}/edit`);
         },
       },
       {
@@ -86,8 +86,6 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
     } catch (error: any) {
       console.error("There was a problem with the fetch operation:", error);
       setError(error.message);
-    } finally {
-      setLoading(false);
     }
   }, [searchQuery]);
 
@@ -99,10 +97,6 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
     const fullName = `${user.name} ${user.surname}`.toLowerCase();
     return fullName.startsWith(searchQuery.toLowerCase());
   });
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   if (error) {
     return <div>Error: {error}</div>;

@@ -19,7 +19,7 @@ const onFinishFailed = () => {
   message.error("Provjeri formu");
 };
 
-const BibliotekariForm: React.FC = () => {
+const AddUcenik: React.FC = () => {
   const [user, setUser] = useState<User>();
   const [error, setError] = useState<string | null>(null);
   const [storing, setStoring] = useState<boolean>(false);
@@ -36,7 +36,7 @@ const BibliotekariForm: React.FC = () => {
   });
 
   const onFinish = async (values: User) => {
-    const userData = { ...values, role_id: 1 };
+    const userData = { ...values, role_id: 2 };
     try {
       setStoring(true);
       const response = await ApiService.createLibrarian(userData);
@@ -57,7 +57,7 @@ const BibliotekariForm: React.FC = () => {
 
   return (
     <Fragment>
-      <Layout title="Bibliotekar">
+      <Layout title="Ucenik">
         {error && <div>Error: {error}</div>}
         <div className="wrapper" style={{ padding: "20px" }}>
           <Form
@@ -161,4 +161,4 @@ const BibliotekariForm: React.FC = () => {
   );
 };
 
-export default BibliotekariForm;
+export default AddUcenik;

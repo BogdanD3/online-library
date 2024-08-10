@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ApiService from "../../Shared/api";
-import MoreBtn from "../../Components/Buttons/MoreBtn";
 
 interface Reservation {
   id: number;
@@ -69,7 +68,6 @@ const ReservationsTable: React.FC = () => {
         <div className="grid-header">Status</div>
         <div className="grid-header">Datum</div>
         <div className="grid-header">Odobri</div>
-        <div className="grid-header"></div>
         {reservations.map((reservation) => (
           <React.Fragment key={reservation.id}>
             <div className="grid-item">

@@ -15,7 +15,7 @@ type FieldType = {
   password_confirmation?: string;
 };
 
-const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
+const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = () => {
   message.error("Provjeri formu");
 };
 
@@ -32,7 +32,6 @@ interface User {
 
 const BibliotekarEdit: React.FC = () => {
   const [user, setUser] = useState<User>({});
-  const [loading, setLoading] = useState<boolean>(true);
   const [userLoaded, setUserLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [storing, setStoring] = useState<boolean>(false);
@@ -59,10 +58,8 @@ const BibliotekarEdit: React.FC = () => {
     } catch (error: any) {
       console.error("There was a problem with the fetch operation:", error);
       setError(error.message);
-    } finally {
-      setLoading(false);
     }
-  }, []);
+  }, [id]);
 
   const storeUserData = useCallback(async (id: number, userData: User) => {
     try {
@@ -81,8 +78,6 @@ const BibliotekarEdit: React.FC = () => {
     } catch (error: any) {
       console.error("There was a problem with the fetch operation:", error);
       setError(error.message);
-    } finally {
-      setStoring(false);
     }
   }, []);
 
@@ -94,7 +89,6 @@ const BibliotekarEdit: React.FC = () => {
     <Fragment>
       <Layout title="Bibliotekar">
         {error && <div>Error: {error}</div>}
-        {loading && <div>Loading...</div>}
         {!userLoaded && <div>Loading user...</div>}
         <div className="wrapper" style={{ padding: "20px" }}>
           {userLoaded && (

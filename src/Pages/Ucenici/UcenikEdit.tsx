@@ -32,7 +32,6 @@ interface User {
 
 const UcenikEdit: React.FC = () => {
   const [user, setUser] = useState<User>({});
-  const [loading, setLoading] = useState<boolean>(true);
   const [userLoaded, setUserLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [storing, setStoring] = useState<boolean>(false);
@@ -59,10 +58,8 @@ const UcenikEdit: React.FC = () => {
     } catch (error: any) {
       console.error("There was a problem with the fetch operation:", error);
       setError(error.message);
-    } finally {
-      setLoading(false);
     }
-  }, []);
+  }, [id]);
 
   const storeUserData = useCallback(async (id: number, userData: User) => {
     try {
@@ -94,7 +91,6 @@ const UcenikEdit: React.FC = () => {
     <Fragment>
       <Layout title="Ucenik">
         {error && <div>Error: {error}</div>}
-        {loading && <div>Loading...</div>}
         {!userLoaded && <div>Loading user...</div>}
         <div className="wrapper" style={{ padding: "20px" }}>
           {userLoaded && (

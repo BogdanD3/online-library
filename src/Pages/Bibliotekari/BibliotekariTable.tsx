@@ -35,7 +35,7 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
         key: "0",
         onClick: () => {
           console.log("View user with id:", user.id);
-          navigate(`/bibliotekari/${user.id}`);
+          navigate(`/bibliotekar/${user.id}`);
         },
       },
       {
@@ -46,7 +46,7 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
         key: "1",
         onClick: () => {
           console.log("Edit user with id:", user.id);
-          navigate(`/bibliotekari/${user.id}/edit`);
+          navigate(`/bibliotekar/${user.id}/edit`);
         },
       },
       {

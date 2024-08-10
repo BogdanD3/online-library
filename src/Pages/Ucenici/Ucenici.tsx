@@ -15,7 +15,7 @@ const Ucenici: React.FC = () => {
     <Layout title="Ucenici">
       <div className="bottom-right">
         <div className="top">
-          <PrimaryBtn link="add-bibliotekar" className="primaryBtn">
+          <PrimaryBtn link="add-ucenik" className="primaryBtn">
             <i className="bi bi-plus-lg"></i> Novi Ucenik/ca
           </PrimaryBtn>
           <div className="search-bar">

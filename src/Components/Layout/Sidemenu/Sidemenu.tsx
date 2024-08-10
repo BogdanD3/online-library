@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
   DashboardOutlined,
@@ -36,6 +36,51 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
     setActiveItem(label);
   };
 
+  const menuItem: MenuItem[] = useMemo(
+    () => [
+      { type: "divider" },
+      {
+        icon: (
+          <DashboardOutlined className="icon" style={{ marginTop: "0.4rem" }} />
+        ),
+        label: "Dashboard",
+        path: "/",
+      },
+      {
+        icon: <TeamOutlined className="icon" />,
+        label: "Bibliotekari",
+        path: "/bibliotekari",
+      },
+      {
+        icon: <UsergroupAddOutlined className="icon" />,
+        label: "Ucenici",
+        path: "/ucenici",
+      },
+      {
+        icon: <BookOutlined className="icon" />,
+        label: "Knjige",
+        path: "/knjige",
+      },
+      {
+        icon: <SolutionOutlined className="icon" />,
+        label: "Autori",
+        path: "/autori",
+      },
+      {
+        icon: <AccountBookOutlined className="icon" />,
+        label: "Izdavanje knjiga",
+      },
+      { icon: <LaptopOutlined className="icon" />, label: "Expand example" },
+      { type: "divider" },
+      {
+        icon: <SettingOutlined className="icon gear" />,
+        label: "Settings",
+        path: "/settings",
+      },
+    ],
+    []
+  );
+
   useEffect(() => {
     const currentPath = location.pathname;
 
@@ -43,7 +88,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
     if (activeMenuItem) {
       setActiveItem(activeMenuItem.label || "");
     }
-  }, [location.pathname]);
+  }, [menuItem, location.pathname]);
 
   useEffect(() => {
     if (isOpen) {
@@ -57,46 +102,6 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
       setHoverDelayClass("");
     }
   }, [isOpen]);
-
-  const menuItem: MenuItem[] = [
-    { type: "divider" },
-    {
-      icon: <DashboardOutlined className="icon" />,
-      label: "Dashboard",
-      path: "/",
-    },
-    {
-      icon: <TeamOutlined className="icon" />,
-      label: "Bibliotekari",
-      path: "/bibliotekari",
-    },
-    {
-      icon: <UsergroupAddOutlined className="icon" />,
-      label: "Ucenici",
-      path: "/ucenici",
-    },
-    {
-      icon: <BookOutlined className="icon" />,
-      label: "Knjige",
-      path: "/knjige",
-    },
-    {
-      icon: <SolutionOutlined className="icon" />,
-      label: "Autori",
-      path: "/autori",
-    },
-    {
-      icon: <AccountBookOutlined className="icon" />,
-      label: "Izdavanje knjiga",
-    },
-    { icon: <LaptopOutlined className="icon" />, label: "Expand example" },
-    { type: "divider" },
-    {
-      icon: <SettingOutlined className="icon gear" />,
-      label: "Settings",
-      path: "/settings",
-    },
-  ];
 
   return (
     <div className="sidebar" style={{ width: isOpen ? "13rem" : "4.6rem" }}>
