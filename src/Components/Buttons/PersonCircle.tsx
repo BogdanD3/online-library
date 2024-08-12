@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import { Dropdown, MenuProps } from "antd";
 import { logout } from "../../Shared/api";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { useNavigate } from "react-router-dom";
 
 const PersonCircle = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const navigate = useNavigate();
 
   const items: MenuProps["items"] = [
     {
@@ -14,6 +17,14 @@ const PersonCircle = () => {
       label: "Logout",
       key: "0",
       onClick: () => logout(),
+    },
+    {
+      icon: (
+        <i className="bi bi-person-circle" style={{ fontSize: "1rem" }}></i>
+      ),
+      label: "Profile",
+      key: "1",
+      onClick: () => navigate("/profile"),
     },
   ];
 

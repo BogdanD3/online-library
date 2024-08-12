@@ -121,6 +121,14 @@ const ApiService = {
     });
   },
 
+  async getProfile() {
+    return this.post("users/me");
+  },
+
+  async updateProfile(data) {
+    return this.put("users/me", data);
+  },
+
   async getLibrarians(searchQuery) {
     return this.getFilter("users", { search: searchQuery });
   },

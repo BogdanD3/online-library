@@ -22,6 +22,8 @@ import KnjigaDetails from "./Pages/Knjige/KnjigaDetails";
 import KnjigaEdit from "./Pages/Knjige/KnjigaEdit";
 import UceniciForm from "./Pages/Ucenici/AddUcenik";
 import AddKnjiga from "./Pages/Knjige/AddKnjiga";
+import Profile from "./Pages/MeProfile/Profile";
+import ProfileEdit from "./Pages/MeProfile/ProfileEdit";
 
 const App: React.FC = () => {
   // initialize ApiClient
@@ -46,6 +48,8 @@ const App: React.FC = () => {
         <Route path="ucenici/add-ucenik" element={<UceniciForm />} />
         <Route path="/knjige" element={<Knjige />} />
         <Route path="/knjige/add-knjiga" element={<AddKnjiga />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="profile-edit" element={<ProfileEdit />} />
         <Route path="settings" element={<Settings />} />
 
         <Route path="/signin" element={<SignInPage />} />

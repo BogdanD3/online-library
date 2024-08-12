@@ -4,9 +4,12 @@ import { LinkOutlined } from "@ant-design/icons";
 import "./RightHeader.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import PersonCircle from "../../Buttons/PersonCircle";
+import { useNavigate } from "react-router-dom";
 
 const RightHeader = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const navigate = useNavigate();
 
   const items: MenuProps["items"] = [
     {
@@ -21,7 +24,14 @@ const RightHeader = () => {
     },
     {
       icon: <LinkOutlined style={{ fontSize: "1rem" }} />,
-      label: "Biblioteka",
+      label: (
+        <a
+          href="https://www.bild-studio.com/en/"
+          style={{ margin: "0", textDecoration: "none" }}
+        >
+          bildStudio
+        </a>
+      ),
       key: "2",
     },
     {
@@ -33,6 +43,7 @@ const RightHeader = () => {
       ),
       label: "Profile",
       key: "3",
+      onClick: () => navigate("/profile"),
     },
   ];
 
