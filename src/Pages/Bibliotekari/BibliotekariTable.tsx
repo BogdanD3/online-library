@@ -55,8 +55,6 @@ const BibliotekariTable: React.FC<BibliotekariTableProps> = ({
         key: "2",
         onClick: () => {
           console.log("Delete user with id:", user.id);
-
-          // Delete user with id
           ApiService.deleteLibrarian(user.id);
           message.success("Korisnik obrisan");
         },

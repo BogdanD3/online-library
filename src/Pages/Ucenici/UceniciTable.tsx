@@ -22,9 +22,7 @@ interface UceniciTableProps {
 
 const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
   const [users, setUsers] = useState<User[]>([]);
-
   const [error, setError] = useState<string | null>(null);
-
   const navigate = useNavigate();
 
   const renderMenuItems = (user: User) => {
@@ -53,12 +51,22 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
         icon: <i className="bi bi-trash3" style={{ fontSize: "1rem" }}></i>,
         label: <p style={{ margin: "0" }}>Obrisi</p>,
         key: "2",
-        onClick: () => {
+        onClick: async () => {
           console.log("Delete user with id:", user.id);
-
-          // Delete user with id
-          ApiService.deleteLibrarian(user.id);
-          message.success("Korisnik obrisan");
+          try {
+            const response = await ApiService.deleteStudent(user.id);
+            if (response.message === "Success") {
+              setUsers((prevUsers) =>
+                prevUsers.filter((u) => u.id !== user.id)
+              );
+              message.success("Korisnik obrisan");
+            } else {
+              message.error(`Failed to delete user: ${response.error}`);
+            }
+          } catch (error) {
+            message.error("Failed to delete user");
+            console.error("Error deleting user:", error);
+          }
         },
       },
     ];
@@ -68,14 +76,11 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
   const fetchData = useCallback(async () => {
     try {
       const response = await ApiService.getStudents(searchQuery);
-
       if (response.error) {
         setError(response.error);
         return;
       }
-
       console.log("API Response:", response);
-
       if (Array.isArray(response.data?.data)) {
         setUsers(
           response.data.data.filter((user: User) => user.role === "Učenik")

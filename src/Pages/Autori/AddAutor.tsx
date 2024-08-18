@@ -28,7 +28,7 @@ const AddAutor: React.FC = () => {
     const authorData = { ...values };
     try {
       setStoring(true);
-      const response = await ApiService.createAuthors(authorData);
+      const response = await ApiService.createAuthor(authorData);
 
       if (response.error) {
         setError(response.error);

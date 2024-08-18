@@ -54,9 +54,7 @@ const KnjigeTable: React.FC<KnjigeTableProps> = ({ searchQuery }) => {
         key: "2",
         onClick: () => {
           console.log("Delete book with id:", book.id);
-
-          // Delete book with id
-          ApiService.deleteLibrarian(book.id);
+          ApiService.deleteBook(book.id);
           message.success("Korisnik obrisan");
         },
       },

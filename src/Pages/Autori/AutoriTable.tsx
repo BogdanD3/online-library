@@ -49,10 +49,8 @@ const AutoriTable: React.FC<AutoriTableProps> = ({ searchQuery }) => {
         key: "2",
         onClick: () => {
           console.log("Delete user with id:", user.id);
-
-          // Delete user with id
-          ApiService.deleteLibrarian(user.id);
-          message.success("Korisnik obrisan");
+          ApiService.deleteAuthor(user.id);
+          message.success("Autor obrisan");
         },
       },
     ];

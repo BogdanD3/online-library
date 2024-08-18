@@ -153,7 +153,7 @@ const ApiService = {
     return this.getFilter("authors", { search: searchQuery });
   },
 
-  async createAuthors(data) {
+  async createAuthor(data) {
     return this.post("authors/store", data);
   },
 
@@ -193,8 +193,16 @@ const ApiService = {
     return this.getFilter("users", { search: searchQuery });
   },
 
+  async deleteStudent(id) {
+    return this.delete(`users/${id}`);
+  },
+
   async getReservations() {
     return this.get("books/reservations");
+  },
+
+  async getIzdavanja() {
+    return this.get("books/borrows");
   },
 };
 
