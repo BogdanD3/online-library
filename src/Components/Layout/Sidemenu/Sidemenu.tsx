@@ -69,6 +69,7 @@ const SideMenu: React.FC<SideMenuProps> = ({ isOpen, setIsOpen }) => {
       {
         icon: <AccountBookOutlined className="icon" />,
         label: "Izdavanje knjiga",
+        path: "/izdavanje",
       },
       { icon: <LaptopOutlined className="icon" />, label: "Expand example" },
       { type: "divider" },

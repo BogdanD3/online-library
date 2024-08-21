@@ -137,9 +137,9 @@ const ReservationsTable: React.FC = () => {
   .grid-container {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-  .grid-header:nth-child(1),
+
   .grid-header:nth-child(5),
-  .grid-item:nth-child(6n + 1),
+
   .grid-item:nth-child(6n + 5) {
     display: none;
   }

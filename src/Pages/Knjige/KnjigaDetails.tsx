@@ -46,7 +46,7 @@ const KnjigaDetails: React.FC = () => {
       }
 
       if (response.data) {
-        setBook(response.data);
+        setBook(response.data.data);
       } else {
         setError("No data found");
       }

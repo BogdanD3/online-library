@@ -24,6 +24,11 @@ import UceniciForm from "./Pages/Ucenici/AddUcenik";
 import AddKnjiga from "./Pages/Knjige/AddKnjiga";
 import Profile from "./Pages/MeProfile/Profile";
 import ProfileEdit from "./Pages/MeProfile/ProfileEdit";
+import IzdavanjeKnjiga from "./Pages/IzdateKnjige/IzdavanjeKnjiga";
+import RezervacijeKnjiga from "./Pages/IzdateKnjige/RezervacijeKnjiga";
+import ArhiviraneRezervacije from "./Pages/IzdateKnjige/ArhiviraneRezervacije";
+import PrekoraceneRezervacije from "./Pages/IzdateKnjige/PrekoracenaIzdavanja";
+import PrekoracenaIzdavanja from "./Pages/IzdateKnjige/PrekoracenaIzdavanja";
 
 const App: React.FC = () => {
   // initialize ApiClient
@@ -51,6 +56,17 @@ const App: React.FC = () => {
         <Route path="profile" element={<Profile />} />
         <Route path="profile-edit" element={<ProfileEdit />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="izdavanje" element={<IzdavanjeKnjiga />} />
+        <Route path="rezervacije" element={<RezervacijeKnjiga />} />
+        <Route
+          path="arhivirane-rezervacije"
+          element={<ArhiviraneRezervacije />}
+        />
+        <Route
+          path="prekoracena-izdavanja"
+          element={<PrekoracenaIzdavanja />}
+        />
+        <Route path="vracene-knjige" element={<PrekoracenaIzdavanja />} />
 
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/register" element={<RegisterPage />} />

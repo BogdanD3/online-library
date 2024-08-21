@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ApiService from "../../Shared/api";
+import Layout from "../../Components/Layout/Layout";
+import MiniMenu from "../../Components/MiniMenu";
 
 interface Reservation {
   id: number;
@@ -52,58 +54,69 @@ const RezervacijeKnjiga: React.FC = () => {
     fetchData();
   }, [fetchData]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
-    <div className="wrapper">
-      <div className="grid-container">
-        <div className="grid-header">Slika</div>
-        <div className="grid-header">Ime i Prezime</div>
-        <div className="grid-header">Status</div>
-        <div className="grid-header">Datum</div>
-        <div className="grid-header">Odobri</div>
-        {reservations.map((reservation) => (
-          <React.Fragment key={reservation.id}>
-            <div className="grid-item">
-              <img
-                src={
-                  reservation.knjiga.photo || "https://via.placeholder.com/100"
-                }
-                alt={reservation.knjiga.title}
-                className="book-photo"
-              />
+    <Layout title="Rezervacije Knjiga">
+      <div className="wrapper">
+        <MiniMenu />
+        <div className="content">
+          {loading && <div className="loading">Loading...</div>}
+          {error && <div className="error">Error: {error}</div>}
+          {!loading && !error && (
+            <div className="grid-container">
+              <div className="grid-header">Slika</div>
+              <div className="grid-header">Ime i Prezime</div>
+              <div className="grid-header">Status</div>
+              <div className="grid-header">Datum</div>
+              <div className="grid-header">Odobri</div>
+              {reservations.map((reservation) => (
+                <React.Fragment key={reservation.id}>
+                  <div className="grid-item">
+                    <img
+                      src={
+                        reservation.knjiga.photo ||
+                        "https://via.placeholder.com/100"
+                      }
+                      alt={reservation.knjiga.title}
+                      className="book-photo"
+                    />
+                  </div>
+                  <div className="grid-item">
+                    {reservation.bibliotekar0?.name || "No Name"}{" "}
+                    {reservation.bibliotekar0?.surname || "No Surname"}
+                  </div>
+                  <div className="grid-item">{reservation.status}</div>
+                  <div className="grid-item">{reservation.action_date}</div>
+                  <div className="grid-item tick-x">
+                    <i
+                      className="bi bi-check-lg"
+                      style={{ fontSize: "1.2rem", paddingRight: "1rem" }}
+                    ></i>
+                    <i className="bi bi-x-lg"></i>
+                  </div>
+                </React.Fragment>
+              ))}
             </div>
-            <div className="grid-item">
-              {reservation.bibliotekar0?.name || "No Name"}{" "}
-              {reservation.bibliotekar0?.surname || "No Surname"}
-            </div>
-            <div className="grid-item">{reservation.status}</div>
-            <div className="grid-item">{reservation.action_date}</div>
-            <div className="grid-item tick-x">
-              <i
-                className="bi bi-check-lg"
-                style={{ fontSize: "1.2rem", paddingRight: "1rem" }}
-              ></i>
-              <i className="bi bi-x-lg"></i>
-            </div>
-          </React.Fragment>
-        ))}
+          )}
+        </div>
       </div>
       <style>{`
 .wrapper {
   display: flex;
+  flex-direction: row;
+}
+.content {
+  display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 3rem;
+  margin-left: 3rem;
   width: 100%;
   padding: 0 1rem;
   box-sizing: border-box;
+}
+.loading, .error {
+  font-size: 1.5rem;
+  margin: 2rem 0;
 }
 .grid-container {
   display: grid;
@@ -137,16 +150,13 @@ const RezervacijeKnjiga: React.FC = () => {
   .grid-container {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-  .grid-header:nth-child(1),
   .grid-header:nth-child(5),
-  .grid-item:nth-child(6n + 1),
   .grid-item:nth-child(6n + 5) {
     display: none;
   }
 }
-
 `}</style>
-    </div>
+    </Layout>
   );
 };
 
