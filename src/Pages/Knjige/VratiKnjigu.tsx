@@ -19,7 +19,7 @@ interface Student {
   surname: string;
 }
 
-const IzdajKnjigu: React.FC = () => {
+const VratiKnjigu: React.FC = () => {
   const [book, setBook] = useState<Book | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -170,4 +170,4 @@ const IzdajKnjigu: React.FC = () => {
   );
 };
 
-export default IzdajKnjigu;
+export default VratiKnjigu;

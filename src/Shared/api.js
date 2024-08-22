@@ -201,8 +201,16 @@ const ApiService = {
     return this.get("books/reservations");
   },
 
+  async ReserveBook(id, values) {
+    return this.post(`books/${id}/reserve`, values);
+  },
+
   async getIzdavanja() {
     return this.get("books/borrows");
+  },
+
+  async IzdajKnjigu(id, values) {
+    return this.post(`books/${id}/izdaj`, values);
   },
 };
 

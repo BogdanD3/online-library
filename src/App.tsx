@@ -27,8 +27,10 @@ import ProfileEdit from "./Pages/MeProfile/ProfileEdit";
 import IzdavanjeKnjiga from "./Pages/IzdateKnjige/IzdavanjeKnjiga";
 import RezervacijeKnjiga from "./Pages/IzdateKnjige/RezervacijeKnjiga";
 import ArhiviraneRezervacije from "./Pages/IzdateKnjige/ArhiviraneRezervacije";
-import PrekoraceneRezervacije from "./Pages/IzdateKnjige/PrekoracenaIzdavanja";
 import PrekoracenaIzdavanja from "./Pages/IzdateKnjige/PrekoracenaIzdavanja";
+import IzdajKnjigu from "./Pages/Knjige/IzdajKnjigu";
+import VratiKnjigu from "./Pages/Knjige/VratiKnjigu";
+import RezervisiKnjigu from "./Pages/Knjige/RezervisiKnjigu";
 
 const App: React.FC = () => {
   // initialize ApiClient
@@ -58,6 +60,9 @@ const App: React.FC = () => {
         <Route path="settings" element={<Settings />} />
         <Route path="izdavanje" element={<IzdavanjeKnjiga />} />
         <Route path="rezervacije" element={<RezervacijeKnjiga />} />
+        <Route path="izdaj-knjigu/:id" element={<IzdajKnjigu />} />
+        <Route path="vrati-knjigu/:id" element={<VratiKnjigu />} />
+        <Route path="rezervisi-knjigu/:id" element={<RezervisiKnjigu />} />
         <Route
           path="arhivirane-rezervacije"
           element={<ArhiviraneRezervacije />}

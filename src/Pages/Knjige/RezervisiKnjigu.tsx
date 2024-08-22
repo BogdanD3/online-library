@@ -1,4 +1,4 @@
-import { Form, message, Button, Select, Input, Card } from "antd";
+import { Form, message, Button, Select, Input } from "antd";
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router";
 import ApiService from "../../Shared/api";
@@ -19,7 +19,7 @@ interface Student {
   surname: string;
 }
 
-const IzdajKnjigu: React.FC = () => {
+const RezervisiKnjigu: React.FC = () => {
   const [book, setBook] = useState<Book | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -65,7 +65,7 @@ const IzdajKnjigu: React.FC = () => {
         datumVracanja: values.returnDate,
       };
 
-      const response = await ApiService.IzdajKnjigu(id, payload);
+      const response = await ApiService.ReserveBook(id, payload);
 
       if (response.error) {
         throw new Error(response.error);
@@ -102,13 +102,6 @@ const IzdajKnjigu: React.FC = () => {
         {loading && <div>Loading...</div>}
         {book && (
           <div style={{ maxWidth: "600px", width: "100%" }}>
-            <Card title="Količine" style={{ marginBottom: "20px" }}>
-              <p>Na raspolaganju: {book.samples - book.bSamples} primjeraka</p>
-              <p>Rezervisano: {book.rSamples} primjeraka</p>
-              <p>Izdato: {book.bSamples} primjeraka</p>
-              <p>U prekoracenju: {book.fSamples} primjeraka</p>
-              <p>Ukupna kolicina: {book.samples} primjeraka</p>
-            </Card>
             <Form
               name="borrowBook"
               labelCol={{ span: 8 }}
@@ -147,19 +140,9 @@ const IzdajKnjigu: React.FC = () => {
                 <Input type="date" />
               </Form.Item>
 
-              <Form.Item
-                label="Datum vraćanja"
-                name="returnDate"
-                rules={[
-                  { required: true, message: "Molimo unesite datum vraćanja!" },
-                ]}
-              >
-                <Input type="date" />
-              </Form.Item>
-
               <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Button type="primary" htmlType="submit" loading={storing}>
-                  Izdaj Knjigu
+                  Rezervisi Knjigu
                 </Button>
               </Form.Item>
             </Form>
@@ -170,4 +153,4 @@ const IzdajKnjigu: React.FC = () => {
   );
 };
 
-export default IzdajKnjigu;
+export default RezervisiKnjigu;
