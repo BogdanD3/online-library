@@ -12,19 +12,19 @@ const PersonCircle = () => {
   const items: MenuProps["items"] = [
     {
       icon: (
-        <i className="bi bi-box-arrow-right" style={{ fontSize: "1rem" }}></i>
-      ),
-      label: "Logout",
-      key: "0",
-      onClick: () => logout(),
-    },
-    {
-      icon: (
         <i className="bi bi-person-circle" style={{ fontSize: "1rem" }}></i>
       ),
       label: "Profile",
       key: "1",
       onClick: () => navigate("/profile"),
+    },
+    {
+      icon: (
+        <i className="bi bi-box-arrow-right" style={{ fontSize: "1rem" }}></i>
+      ),
+      label: "Logout",
+      key: "0",
+      onClick: () => logout(),
     },
   ];
 

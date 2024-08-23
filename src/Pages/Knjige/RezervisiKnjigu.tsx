@@ -89,7 +89,7 @@ const RezervisiKnjigu: React.FC = () => {
   }, [fetchData]);
 
   return (
-    <Layout title={book?.title || "Izdaj Knjigu"}>
+    <Layout title={book?.title || "Rezervisi Knjigu"}>
       <div
         style={{
           padding: "20px",

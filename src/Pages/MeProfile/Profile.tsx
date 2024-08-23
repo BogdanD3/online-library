@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback, Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 import ApiService from "../../Shared/api";
 import Layout from "../../Components/Layout/Layout";
+import { message, Modal } from "antd";
 
 interface User {
   id?: number;
@@ -18,6 +20,8 @@ const Profile: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const navigate = useNavigate();
+
   const fetchData = useCallback(async () => {
     try {
       const response = await ApiService.getProfile();
@@ -26,11 +30,8 @@ const Profile: React.FC = () => {
         setError(response.error);
       }
 
-      console.log("API Response:", response);
-
       setUser(response.data.data);
     } catch (error: any) {
-      console.error("There was a problem with the fetch operation:", error);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -40,6 +41,24 @@ const Profile: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const deleteLibrarian = async () => {
+    Modal.confirm({
+      title: "Are you sure you want to delete your profile?",
+      content: "This action cannot be undone.",
+      okText: "Yes, delete",
+      cancelText: "Cancel",
+      onOk: async () => {
+        try {
+          await ApiService.deleteLibrarian(user.id);
+          message.success("Profile deleted successfully.");
+          navigate("/login"); // Redirect to login or another page after deletion
+        } catch (error) {
+          message.error("There was an issue deleting your profile.");
+        }
+      },
+    });
+  };
 
   return (
     <Fragment>
@@ -87,10 +106,15 @@ const Profile: React.FC = () => {
                 style={{ marginLeft: "11rem", marginTop: "5rem" }}
               >
                 <button className="button">Izmjeni Lozinku</button>
-                <a href="/profile-edit" className="button">
+                <button
+                  onClick={() => navigate("/profile-edit")}
+                  className="button"
+                >
                   Izmjeni Profil
-                </a>
-                <button className="button">Obrisi Profil</button>
+                </button>
+                <button className="button" onClick={deleteLibrarian}>
+                  Obrisi Profil
+                </button>
               </div>
             </div>
           </div>

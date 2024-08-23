@@ -205,6 +205,14 @@ const ApiService = {
     return this.post(`books/${id}/reserve`, values);
   },
 
+  async ReturnBook(values) {
+    return this.post("books/vrati", values);
+  },
+
+  async WriteOffBook(values) {
+    return this.post("books/otpisi", values);
+  },
+
   async getIzdavanja() {
     return this.get("books/borrows");
   },

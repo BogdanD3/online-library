@@ -77,9 +77,20 @@ const KnjigeTable: React.FC<KnjigeTableProps> = ({ searchQuery }) => {
         },
       },
       {
+        icon: (
+          <i className="bi bi-clipboard2-x" style={{ fontSize: "1rem" }}></i>
+        ),
+        label: <p style={{ margin: "0" }}>Otpisi</p>,
+        key: "4",
+        onClick: () => {
+          console.log("Return book with id:", book.id);
+          navigate(`/otpisi-knjigu/${book.id}`);
+        },
+      },
+      {
         icon: <i className="bi bi-save-fill" style={{ fontSize: "1rem" }}></i>,
         label: <p style={{ margin: "0" }}>Rezervisi</p>,
-        key: "4",
+        key: "5",
         onClick: () => {
           console.log("Reserve book with id:", book.id);
           navigate(`/rezervisi-knjigu/${book.id}`);
@@ -88,7 +99,7 @@ const KnjigeTable: React.FC<KnjigeTableProps> = ({ searchQuery }) => {
       {
         icon: <i className="bi bi-trash3" style={{ fontSize: "1rem" }}></i>,
         label: <p style={{ margin: "0" }}>Obrisi</p>,
-        key: "5",
+        key: "6",
         onClick: () => {
           console.log("Delete book with id:", book.id);
           ApiService.deleteBook(book.id);

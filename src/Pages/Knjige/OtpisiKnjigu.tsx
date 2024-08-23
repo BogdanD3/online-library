@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router";
+import { message } from "antd"; // Import the message component from antd
 import ApiService from "../../Shared/api";
 import Layout from "../../Components/Layout/Layout";
 
@@ -16,7 +17,7 @@ interface Borrow {
   return_date: string | null;
 }
 
-const VratiKnjigu: React.FC = () => {
+const OtpisiKnjigu: React.FC = () => {
   const [bookTitle, setBookTitle] = useState<string | null>(null);
   const [borrows, setBorrows] = useState<Borrow[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -81,15 +82,22 @@ const VratiKnjigu: React.FC = () => {
     });
   };
 
-  const handleReturnBooks = async () => {
-    const toReturn = Array.from(selectedBorrows);
+  const handleWriteOffBooks = async () => {
+    const toWriteoff = Array.from(selectedBorrows);
+
     try {
-      await ApiService.ReturnBook({ toReturn });
+      const response = await ApiService.WriteOffBook({ toWriteoff });
+
+      if (response.error) {
+        throw new Error(response.error);
+      }
+
+      message.success("Knjige su uspješno otpisane!");
       setSelectedBorrows(new Set());
       fetchData();
     } catch (error: any) {
-      console.error("Error returning books:", error);
-      setError("Failed to return books. Please try again.");
+      console.error("Error writing off books:", error);
+      message.error("Failed to write off books. Please try again.");
     }
   };
 
@@ -98,7 +106,7 @@ const VratiKnjigu: React.FC = () => {
   );
 
   return (
-    <Layout title={bookTitle || "Vrati Knjigu"}>
+    <Layout title={bookTitle || "Otpisi Knjigu"}>
       <div
         style={{
           padding: "20px",
@@ -152,7 +160,7 @@ const VratiKnjigu: React.FC = () => {
               </tbody>
             </table>
             <button
-              onClick={handleReturnBooks}
+              onClick={handleWriteOffBooks}
               disabled={selectedBorrows.size === 0}
               style={{
                 marginTop: "20px",
@@ -164,7 +172,7 @@ const VratiKnjigu: React.FC = () => {
                 cursor: selectedBorrows.size === 0 ? "not-allowed" : "pointer",
               }}
             >
-              Vrati Knjigu
+              Otpisi Knjigu
             </button>
           </>
         )}
@@ -198,4 +206,4 @@ const VratiKnjigu: React.FC = () => {
   );
 };
 
-export default VratiKnjigu;
+export default OtpisiKnjigu;
