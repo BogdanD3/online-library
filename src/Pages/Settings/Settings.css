@@ -1,56 +1,66 @@
 .settings-container {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .settings-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .settings-header-button {
-    background-color: transparent;
-    border: none;
-    font-weight: bold;
-    color: #333;
-    cursor: pointer;
-    padding: 5px 10px;
-    margin: 0 5px;
-    border-radius: 3px;
-    transition: background-color 0.2s ease;
-  }
-  
-  .settings-header-button:hover {
-    background-color: #eee;
-  }
-  
-  .settings-section {
-    padding: 20px 0;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .settings-input-container {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  .settings-input {
-    width: 100px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  .settings-input-label {
-    margin-left: 10px;
-    font-weight: bold;
-  }
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.settings-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 1rem;
+}
+
+.settings-header-link {
+  color: #1890ff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: color 0.3s, border-bottom 0.3s;
+  border-bottom: 2px solid transparent;
+  margin: 0 1rem;
+}
+
+.settings-header-link:hover,
+.settings-header-link:focus {
+  color: #40a9ff;
+  border-bottom: 2px solid #40a9ff;
+}
+
+.settings-section {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.settings-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.settings-section p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.settings-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.settings-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.settings-input-label {
+  margin-left: 0.5rem;
+  font-size: 1rem;
+}

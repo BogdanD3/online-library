@@ -1,61 +1,75 @@
-import React from 'react';
+import React from "react";
+import Layout from "../../Components/Layout/Layout";
+import "./Settings.css";
 
-interface SettingsProps {
-  // Dodati props
-}
-
-const Settings: React.FC<SettingsProps> = () => {
+const Settings: React.FC = () => {
   return (
-    <div className="settings-container">
-      <div className="settings-header">
-        <button className="settings-header-button">Polisa</button>
-        <button className="settings-header-button">Kategorije</button>
-        <button className="settings-header-button">Zanrovi</button>
-        <button className="settings-header-button">Izdavac</button>
-        <button className="settings-header-button">Povez</button>
-        <button className="settings-header-button">Format</button>
-        <button className="settings-header-button">Pismo</button>
-      </div>
-      <div className="settings-section">
-        <h2>Rok za rezervaciju</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum eligendi
-          nihil, vel necessitatibus saepe laboriosam! Perspiciatis laboriosam
-          culpa veritatis ea voluptatum commodi tempora unde, dolorum debitis
-          quia id dicta vitae.
-        </p>
-        <div className="settings-input-container">
-          <input type="text" className="settings-input" placeholder="..." />
-          <span className="settings-input-label">dana</span>
+    <Layout title="Settings">
+      <div className="settings-container">
+        <div className="settings-header">
+          <a href="#" className="settings-header-link">
+            Polisa
+          </a>
+          <a href="#" className="settings-header-link">
+            Kategorije
+          </a>
+          <a href="#" className="settings-header-link">
+            Zanrovi
+          </a>
+          <a href="#" className="settings-header-link">
+            Izdavac
+          </a>
+          <a href="#" className="settings-header-link">
+            Povez
+          </a>
+          <a href="#" className="settings-header-link">
+            Format
+          </a>
+          <a href="#" className="settings-header-link">
+            Pismo
+          </a>
+        </div>
+        <div className="settings-section">
+          <h2>Rok za rezervaciju</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum
+            eligendi nihil, vel necessitatibus saepe laboriosam! Perspiciatis
+            laboriosam culpa veritatis ea voluptatum commodi tempora unde,
+            dolorum debitis quia id dicta vitae.
+          </p>
+          <div className="settings-input-container">
+            <input type="text" className="settings-input" placeholder="..." />
+            <span className="settings-input-label">dana</span>
+          </div>
+        </div>
+        <div className="settings-section">
+          <h2>Rok vracanja</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum
+            eligendi nihil, vel necessitatibus saepe laboriosam! Perspiciatis
+            laboriosam culpa veritatis ea voluptatum commodi tempora unde,
+            dolorum debitis quia id dicta vitae.
+          </p>
+          <div className="settings-input-container">
+            <input type="text" className="settings-input" placeholder="..." />
+            <span className="settings-input-label">dana</span>
+          </div>
+        </div>
+        <div className="settings-section">
+          <h2>Rok konflikta</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum
+            eligendi nihil, vel necessitatibus saepe laboriosam! Perspiciatis
+            laboriosam culpa veritatis ea voluptatum commodi tempora unde,
+            dolorum debitis quia id dicta vitae.
+          </p>
+          <div className="settings-input-container">
+            <input type="text" className="settings-input" placeholder="..." />
+            <span className="settings-input-label">dana</span>
+          </div>
         </div>
       </div>
-      <div className="settings-section">
-        <h2>Rok vracanja</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum eligendi
-          nihil, vel necessitatibus saepe laboriosam! Perspiciatis laboriosam
-          culpa veritatis ea voluptatum commodi tempora unde, dolorum debitis
-          quia id dicta vitae.
-        </p>
-        <div className="settings-input-container">
-          <input type="text" className="settings-input" placeholder="..." />
-          <span className="settings-input-label">dana</span>
-        </div>
-      </div>
-      <div className="settings-section">
-        <h2>Rok konflikta</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum eligendi
-          nihil, vel necessitatibus saepe laboriosam! Perspiciatis laboriosam
-          culpa veritatis ea voluptatum commodi tempora unde, dolorum debitis
-          quia id dicta vitae.
-        </p>
-        <div className="settings-input-container">
-          <input type="text" className="settings-input" placeholder="..." />
-          <span className="settings-input-label">dana</span>
-        </div>
-      </div>
-    </div>
+    </Layout>
   );
 };
 
