@@ -1,12 +1,16 @@
 import React, { Fragment, useEffect, useState, useCallback } from "react";
 import Layout from "../../Components/Layout/Layout";
 import MiniMenu from "../../Components/MiniMenu";
-import ApiService from "../../Shared/api"; // Assuming ApiService is correctly set up
+import ApiService from "../../Shared/api";
 
 interface Borrow {
   id: number;
   knjiga: {
     title: string;
+  };
+  student: {
+    name: string;
+    surname: string;
   };
   bibliotekar0: {
     name: string;
@@ -43,6 +47,13 @@ const IzdavanjeKnjiga: React.FC = () => {
     fetchData();
   }, [fetchData]);
 
+  const calculateDaysBorrowed = (borrowDate: string, returnDate: string) => {
+    const borrowDateObj = new Date(borrowDate);
+    const returnDateObj = new Date(returnDate);
+    const timeDiff = returnDateObj.getTime() - borrowDateObj.getTime();
+    return Math.abs(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+  };
+
   return (
     <Layout title="Izdavanje Knjige">
       <div className="wrapper">
@@ -60,11 +71,16 @@ const IzdavanjeKnjiga: React.FC = () => {
               {borrows.map((borrow) => (
                 <Fragment key={borrow.id}>
                   <div className="grid-item">{borrow.knjiga.title}</div>
-                  <div className="grid-item">{borrow.borrow_date}</div>
-                  <div className="grid-item">{borrow.return_date}</div>
                   <div className="grid-item">
-                    {new Date(borrow.return_date).getTime() -
-                      new Date(borrow.borrow_date).getTime()}
+                    {borrow.student.name} {borrow.student.surname}
+                  </div>
+                  <div className="grid-item">{borrow.borrow_date}</div>
+                  <div className="grid-item">
+                    {calculateDaysBorrowed(
+                      borrow.borrow_date,
+                      new Date().toISOString()
+                    )}{" "}
+                    dana
                   </div>
                   <div className="grid-item">
                     {borrow.bibliotekar0.name} {borrow.bibliotekar0.surname}

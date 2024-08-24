@@ -5,7 +5,10 @@ interface Borrow {
   id: number;
   knjiga: {
     title: string;
-    authors: { name: string; surname: string }[];
+  };
+  student: {
+    name: string;
+    surname: string;
   };
   bibliotekar0: {
     name: string;
@@ -19,7 +22,7 @@ interface Borrow {
 
 const Aktivnosti: React.FC = () => {
   const [borrows, setBorrows] = useState<Borrow[]>([]);
-  const [displayCount, setDisplayCount] = useState(5); // Number of items to display
+  const [displayCount, setDisplayCount] = useState(5);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -37,7 +40,6 @@ const Aktivnosti: React.FC = () => {
           ...response.data.data.vracene,
         ];
 
-        // Sort borrows by borrow_date in descending order
         const sortedBorrows = allBorrows.sort(
           (a, b) =>
             new Date(b.borrow_date).getTime() -
@@ -91,15 +93,14 @@ const Aktivnosti: React.FC = () => {
               <div className="aktivnost">
                 <img
                   src={borrow.bibliotekar0.photoPath}
-                  alt={`${borrow.bibliotekar0.name}'s photo`}
+                  alt=""
                   className="librarian-photo"
                 />
                 <p>
                   {borrow.bibliotekar0.name} {borrow.bibliotekar0.surname}{" "}
-                  {getActionText(borrow.status)} "{borrow.knjiga.title}" autora{" "}
-                  {borrow.knjiga.authors[0].name}{" "}
-                  {borrow.knjiga.authors[0].surname}a dana{" "}
-                  {new Date(borrow.borrow_date).toLocaleDateString()}.
+                  {getActionText(borrow.status)} "{borrow.knjiga.title}"
+                  studentu {borrow.student.name} {borrow.student.surname}
+                  dana {new Date(borrow.borrow_date).toLocaleDateString()}.
                 </p>
               </div>
             </Fragment>

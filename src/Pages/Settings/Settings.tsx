@@ -7,25 +7,25 @@ const Settings: React.FC = () => {
     <Layout title="Settings">
       <div className="settings-container">
         <div className="settings-header">
-          <a href="#" className="settings-header-link">
+          <a href="#no" className="settings-header-link">
             Polisa
           </a>
-          <a href="#" className="settings-header-link">
+          <a href="#going" className="settings-header-link">
             Kategorije
           </a>
-          <a href="#" className="settings-header-link">
+          <a href="#going" className="settings-header-link">
             Zanrovi
           </a>
-          <a href="#" className="settings-header-link">
+          <a href="#going" className="settings-header-link">
             Izdavac
           </a>
-          <a href="#" className="settings-header-link">
+          <a href="#going" className="settings-header-link">
             Povez
           </a>
-          <a href="#" className="settings-header-link">
+          <a href="#going" className="settings-header-link">
             Format
           </a>
-          <a href="#" className="settings-header-link">
+          <a href="#aa" className="settings-header-link">
             Pismo
           </a>
         </div>
