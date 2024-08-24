@@ -23,6 +23,7 @@ interface UceniciTableProps {
 const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
   const renderMenuItems = (user: User) => {
@@ -74,6 +75,7 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
   };
 
   const fetchData = useCallback(async () => {
+    setLoading(true);
     try {
       const response = await ApiService.getStudents(searchQuery);
       if (response.error) {
@@ -91,6 +93,8 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
     } catch (error: any) {
       console.error("There was a problem with the fetch operation:", error);
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   }, [searchQuery]);
 
@@ -102,6 +106,10 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
     const fullName = `${user.name} ${user.surname}`.toLowerCase();
     return fullName.startsWith(searchQuery.toLowerCase());
   });
+
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -174,17 +182,21 @@ const UceniciTable: React.FC<UceniciTableProps> = ({ searchQuery }) => {
           height: 3rem;
           border-radius: 50%;
         }
-      @media (max-width: 768px) {
-        .grid-container {
-          grid-template-columns: repeat(4, 1fr); 
+        .loading {
+          font-size: 1.5rem;
+          margin-top: 2rem;
         }
-        .grid-header:nth-child(3) {
-          display: none; 
+        @media (max-width: 768px) {
+          .grid-container {
+            grid-template-columns: repeat(4, 1fr); 
+          }
+          .grid-header:nth-child(3) {
+            display: none; 
+          }
+          .grid-item:nth-child(5n + 3) {
+            display: none; 
+          }
         }
-        .grid-item:nth-child(5n + 3) {
-          display: none; 
-        }
-      }
       `}</style>
     </div>
   );

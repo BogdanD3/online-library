@@ -60,6 +60,9 @@ const ReservationsTable: React.FC = () => {
     return <div>Error: {error}</div>;
   }
 
+  // Show only the first two reservations
+  const displayedReservations = reservations.slice(0, 2);
+
   return (
     <div className="wrapper">
       <div className="grid-container">
@@ -68,7 +71,7 @@ const ReservationsTable: React.FC = () => {
         <div className="grid-header">Status</div>
         <div className="grid-header">Datum</div>
         <div className="grid-header">Odobri</div>
-        {reservations.map((reservation) => (
+        {displayedReservations.map((reservation) => (
           <React.Fragment key={reservation.id}>
             <div className="grid-item">
               <img
@@ -94,6 +97,9 @@ const ReservationsTable: React.FC = () => {
             </div>
           </React.Fragment>
         ))}
+      </div>
+      <div className="view-all">
+        <a href="/rezervacije">Cijela lista</a>
       </div>
       <style>{`
 .wrapper {
@@ -144,7 +150,17 @@ const ReservationsTable: React.FC = () => {
     display: none;
   }
 }
-
+.view-all {
+  margin-top: 1rem;
+}
+.view-all a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+.view-all a:hover {
+  text-decoration: underline;
+}
 `}</style>
     </div>
   );

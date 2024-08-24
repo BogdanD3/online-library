@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiService from "../../Shared/api";
 import Layout from "../../Components/Layout/Layout";
-import { message, Modal } from "antd";
+import { message, Modal, Button, Form, Input } from "antd";
 
 interface User {
   id?: number;
@@ -19,6 +19,28 @@ const Profile: React.FC = () => {
   const [user, setUser] = useState<User>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = async () => {
+    try {
+      const values = await form.validateFields();
+      console.log("Password change values:", values);
+      // Handle password change logic here
+
+      // Close the modal after processing
+      setIsModalOpen(false);
+    } catch (info) {
+      console.log("Validation Failed:", info);
+    }
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   const navigate = useNavigate();
 
@@ -52,13 +74,15 @@ const Profile: React.FC = () => {
         try {
           await ApiService.deleteLibrarian(user.id);
           message.success("Profile deleted successfully.");
-          navigate("/login"); // Redirect to login or another page after deletion
+          navigate("/login");
         } catch (error) {
           message.error("There was an issue deleting your profile.");
         }
       },
     });
   };
+
+  const [form] = Form.useForm();
 
   return (
     <Fragment>
@@ -68,6 +92,7 @@ const Profile: React.FC = () => {
           <div className="ucenik-details-page">
             {error && <div>Error: {error}</div>}
             <div className="ucenik-details-card-left">
+              {/* Profile Details */}
               <div className="row-container">
                 <p style={{ margin: "0" }}>Ime i Prezime</p>
                 <p style={{ margin: "0" }}>
@@ -100,21 +125,56 @@ const Profile: React.FC = () => {
               </div>
             </div>
             <div className="ucenik-details-card-right">
-              <img className="image" src={user.photoPath} alt="Slika"></img>
+              <img className="image" src={user.photoPath} alt="Slika" />
               <div
                 className="buttons-wrapper"
                 style={{ marginLeft: "11rem", marginTop: "5rem" }}
               >
-                <button className="button">Izmjeni Lozinku</button>
-                <button
+                <Button type="primary" onClick={showModal}>
+                  Izmjeni Lozinku
+                </Button>
+                <Modal
+                  title="Change Password"
+                  open={isModalOpen}
+                  onOk={handleOk}
+                  onCancel={handleCancel}
+                >
+                  <Form form={form} layout="vertical">
+                    <Form.Item
+                      name="oldPassword"
+                      label="Old Password"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your old password!",
+                        },
+                      ]}
+                    >
+                      <Input.Password placeholder="Enter old password" />
+                    </Form.Item>
+                    <Form.Item
+                      name="newPassword"
+                      label="New Password"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your new password!",
+                        },
+                      ]}
+                    >
+                      <Input.Password placeholder="Enter new password" />
+                    </Form.Item>
+                  </Form>
+                </Modal>
+                <Button
+                  type="primary"
                   onClick={() => navigate("/profile-edit")}
-                  className="button"
                 >
                   Izmjeni Profil
-                </button>
-                <button className="button" onClick={deleteLibrarian}>
+                </Button>
+                <Button type="primary" onClick={deleteLibrarian}>
                   Obrisi Profil
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -130,17 +190,6 @@ const Profile: React.FC = () => {
             display: flex;
             flex-direction: column;
         }
-        .button {
-            color: white;
-            margin-left: 1rem;
-            background-color: #444;
-            border: none;
-            cursor: pointer;
-            text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
-            border-radius: 5px;
-            padding: 0.3rem 0.6rem;
-            text-decoration: none;
-        }
         .row-container {
             margin: 2rem 0 2rem 1rem;
         }
@@ -148,6 +197,9 @@ const Profile: React.FC = () => {
             width: 15rem;
             height: 15rem;
             margin: 6rem 0 0 15rem;
+        }
+        Button {
+          margin: 0 0.5rem;
         }
           `}
       </style>

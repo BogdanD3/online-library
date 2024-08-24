@@ -48,7 +48,10 @@ const PersonCircle = () => {
         onVisibleChange={(flag) => setDropdownVisible(flag)}
       >
         <p onClick={(e) => e.preventDefault()}>
-          <i className="bi bi-person-circle" style={{ cursor: "pointer" }}></i>
+          <i
+            className="bi bi-person-circle"
+            style={{ cursor: "pointer", fontSize: "2rem" }}
+          ></i>
         </p>
       </Dropdown>
     </div>

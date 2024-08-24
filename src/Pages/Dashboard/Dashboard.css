@@ -1,0 +1,44 @@
+.dashboard-container {
+  display: flex;
+  height: 100%;
+}
+
+.left-side {
+  flex: 1;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.right-side {
+  flex: 1;
+  padding: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.loading {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+
+.error {
+  margin-top: 1rem;
+  color: red;
+  font-size: 1.2rem;
+}
+
+.right-side > .chart-container {
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .left-side,
+  .right-side {
+    flex: none;
+    width: 100%;
+  }
+}
