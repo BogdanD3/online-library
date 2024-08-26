@@ -125,39 +125,45 @@ const AutoriTable: React.FC<AutoriTableProps> = ({ searchQuery }) => {
         ))}
       </div>
       <style>{`
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 3rem;
-  width: 100%;
-  padding: 0 1rem;
-  box-sizing: border-box;
-}
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow-x: auto;
-}
-.grid-header {
-  font-weight: bold;
-  border-bottom: 2px solid #ccc;
-  padding: 0.5rem;
-  text-align: center;
-}
-.grid-item {
-  border-bottom: 1px solid #ccc;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-}
-      `}</style>
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+    width: 100%;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) 5rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+
+  .grid-header {
+    font-weight: bold;
+    border-bottom: 2px solid #ccc;
+    padding: 0.75rem;
+    text-align: center;
+    background-color: #f4f4f4;
+    text-transform: uppercase;
+  }
+
+  .grid-item {
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+`}</style>
     </div>
   );
 };

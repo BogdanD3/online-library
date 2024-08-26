@@ -8,7 +8,6 @@ import { Button, Form, Input } from "antd";
 type FieldType = {
   name?: string;
   surname?: string;
-  jmbg?: string;
   username?: string;
   email?: string;
   password?: string;
@@ -133,9 +132,11 @@ const UcenikEdit: React.FC = () => {
               </Form.Item>
 
               <Form.Item<FieldType>
-                label="Jmbg"
-                name="jmbg"
-                rules={[{ required: true, message: "Please input your jmbg!" }]}
+                label="Email"
+                name="email"
+                rules={[
+                  { required: true, message: "Please input your email!" },
+                ]}
               >
                 <Input />
               </Form.Item>

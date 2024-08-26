@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState, useCallback } from "react";
 import Layout from "../../Components/Layout/Layout";
 import MiniMenu from "../../Components/MiniMenu";
-import ApiService from "../../Shared/api"; // Assuming ApiService is correctly set up
+import ApiService from "../../Shared/api";
 
 interface Borrow {
   id: number;
@@ -43,8 +43,15 @@ const VraceneKnjige: React.FC = () => {
     fetchData();
   }, [fetchData]);
 
+  const calculateDaysBorrowed = (borrowDate: string, returnDate: string) => {
+    const borrowDateObj = new Date(borrowDate);
+    const returnDateObj = new Date(returnDate);
+    const timeDiff = returnDateObj.getTime() - borrowDateObj.getTime();
+    return Math.abs(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+  };
+
   return (
-    <Layout title="Izdavanje Knjige">
+    <Layout title="Vracene Knjige">
       <div className="wrapper">
         <MiniMenu />
         <div className="content">
@@ -63,8 +70,11 @@ const VraceneKnjige: React.FC = () => {
                   <div className="grid-item">{borrow.borrow_date}</div>
                   <div className="grid-item">{borrow.return_date}</div>
                   <div className="grid-item">
-                    {new Date(borrow.return_date).getTime() -
-                      new Date(borrow.borrow_date).getTime()}
+                    {calculateDaysBorrowed(
+                      borrow.borrow_date,
+                      new Date().toISOString()
+                    )}{" "}
+                    dana
                   </div>
                   <div className="grid-item">
                     {borrow.bibliotekar0.name} {borrow.bibliotekar0.surname}
@@ -76,53 +86,81 @@ const VraceneKnjige: React.FC = () => {
         </div>
       </div>
       <style>{`
-        .wrapper {
-          display: flex;
-          flex-direction: row;
-        }
-        .content {
-          margin-left: 5rem;
-          margin-top: 2rem;
-          width: 100%;
-        }
-        .loading, .error {
-          font-size: 1.5rem;
-          margin: 2rem 0;
-          text-align: center;
-        }
-        .grid-container {
-          display: grid;
-          grid-template-columns: repeat(5, 1fr);
-          gap: 1rem;
-          width: 100%;
-          max-width: 100%;
-          box-sizing: border-box;
-          overflow-x: auto;
-        }
-        .grid-header {
-          font-weight: bold;
-          border-bottom: 2px solid #ccc;
-          padding: 0.5rem;
-          text-align: center;
-        }
-        .grid-item {
-          border-bottom: 1px solid #ccc;
-          padding: 0.5rem;
-          display: flex;
-          align-items: center;
-          text-align: center;
-          justify-content: center;
-        }
-        @media (max-width: 768px) {
-          .grid-container {
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-          }
-          .grid-header:nth-child(5),
-          .grid-item:nth-child(5n + 5) {
-            display: none;
-          }
-        }
-      `}</style>
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .content {
+    margin-top: 2rem;
+    margin-left: 5rem;
+    margin-right: 3rem;
+    width: 100%;
+  }
+
+  .loading, .error {
+    font-size: 1.5rem;
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+
+  .grid-header {
+    font-weight: bold;
+    border-bottom: 2px solid #ccc;
+    padding: 0.75rem;
+    text-align: center;
+    background-color: #f4f4f4;
+    text-transform: uppercase;
+  }
+
+  .grid-item {
+    border-bottom: 1px solid #ccc;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  @media (max-width: 768px) {
+    .grid-container {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .grid-header:nth-child(5),
+    .grid-item:nth-child(5n + 5) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .grid-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-header:nth-child(4),
+    .grid-item:nth-child(4n + 4) {
+      display: none;
+    }
+
+    .grid-header:nth-child(5),
+    .grid-item:nth-child(5n + 5) {
+      grid-column: span 2;
+    }
+  }
+`}</style>
     </Layout>
   );
 };

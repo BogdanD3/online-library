@@ -32,6 +32,7 @@ import IzdajKnjigu from "./Pages/Knjige/IzdajKnjigu";
 import VratiKnjigu from "./Pages/Knjige/VratiKnjigu";
 import RezervisiKnjigu from "./Pages/Knjige/RezervisiKnjigu";
 import OtpisiKnjigu from "./Pages/Knjige/OtpisiKnjigu";
+import VraceneKnjige from "./Pages/IzdateKnjige/VraceneKnjige";
 
 const App: React.FC = () => {
   // initialize ApiClient
@@ -73,7 +74,7 @@ const App: React.FC = () => {
           path="prekoracena-izdavanja"
           element={<PrekoracenaIzdavanja />}
         />
-        <Route path="vracene-knjige" element={<PrekoracenaIzdavanja />} />
+        <Route path="vracene-knjige" element={<VraceneKnjige />} />
 
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/register" element={<RegisterPage />} />
