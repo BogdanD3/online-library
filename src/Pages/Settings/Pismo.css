@@ -1,0 +1,58 @@
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .letter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .letter-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .letter-list li:last-child {
+    border-bottom: none;
+  }
+  
+  .add-letter-btn {
+    background-color: #337ab7;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .add-letter-btn:hover {
+    background-color: #23527c;
+  }
+  
+  .delete-letter-btn {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .delete-letter-btn:hover {
+    background-color: #c9302c;
+  }
