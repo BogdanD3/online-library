@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import './SettingsPismo.css';
+import React, { useState } from "react";
+import "./Pismo.css";
+import SettingsHeader from "../../Components/SettingsHeader";
+import Layout from "../../Components/Layout/Layout";
 
 interface Letter {
   id: number;
@@ -9,9 +11,9 @@ interface Letter {
 
 const SettingsPismo: React.FC = () => {
   const [letters, setLetters] = useState<Letter[]>([
-    { id: 1, name: 'Letter 1', description: 'Description for Letter 1' },
-    { id: 2, name: 'Letter 2', description: 'Description for Letter 2' },
-    { id: 3, name: 'Letter 3', description: 'Description for Letter 3' }
+    { id: 1, name: "Letter 1", description: "Description for Letter 1" },
+    { id: 2, name: "Letter 2", description: "Description for Letter 2" },
+    { id: 3, name: "Letter 3", description: "Description for Letter 3" },
   ]);
 
   const addLetter = () => {
@@ -23,27 +25,30 @@ const SettingsPismo: React.FC = () => {
   };
 
   return (
-    <div className="container">
-      <div className="header">
-        <h1>Settings Pismo</h1>
-        <button className="add-letter-btn" onClick={addLetter}>
-          Add Letter
-        </button>
+    <Layout title="Pismo">
+      <SettingsHeader />
+      <div className="container">
+        <div className="header">
+          <h1>Settings Pismo</h1>
+          <button className="add-letter-btn" onClick={addLetter}>
+            Add Letter
+          </button>
+        </div>
+        <ul className="letter-list">
+          {letters.map((letter) => (
+            <li key={letter.id}>
+              {letter.name} - {letter.description}
+              <button
+                className="delete-letter-btn"
+                onClick={() => deleteLetter(letter.id)}
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul className="letter-list">
-        {letters.map((letter) => (
-          <li key={letter.id}>
-            {letter.name} - {letter.description}
-            <button
-              className="delete-letter-btn"
-              onClick={() => deleteLetter(letter.id)}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    </Layout>
   );
 };
 

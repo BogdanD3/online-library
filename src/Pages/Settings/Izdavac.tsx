@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import './SettingsIzdavac.css';
+import React, { useState } from "react";
+import "./Izdavac.css";
+import Layout from "../../Components/Layout/Layout";
+import SettingsHeader from "../../Components/SettingsHeader";
 
 interface Publisher {
   id: number;
@@ -8,9 +10,9 @@ interface Publisher {
 
 const SettingsIzdavac: React.FC = () => {
   const [publishers, setPublishers] = useState<Publisher[]>([
-    { id: 1, name: 'Publisher 1' },
-    { id: 2, name: 'Publisher 2' },
-    { id: 3, name: 'Publisher 3' }
+    { id: 1, name: "Publisher 1" },
+    { id: 2, name: "Publisher 2" },
+    { id: 3, name: "Publisher 3" },
   ]);
 
   const addPublisher = () => {
@@ -22,27 +24,30 @@ const SettingsIzdavac: React.FC = () => {
   };
 
   return (
-    <div className="container">
-      <div className="header">
-        <h1>Settings Izdavac</h1>
-        <button className="add-publisher-btn" onClick={addPublisher}>
-          Add Publisher
-        </button>
+    <Layout title="Izdavac">
+      <SettingsHeader />
+      <div className="container">
+        <div className="header">
+          <h1>Settings Izdavac</h1>
+          <button className="add-publisher-btn" onClick={addPublisher}>
+            Add Publisher
+          </button>
+        </div>
+        <ul className="publisher-list">
+          {publishers.map((publisher) => (
+            <li key={publisher.id}>
+              {publisher.name}
+              <button
+                className="delete-publisher-btn"
+                onClick={() => deletePublisher(publisher.id)}
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul className="publisher-list">
-        {publishers.map((publisher) => (
-          <li key={publisher.id}>
-            {publisher.name}
-            <button
-              className="delete-publisher-btn"
-              onClick={() => deletePublisher(publisher.id)}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    </Layout>
   );
 };
 

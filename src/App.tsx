@@ -33,6 +33,12 @@ import VratiKnjigu from "./Pages/Knjige/VratiKnjigu";
 import RezervisiKnjigu from "./Pages/Knjige/RezervisiKnjigu";
 import OtpisiKnjigu from "./Pages/Knjige/OtpisiKnjigu";
 import VraceneKnjige from "./Pages/IzdateKnjige/VraceneKnjige";
+import SettingsIzdavac from "./Pages/Settings/Izdavac";
+import SettingsKategorije from "./Pages/Settings/Kategorije";
+import SettingsZanrovi from "./Pages/Settings/Zanrovi";
+import SettingsPovez from "./Pages/Settings/Povez";
+import SettingsFormat from "./Pages/Settings/Format";
+import SettingsPismo from "./Pages/Settings/Pismo";
 
 const App: React.FC = () => {
   // initialize ApiClient
@@ -59,13 +65,19 @@ const App: React.FC = () => {
         <Route path="/knjige/add-knjiga" element={<AddKnjiga />} />
         <Route path="profile" element={<Profile />} />
         <Route path="profile-edit" element={<ProfileEdit />} />
-        <Route path="settings" element={<Settings />} />
         <Route path="izdavanje" element={<IzdavanjeKnjiga />} />
         <Route path="rezervacije" element={<RezervacijeKnjiga />} />
         <Route path="izdaj-knjigu/:id" element={<IzdajKnjigu />} />
         <Route path="vrati-knjigu/:id" element={<VratiKnjigu />} />
         <Route path="otpisi-knjigu/:id" element={<OtpisiKnjigu />} />
         <Route path="rezervisi-knjigu/:id" element={<RezervisiKnjigu />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="kategorije" element={<SettingsKategorije />} />
+        <Route path="zanrovi" element={<SettingsZanrovi />} />
+        <Route path="izdavac" element={<SettingsIzdavac />} />
+        <Route path="povez" element={<SettingsPovez />} />
+        <Route path="format" element={<SettingsFormat />} />
+        <Route path="pismo" element={<SettingsPismo />} />
         <Route
           path="arhivirane-rezervacije"
           element={<ArhiviraneRezervacije />}
