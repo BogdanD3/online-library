@@ -25,54 +25,54 @@ const SettingsHeader = () => {
         Polisa
       </a>
       <a
-        href="kategorije"
+        href="/kategorije"
         className={`settings-header-link ${
-          activeLink === "going" ? "active" : ""
+          activeLink === "/going" ? "active" : ""
         }`}
         onClick={() => handleLinkClick("going")}
       >
         Kategorije
       </a>
       <a
-        href="zanrovi"
+        href="/zanrovi"
         className={`settings-header-link ${
-          activeLink === "zanrovi" ? "active" : ""
+          activeLink === "/zanrovi" ? "active" : ""
         }`}
         onClick={() => handleLinkClick("zanrovi")}
       >
         Zanrovi
       </a>
       <a
-        href="izdavac"
+        href="/izdavac"
         className={`settings-header-link ${
-          activeLink === "izdavac" ? "active" : ""
+          activeLink === "/izdavac" ? "active" : ""
         }`}
         onClick={() => handleLinkClick("izdavac")}
       >
         Izdavac
       </a>
       <a
-        href="povez"
+        href="/povez"
         className={`settings-header-link ${
-          activeLink === "povez" ? "active" : ""
+          activeLink === "/povez" ? "active" : ""
         }`}
         onClick={() => handleLinkClick("povez")}
       >
         Povez
       </a>
       <a
-        href="format"
+        href="/format"
         className={`settings-header-link ${
-          activeLink === "format" ? "active" : ""
+          activeLink === "/format" ? "active" : ""
         }`}
         onClick={() => handleLinkClick("format")}
       >
         Format
       </a>
       <a
-        href="pismo"
+        href="/pismo"
         className={`settings-header-link ${
-          activeLink === "pismo" ? "active" : ""
+          activeLink === "/pismo" ? "active" : ""
         }`}
         onClick={() => handleLinkClick("pismo")}
       >
