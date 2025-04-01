@@ -1,19 +1,19 @@
 function MiniMenu() {
   return (
     <div className="mini-menu">
-      <a href="/izdavanje" className="menu-item">
+      <a href="/izdavanje" className="menu-item" style={{boxShadow: '0 0 5px black'}}>
         Izdate Knjige
       </a>
-      <a href="/vracene-knjige" className="menu-item">
+      <a href="/vracene-knjige" className="menu-item" style={{boxShadow: '0 0 5px black'}}>
         Vracene Knjige
       </a>
-      <a href="/prekoracena-izdavanja" className="menu-item">
+      <a href="/prekoracena-izdavanja" className="menu-item" style={{boxShadow: '0 0 5px black'}}>
         Knjige u Prekoracenju
       </a>
-      <a href="/rezervacije" className="menu-item">
+      <a href="/rezervacije" className="menu-item" style={{boxShadow: '0 0 5px black'}}>
         Aktivne Rezervacije
       </a>
-      <a href="/arhivirane-rezervacije" className="menu-item">
+      <a href="/arhivirane-rezervacije" className="menu-item" style={{boxShadow: '0 0 5px black'}}>
         Arhivirane Rezervacije
       </a>
       <style>{`

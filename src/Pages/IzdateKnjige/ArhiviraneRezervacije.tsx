@@ -63,30 +63,30 @@ const ArhiviraneRezervacije: React.FC = () => {
           {error && <div className="error">Error: {error}</div>}
           {!loading && !error && (
             <div className="grid-container">
-              <div className="grid-header">Slika</div>
-              <div className="grid-header">Ime i Prezime</div>
-              <div className="grid-header">Status</div>
-              <div className="grid-header">Datum</div>
-              <div className="grid-header">Odobri</div>
+              <div className="grid-header" style={{backgroundColor: '#9c9997', borderTopLeftRadius: '6px', borderRight: '2px solid rgb(51, 51, 51)'}}>Slika</div>
+              <div className="grid-header" style={{backgroundColor: '#9c9997', borderRight: '2px solid rgb(51, 51, 51)'}}>Ime i Prezime</div>
+              <div className="grid-header" style={{backgroundColor: '#9c9997', borderRight: '2px solid rgb(51, 51, 51)'}}>Status</div>
+              <div className="grid-header" style={{backgroundColor: '#9c9997', borderRight: '2px solid rgb(51, 51, 51)'}}>Datum</div>
+              <div className="grid-header" style={{backgroundColor: '#9c9997', borderTopRightRadius: '6px'}}>Odobri</div>
               {reservations.map((reservation) => (
                 <React.Fragment key={reservation.id}>
-                  <div className="grid-item">
+                  <div className="grid-item" style={{backgroundColor: '#c3c3c3', borderRight: '2px solid rgb(84, 84, 84)'}}>
                     <img
                       src={
                         reservation.knjiga.photo ||
                         "https://via.placeholder.com/100"
                       }
                       alt={reservation.knjiga.title}
-                      className="book-photo"
+                      className="book-photo" style={{ width: "50px", height: "50px" }}
                     />
                   </div>
-                  <div className="grid-item">
+                  <div className="grid-item" style={{backgroundColor: '#c3c3c3', borderRight: '2px solid rgb(84, 84, 84)'}}>
                     {reservation.bibliotekar0?.name || "No Name"}{" "}
                     {reservation.bibliotekar0?.surname || "No Surname"}
                   </div>
-                  <div className="grid-item">{reservation.status}</div>
-                  <div className="grid-item">{reservation.action_date}</div>
-                  <div className="grid-item tick-x">
+                  <div className="grid-item" style={{backgroundColor: '#c3c3c3', borderRight: '2px solid rgb(84, 84, 84)'}}>{reservation.status}</div>
+                  <div className="grid-item" style={{backgroundColor: '#c3c3c3', borderRight: '2px solid rgb(84, 84, 84)'}}>{reservation.action_date}</div>
+                  <div className="grid-item tick-x" style={{backgroundColor: '#c3c3c3'}}>
                     <i
                       className="bi bi-check-lg"
                       style={{ fontSize: "1.2rem", paddingRight: "1rem" }}

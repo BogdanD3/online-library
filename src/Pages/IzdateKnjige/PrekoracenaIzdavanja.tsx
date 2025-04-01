@@ -59,24 +59,24 @@ const PrekoracenaIzdavanja: React.FC = () => {
           {error && <div className="error">Error: {error}</div>}
           {!loading && !error && (
             <div className="grid-container">
-              <div className="grid-header">Naziv knjige</div>
-              <div className="grid-header">Izdato uceniku</div>
-              <div className="grid-header">Datum izdavanja</div>
-              <div className="grid-header">Trenutno zadrzavanje knjige</div>
-              <div className="grid-header">Knjigu izdao</div>
+              <div className="grid-header" style={{backgroundColor: '#9c9997', borderTopLeftRadius: '6px', borderRight: '2px solid rgb(51, 51, 51)'}}>Naziv knjige</div>
+              <div className="grid-header" style={{backgroundColor: '#9c9997', borderRight: '2px solid rgb(51, 51, 51)'}}>Izdato uceniku</div>
+              <div className="grid-header" style={{backgroundColor: '#9c9997', borderRight: '2px solid rgb(51, 51, 51)'}}>Datum izdavanja</div>
+              <div className="grid-header" style={{backgroundColor: '#9c9997', borderRight: '2px solid rgb(51, 51, 51)'}}>Trenutno zadrzavanje knjige</div>
+              <div className="grid-header" style={{backgroundColor: '#9c9997', borderTopRightRadius: '6px'}}>Knjigu izdao</div>
               {borrows.map((borrow) => (
                 <Fragment key={borrow.id}>
-                  <div className="grid-item">{borrow.knjiga.title}</div>
-                  <div className="grid-item">{borrow.borrow_date}</div>
-                  <div className="grid-item">{borrow.return_date}</div>
-                  <div className="grid-item">
+                  <div className="grid-item" style={{backgroundColor: '#c3c3c3', borderRight: '2px solid rgb(84, 84, 84)'}}>{borrow.knjiga.title}</div>
+                  <div className="grid-item" style={{backgroundColor: '#c3c3c3', borderRight: '2px solid rgb(84, 84, 84)'}}>{borrow.borrow_date}</div>
+                  <div className="grid-item" style={{backgroundColor: '#c3c3c3', borderRight: '2px solid rgb(84, 84, 84)'}}>{borrow.return_date}</div>
+                  <div className="grid-item" style={{backgroundColor: '#c3c3c3', borderRight: '2px solid rgb(84, 84, 84)'}}>
                     {calculateDaysBorrowed(
                       borrow.borrow_date,
                       new Date().toISOString()
                     )}{" "}
                     dana
                   </div>
-                  <div className="grid-item">
+                  <div className="grid-item" style={{backgroundColor: '#c3c3c3'}}>
                     {borrow.bibliotekar0.name} {borrow.bibliotekar0.surname}
                   </div>
                 </Fragment>
